@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head >
+        <meta charset="utf-8"/>
+        <meta name="keywords" content="Log in"/>
+        <meta name="description" content="Log in"/>
+        <title>Uber</title>
+        
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
+        
+        <!--Css files -->
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/sign.css" />
+    </head>
+
+    <body>
+        <!--header-->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <ul class="list-unstyled">
+                        <li class="ulogo">
+                            <a data-baseweb="link" href="index.html"
+                            target="_self" aria-label="Go to Uber.com"  
+                            class="uberlogo">Uber</a>
+                        </li>
+                    </ul>
+                    <nav>
+                        <ul class="list-unstyled">
+                            <li class="login">
+                                <button class="logbut">Log in</button>
+                            </li>
+                            <li class="signup">
+                                <button class="signbut">Sign UP</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        </br>
+        
+        <!--Sign Up  -->
+            <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
+                    <div class="title">
+                        <h2 id="title" class="title">
+                            vehicle information
+                        </h2>
+                    </div>
+
+                    <!-- Vehicle Licence -->
+                    <div class="vehiclelicence">
+                        <label for="licence"><b>Vehicle Licence ID</b></label>
+                            <input type="tel" id="vlicence" name="vehiclelicence" placeholder="Vehicle Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
+                    </div>
+                    
+                    <!-- Licence plate -->
+                    <div class="licenceplate">
+                        <label for="licenceplate"><b>Licence Plate</b></label>
+                            <input type="text" id="vlicencep" name="licenceplate" placeholder="Licence Plate" pattern="[أ-ى][أى][أ-ى][0-9][0-9][0-9]" required>
+                    </div>
+                    
+                    <!-- Car Maker -->
+                    <label for="carmaker">Car Maker</label>
+                    <select id="carmaker" name="carmaker">
+                      <option value="KIA">KIA</option>
+                      <option value="Houndy">Houndy</option>
+                      <option value="Nessan">Nessan</option>
+                    </select>
+
+                    <!-- Model -->
+                    <label for="model">Car Model</label>
+                    <select id="model" name="model">
+                      <option value="Sunny">Sunny</option>
+                      <option value="Houndy">Houndy</option>
+                      <option value="Nessan">Nessan</option>
+                    </select>
+
+                    <!-- Reales Year -->
+                    <label for="year">Reales Year</label>
+                    <select id="year" name="year">
+                      <option value="2001">2001</option>
+                      <option value="2002">2002</option>
+                      <option value="2003">2003</option>
+                    </select>
+
+                    <!-- Color -->
+                    <label for="color">Color</label>
+                    <select id="color" name="color">
+                      <option value="Red">Red</option>
+                      <option value="Blue">Blue</option>
+                      <option value="Green">Green</option>
+                    </select>
+                        
+                <!-- submit button -->
+                <div class="sumit">
+                    <button type="submit" class="next" id="sumit">Sunmit</button> 
+                </div>                      
+        </div>
+
+        <div class="captche-continer">            
+            <div class="captche">
+                <p class="p-catche">
+                    This site is protected by reCAPTCHA and the Google 
+                        <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
+                             Privacy Policy
+                        </a>
+                            and 
+                        <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
+                            Terms of Service
+                        </a>
+                    apply.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

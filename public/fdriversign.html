@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head >
+        <meta charset="utf-8"/>
+        <meta name="keywords" content="Log in"/>
+        <meta name="description" content="Log in"/>
+        <title>Uber</title>
+        
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
+        
+        <!--Css files -->
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/fridersign.css" />
+    </head>
+
+    <body>
+        <!--header-->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <ul class="list-unstyled">
+                        <li class="ulogo">
+                            <a data-baseweb="link" href="index.html"
+                            target="_self" aria-label="Go to Uber.com"  
+                            class="uberlogo">Uber</a>
+                        </li>
+                    </ul>
+                    <nav>
+                        <ul class="list-unstyled">
+                            <li class="login">
+                                <button class="logbut" onClick="logButton()">Log in</button>
+                            </li>
+                            <li class="signup">
+                                <button class="signbut" onClick="signButton()">Sign UP</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        </br>
+        
+        <!--Sign Up  -->
+            <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
+                    <div class="title">
+                        <h2 id="title" class="title">
+                            What's your email and password?
+                        </h2>
+                    </div>
+
+                    <!--mail  -->
+                    <div class="mail">
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" placeholder="Enter Email" name="email" required>
+                    </div>
+
+                    <!-- password -->
+                    <div class="pass">
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>
+                    </div>
+
+                    <div class="repassword">
+                        <label for="psw-repeat"><b>Repeat Password</b></label>
+                        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                    </div>
+                        
+                <!-- submit button -->
+                <div class="continune">
+                    <button type="submit" class="next" id="continune">Continue</button> 
+                </div>                      
+        </div>
+
+        <div class="captche-continer">            
+            <div class="captche">
+                <p class="p-catche">
+                    This site is protected by reCAPTCHA and the Google 
+                        <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
+                             Privacy Policy
+                        </a>
+                            and 
+                        <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
+                            Terms of Service
+                        </a>
+                    apply.
+                </p>
+            </div>
+        </div>
+        <script src="js/main.js"></script>
+    </body>
+</html>

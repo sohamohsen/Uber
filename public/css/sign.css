@@ -1,0 +1,283 @@
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+}
+
+.container{
+    /* width: 95%;
+    height: 25%; */
+    margin: auto;
+    background-color: black;
+    height: 64px;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
+    top: 0;
+} 
+
+.li-unstyled  {
+    list-style-type: none;
+}
+
+/* Header */
+
+header .header-content{
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+}
+
+.header-content{
+    width: 95%;
+}
+
+.uberlogo {
+    padding-left: 50%;
+}
+
+.header-content ul li{
+    display: inline-block;
+}
+
+nav {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom-width: 0;
+    border-bottom-style: solid;
+    border-bottom-color: #E2E2E2;
+    background-color: #000000;
+    position: relative;
+    z-index: 2002;
+    height: 64px;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
+    top: 0;
+}
+.uberlogo{
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+.signbut:hover{
+    opacity: 0.5;
+}
+
+.logbut:hover{
+    opacity: 0.5;
+}
+.signbut{
+    transition: opacity .5s;
+    display: inline-flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    transition-property: background;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 1, 1);
+    cursor: pointer;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #000000;
+    background-color: #FFFFFF;
+    white-space: nowrap;
+}
+
+.logbut{
+    transition: opacity .5s;
+    display: inline-block;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    transition-property: background;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 1, 1);
+    cursor: pointer;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #FFFFFF;
+    background-color: #000000;
+    white-space: nowrap;
+}
+
+/* body */
+.Sign {
+    padding: 30px;
+    margin: 0 150px;
+    border: 1px solid;
+    box-shadow: 5px 10px 8px 10px #888888;
+
+}
+
+.title {
+    padding-bottom: 15px ;
+    text-align: center;
+    font-size: 50px;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], [type=tel], [type=date], select, textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+
+  }
+  
+input[type=text]:focus, [type=tel]:focus, input[type=password]:focus, select, textarea {
+    background-color: #ddd;
+    outline: none;
+    border: 1px solid #ccc;
+
+}
+
+.gender {
+    justify-content: space-between;
+    line-height: 2em;
+
+
+}
+
+input[type=radio] {
+    display: inline;
+    padding: auto;
+    justify-content: space-between;
+    line-height: 50px;
+}
+
+.female {
+    padding-left: 50px;
+}
+
+.other {
+    padding-left: 50px;
+}
+
+
+
+/* button */
+.next {
+    background-color: #000000;
+    color: white;
+    min-height: 48px;
+    padding: 14px 16px;
+    font-weight: 500;
+    transition: background 200ms cubic-bezier(0, 0, 1, 1);
+    line-height: 20px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    box-sizing: inherit;
+    font-family: Arial,sans-serif;
+    appearance: auto;
+    width: 100%;
+    border: none;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+}
+
+.next:hover {
+    opacity: 0.5;
+}
+
+.captche-continer {
+    padding-top: 40px;
+    padding-bottom: 10px;
+    text-align: center;
+    opacity: 0.5;
+    font-size: 15px;
+}

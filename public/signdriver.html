@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head >
+        <meta charset="utf-8"/>
+        <meta name="keywords" content="Log in"/>
+        <meta name="description" content="Log in"/>
+        <title>Uber</title>
+        
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
+        
+        <!--Css files -->
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/sign.css" />
+    </head>
+
+    <body>
+        <!--header-->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <ul class="list-unstyled">
+                        <li class="ulogo">
+                            <a data-baseweb="link" href="#"
+                            target="_self" aria-label="Go to Uber.com"  
+                            class="uberlogo">Uber</a>
+                        </li>
+                    </ul>
+                    <nav>
+                        <ul class="list-unstyled">
+                            <li class="login">
+                                <button class="logbut" onClick="logButton()">Log in</button>
+                            </li>
+                            <li class="signup">
+                                <button class="signbut" onClick="signButton()">Sign UP</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        </br>
+        
+        <!--Sign Up  -->
+            <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
+                    <div class="title">
+                        <h2 id="title" class="title">
+                            Personal information
+                        </h2>
+                    </div>
+
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                
+                    <!-- National id -->
+                    <div class="nationalid">
+                        <label for="nationalid"><b>National ID</b></label>
+                            <input type="tel" id="nid" name="nationalid" placeholder="National ID" pattern="{2}[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
+                    </div>
+
+                    <!-- Driver Licence -->
+                    <div class="driverlicence">
+                        <label for="licence"><b>Driver Licence ID</b></label>
+                            <input type="tel" id="dlicence" name="driverlicence" placeholder="Driver Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
+                    </div>
+
+                    <!-- Phone  -->
+                    <div class="phone">
+                        <label for="Phone"><b>Phone Number</b></label>
+                        <input type="tel" id="phone" name="phone" placeholder="01x-xxx-xxx-xx" pattern="{0}{1}[0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]" required>
+                    </div>
+                    <div class="birthday">
+                        <label for="birthday">Birthday:</label>
+                        <input type="date" id="birthday" name="birthday">
+                    </div>
+                    
+                    <!-- City -->
+
+                    <label for="city">City</label>
+                    <select id="city" name="city">
+                      <option value="Cairo">Cairo</option>
+                      <option value="Alexinria">Alexinria</option>
+                      <option value="Giza">Giza</option>
+                    </select>
+
+                    <div data-role="controlgroup" class="gender">
+                        <legend>Choose your gender:</legend>
+                          <label for="male" class="male" >Male</label>
+                          <input type="radio" name="gender" id="male" value="male" checked>
+                          <label for="female" class="female">Female</label>
+                          <input type="radio" name="gender" id="female" value="female">
+                    </div>
+                        
+                <!-- submit button -->
+                <div class="continune">
+                    <button type="submit" class="next" id="continune">Continue</button> 
+                </div>                      
+        </div>
+
+        <div class="captche-continer">            
+            <div class="captche">
+                <p class="p-catche">
+                    This site is protected by reCAPTCHA and the Google 
+                        <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
+                             Privacy Policy
+                        </a>
+                            and 
+                        <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
+                            Terms of Service
+                        </a>
+                    apply.
+                </p>
+            </div>
+        </div>
+        <script src="js/main.js"></script>
+    </body>
+</html>
