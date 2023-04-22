@@ -9,10 +9,15 @@ import java.io.Serializable;
 @Table(name = "account")
 public class Account {
 
-    private int id;
-    private String email;
-    private String password;
-    private String type;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
+    @Column(name = "email")
+    public String email;
+    @Column(name = "password")
+    public String password;
+    @Column(name = "type")
+    public String type;
 
     public Account() {
     }
@@ -24,8 +29,7 @@ public class Account {
         this.type = type;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public int getId() {
         return id;
     }

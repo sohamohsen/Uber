@@ -14,6 +14,7 @@
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
         <link rel="stylesheet" href="css/fridersign.css" />
+        <script src="js/jquery-3.6.4.min.js"></script>
     </head>
 
     <body>
@@ -54,23 +55,23 @@
 
                     <!--mail  -->
                     <div class="mail">
-                        <label for="email"><b>Email</b></label>
-                        <input type="text" placeholder="Enter Email" name="email" required>
+                        <label for="email_rider"><b>Email</b></label>
+                        <input id="email_rider" type="text" placeholder="Enter Email" name="email" required>
                     </div>
 
                     <!-- password -->
                     <div class="pass">
-                        <label for="psw"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <label for="pass_rider"><b>Password</b></label>
+                        <input id="pass_rider" type="password" placeholder="Enter Password" name="psw" required>
                     </div>
                         
                 <!-- submit button -->
-                <div class="continune">
-                    <button type="submit" class="next" id="continune">Continue</button> 
+                <div class="continue">
+                    <button  type="submit" class="next" id="continue_log_rider" onclick="riderSignIn()">Continue</button>
                 </div>                      
         </div>
 
-        <div class="captche-continer">            
+        <div class="captcha-container">
             <div class="captche">
                 <p class="p-catche">
                     This site is protected by reCAPTCHA and the Google 
@@ -86,5 +87,10 @@
             </div>
         </div>
         <script src="js/main.js"></script>
+        <script>
+        if(localStorage.getItem('user_id') !== null){
+             window.location.assign('nav.html')
+        }
+    </script>
     </body>
 </html>

@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
 
-    <body>
+    <body >
 
         <!--header-->
         <header>
@@ -136,7 +136,7 @@
                 </a>
                 <a data-baseweb="link" href="https://ocie.app.link/HmhKsK15Pwb?%243p=a_custom_47734&amp;~tune_publisher_sub1=%7Bmarketing_visitor_id%7D&amp;~campaign=uber-com-footer&amp;%24uri_redirect_mode=1" 
                 alt="Download the Uber app for Android" 
-                target="_self" class="app">
+                target="_self" class="app"></a>
                     <img src="css/images/playstore.png" class="fplay"
                 alt="Download the Uber app for Android" role="presentation" aria-hidden="true">
                 <a data-baseweb="link" href="https://ocie.app.link/HmhKsK15Pwb?%243p=a_custom_47734&amp;~tune_publisher_sub1=%7Bmarketing_visitor_id%7D&amp;~campaign=uber-com-footer&amp;%24uri_redirect_mode=1" 
@@ -151,6 +151,11 @@
             </div>
         </footer>
         <script src="js/main.js"></script>
+    <script>
+        if(localStorage.getItem('user_id') !== null){
+             window.location.assign('nav.html')
+        }
+    </script>
     </body>
 
 </html>

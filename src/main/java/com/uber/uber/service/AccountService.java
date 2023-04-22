@@ -24,8 +24,7 @@ public class AccountService {
     }
 
     public Account getAccountByEmail(String email){
-        //TODO modify query , where email == account.email
-        return repo.findById(1).get();
+        return repo.findByEmailIs(email);
     }
 
     public void save(Account account){

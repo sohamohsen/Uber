@@ -15,15 +15,11 @@ public class CityService {
     @Autowired
     private CityRepo repo;
 
-    public List<City> getcities(){
+    public List<City> getCities(){
         return repo.findAll();
     }
 
     public City getAccountById(int id){
         return repo.findById(id).get();
-    }
-
-    public void save(City city){
-        repo.save(city);
     }
 }
