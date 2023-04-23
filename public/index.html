@@ -68,10 +68,10 @@
 <section class="section2">
         <div class="login">
             <div class="driver">
-                <a class="signdriver" href="logdriver.html">
+                <a class="signdriver" href="login-driver.html">
                     Driver
                 </a>
-                <a class="signdriver" href="logdriver.html">
+                <a class="signdriver" href="login-driver.html">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
                         <path d="m22.2 12-6.5 9h-3.5l5.5-7.5H2v-3h15.7L12.2 3h3.5l6.5 9Z" fill="currentColor">
                         </path>
@@ -81,10 +81,10 @@
             </div>
             <!-- Rider -->
             <div class="rider">
-                <a class="signrider" href="logrider.html">
+                <a class="signrider" href="login-rider.html">
                     Rider
                 </a>
-                <a class="signrider" href="logrider.html">
+                <a class="signrider" href="login-rider.html">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
                     <path d="m22.2 12-6.5 9h-3.5l5.5-7.5H2v-3h15.7L12.2 3h3.5l6.5 9Z" fill="currentColor">
                     </path>
@@ -152,8 +152,9 @@
         </footer>
         <script src="js/main.js"></script>
     <script>
+        localStorage.clear();
         if(localStorage.getItem('user_id') !== null){
-             window.location.assign('nav.html')
+             window.location.assign('rider-wallet.html')
         }
     </script>
     </body>

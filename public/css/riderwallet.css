@@ -67,7 +67,7 @@ header .header-content{
 }
 
 nav {
-    padding-top: 12px;
+    padding-top: 10px;
     padding-bottom: 12px;
     border-bottom-width: 0;
     border-bottom-style: solid;
@@ -137,6 +137,7 @@ li a, .dropbtn {
   }
   
   .dropdown-content {
+  padding-left:20px;
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -213,4 +214,13 @@ li a, .dropbtn {
     font-size: 34px;
     text-align: center;
 
+}
+
+.rideinputs {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 }

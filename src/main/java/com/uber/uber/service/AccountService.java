@@ -27,8 +27,8 @@ public class AccountService {
         return repo.findByEmailIs(email);
     }
 
-    public void save(Account account){
-        repo.save(account);
+    public Account save(Account account){
+        return repo.save(account);
     }
 
 }

@@ -10,10 +10,10 @@
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-        
+        <script src="js/jquery-3.6.4.min.js"></script>
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
-        <link rel="stylesheet" href="css/fridersign.css" />
+        <link rel="stylesheet" href="css/sign.css" />
     </head>
 
     <body>
@@ -23,7 +23,7 @@
                 <div class="header-content">
                     <ul class="list-unstyled">
                         <li class="ulogo">
-                            <a data-baseweb="link" href="#"
+                            <a data-baseweb="link" href="index.html"
                             target="_self" aria-label="Go to Uber.com"  
                             class="uberlogo">Uber</a>
                         </li>
@@ -31,10 +31,10 @@
                     <nav>
                         <ul class="list-unstyled">
                             <li class="login">
-                                <button class="logbut" onClick="logButton()">Log in</button>
+                                <button class="logbut">Log in</button>
                             </li>
                             <li class="signup">
-                                <button class="signbut" onClick="signButton()">Sign UP</button>
+                                <button class="signbut">Sign UP</button>
                             </li>
                         </ul>
                     </nav>
@@ -48,30 +48,46 @@
             <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
                     <div class="title">
                         <h2 id="title" class="title">
-                            What's your email and password?
+                            Personal information
                         </h2>
                     </div>
 
-                    <!--mail  -->
-                    <div class="mail">
-                        <label for="email"><b>Email</b></label>
-                        <input type="text" placeholder="Enter Email" name="email" required>
-                    </div>
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
 
-                    <!-- password -->
-                    <div class="pass">
-                        <label for="psw"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
+                    <!-- Phone  -->
+                    <div class="phone">
+                        <label for="Phone"><b>Phone Number</b></label>
+                        <input type="tel" id="phone" name="phone" placeholder="01x-xxx-xxx-xx" pattern="{0}{1}[0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]" required>
                     </div>
+                    <div class="birthday">
+                        <label for="birthday">Birthday:</label>
+                        <input type="date" id="birthday" name="birthday">
+                    </div>
+                    
+                    <!-- City -->
 
-                    <div class="repassword">
-                        <label for="psw-repeat"><b>Repeat Password</b></label>
-                        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-                    </div>
+                    <label for="city">City</label>
+                    <select id="city" name="city">
+                      <option value="Cairo">Cairo</option>
+                      <option value="Alexinria">Alexinria</option>
+                      <option value="Giza">Giza</option>
+                    </select>
+
+                    <div data-role="controlgroup" class="gender">
+                        <legend>Choose your gender:</legend>
+                          <label for="male" class="male" >Male</label>
+                          <input type="radio" name="gender" id="male" value="male" checked>
+                          <label for="female" class="female">Female</label>
+                          <input type="radio" name="gender" id="female" value="female">
+                        </div>
                         
                 <!-- submit button -->
                 <div class="continune">
-                    <button type="submit" class="next" id="continune">Continue</button> 
+                    <button type="submit" class="next" id="signup">Sign Up</button> 
                 </div>                      
         </div>
 
@@ -90,6 +106,5 @@
                 </p>
             </div>
         </div>
-        <script src="js/main.js"></script>
     </body>
 </html>

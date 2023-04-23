@@ -13,7 +13,7 @@
         
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
-        <link rel="stylesheet" href="css/fridersign.css" />
+        <link rel="stylesheet" href="css/sign.css" />
     </head>
 
     <body>
@@ -31,10 +31,10 @@
                     <nav>
                         <ul class="list-unstyled">
                             <li class="login">
-                                <button class="logbut" onClick="logButton()">Log in</button>
+                                <button class="logbut">Log in</button>
                             </li>
                             <li class="signup">
-                                <button class="signbut" onClick="signButton()">Sign UP</button>
+                                <button class="signbut">Sign UP</button>
                             </li>
                         </ul>
                     </nav>
@@ -48,30 +48,57 @@
             <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
                     <div class="title">
                         <h2 id="title" class="title">
-                            What's your email and password?
+                            vehicle information
                         </h2>
                     </div>
 
-                    <!--mail  -->
-                    <div class="mail">
-                        <label for="email"><b>Email</b></label>
-                        <input type="text" placeholder="Enter Email" name="email" required>
+                    <!-- Vehicle Licence -->
+                    <div class="vehiclelicence">
+                        <label for="vehicle-licence"><b>Vehicle Licence ID</b></label>
+                            <input type="tel" id="vehicle-licence" name="vehiclelicence" placeholder="Vehicle Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
                     </div>
+                    
+                    <!-- Licence plate -->
+                    <div class="licenceplate">
+                        <label for="licence_plate"><b>Licence Plate</b></label>
+                            <input type="text" id="licence_plate" name="licenceplate" placeholder="Licence Plate" pattern="[أ-ى][أى][أ-ى][0-9][0-9][0-9]" required>
+                    </div>
+                    
+                    <!-- Car Maker -->
+                    <label for="carmaker">Car Maker</label>
+                    <select id="carmaker" name="carmaker">
+                      <option value="KIA">KIA</option>
+                      <option value="Houndy">Houndy</option>
+                      <option value="Nessan">Nessan</option>
+                    </select>
 
-                    <!-- password -->
-                    <div class="pass">
-                        <label for="psw"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
-                    </div>
+                    <!-- Model -->
+                    <label for="model">Car Model</label>
+                    <select id="model" name="model">
+                      <option value="Sunny">Sunny</option>
+                      <option value="Houndy">Houndy</option>
+                      <option value="Nessan">Nessan</option>
+                    </select>
 
-                    <div class="repassword">
-                        <label for="psw-repeat"><b>Repeat Password</b></label>
-                        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-                    </div>
+                    <!-- Reales Year -->
+                    <label for="year">Reales Year</label>
+                    <select id="year" name="year">
+                      <option value="2001">2001</option>
+                      <option value="2002">2002</option>
+                      <option value="2003">2003</option>
+                    </select>
+
+                    <!-- Color -->
+                    <label for="color">Color</label>
+                    <select id="color" name="color">
+                      <option value="Red">Red</option>
+                      <option value="Blue">Blue</option>
+                      <option value="Green">Green</option>
+                    </select>
                         
                 <!-- submit button -->
-                <div class="continune">
-                    <button type="submit" class="next" id="continune">Continue</button> 
+                <div class="sumit">
+                    <button type="submit" class="next" id="sumit">Sunmit</button> 
                 </div>                      
         </div>
 
@@ -90,6 +117,5 @@
                 </p>
             </div>
         </div>
-        <script src="js/main.js"></script>
     </body>
 </html>
