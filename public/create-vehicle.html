@@ -75,25 +75,19 @@
                     <select id="model" name="model" onchange="onCarModelSelectItem(event)">
                     </select>
 
-                    <!-- Reales Year -->
-                    <label for="year">Reales Year</label>
-                    <select id="year" name="year">
-                      <option value="2001">2001</option>
-                      <option value="2002">2002</option>
-                      <option value="2003">2003</option>
+                    <!-- Release Year -->
+                    <label for="year">Release Year</label>
+                    <select id="year" name="year" onchange="onYearSelectItem(event)">
                     </select>
 
                     <!-- Color -->
                     <label for="color">Color</label>
                     <select id="color" name="color">
-                      <option value="Red">Red</option>
-                      <option value="Blue">Blue</option>
-                      <option value="Green">Green</option>
                     </select>
                         
                 <!-- submit button -->
                 <div class="summit">
-                    <button type="submit" class="next" id="summit">Submit</button>
+                    <button type="submit" class="next" id="summit" onclick="attemptCreateVehicleAccount()">Submit</button>
                 </div>                      
         </div>
 
@@ -112,10 +106,13 @@
                 </p>
             </div>
         </div>
-        <script src="js/main.js"></script>
+        <script src="js/main.js">
+        </script>>
         <script>
-        getCarMakers()
-        getCarModels()
+            getCarMakers()
+            getCarModels()
+            getYears();
+            getColors();
         </script>
     </body>
 </html>
