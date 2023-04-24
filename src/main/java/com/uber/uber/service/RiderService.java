@@ -19,6 +19,11 @@ public class RiderService {
         return repo.findAll();
     }
 
+
+    public Rider getRiderByPhoneNumber(String phoneNumber){
+        return repo.findByPhoneNumber(phoneNumber);
+    }
+
     public Rider getRiderByUserId(int accountId){
         return repo.findByAccountId(accountId);
     }

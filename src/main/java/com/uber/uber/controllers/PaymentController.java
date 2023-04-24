@@ -1,9 +1,7 @@
 package com.uber.uber.controllers;
 
 import com.uber.uber.models.Payment;
-import com.uber.uber.models.Vehicle;
 import com.uber.uber.service.PaymentService;
-import com.uber.uber.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

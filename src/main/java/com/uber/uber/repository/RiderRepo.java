@@ -7,4 +7,5 @@ public interface RiderRepo extends JpaRepository<Rider,Integer> {
 
 
     Rider findByAccountId(int accountId);
+    Rider findByPhoneNumber(String phoneNumber);
 }

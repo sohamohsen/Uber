@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -19,8 +20,16 @@ public class AccountService {
         return repo.findAll();
     }
 
-    public Account getAccountById(int id){
-        return repo.findById(id).get();
+
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public Account getAccountById(int id) throws NoSuchElementException {
+        Account account = null;
+        try {
+            account= repo.findById(id).get();
+        }catch (NoSuchElementException e){
+           e.printStackTrace();
+        }
+        return account;
     }
 
     public Account getAccountByEmail(String email){

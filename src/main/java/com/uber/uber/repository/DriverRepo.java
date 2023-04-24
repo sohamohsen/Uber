@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DriverRepo extends JpaRepository<Driver, Integer> {
 
     Driver findByAccountId(int accountId);
+    Driver findByPhoneNumber(String phoneNumber);
 }

@@ -13,92 +13,41 @@ public class Vehicle implements Serializable {
     public int id;
 
     @Column(name="licence_plate")
-    private String licencePlate;
+    public String licencePlate;
     @Column(name="vehicle_licence")
-    private int vehicleLicence;
+    public int vehicleLicence;
     @Column(name="color_id")
-    private int colorId;
+    public int colorId;
     @Column(name="relase_year") //TODO modify name in database
-    private int releaseYear;
+    public int releaseYear;
     @Column(name="car_model_id")
-    private int carModelId;
+    public int carModelId;
+
 
     @Column(name = "car_maker_id")
     public int carMakerId;
 
+    @Column(
+            name = "driver_id"
+    )
+    public int driverId;
+
+    /*@OneToOne
+    @JoinColumn(
+            name = "driver_id"
+    )
+    public Driver driver;*/
+
     public Vehicle() {
     }
 
-    public Vehicle(String licencePlate, int vehicleLicence, int colorId, int releaseYear, int carModelId, int carMakerId) {
+    public Vehicle(String licencePlate, int vehicleLicence, int colorId, int releaseYear, int carModelId, int carMakerId, int driverId) {
         this.licencePlate = licencePlate;
         this.vehicleLicence = vehicleLicence;
         this.colorId = colorId;
         this.releaseYear = releaseYear;
         this.carModelId = carModelId;
         this.carMakerId = carMakerId;
+        this.driverId = driverId;
     }
-
-
-   /* public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-*/
-    @Column(name="licence_plate")
-    public String getLicencePlate() {
-        return licencePlate;
-    }
-
-    public void setLicencePlate(String licencePlate) {
-        this.licencePlate = licencePlate;
-    }
-
-
-    @Column(name="vehicle_licence")
-    public int getVehicleLicence() {
-        return vehicleLicence;
-    }
-
-    public void setVehicleLicence(int vehicleLicence) {
-        this.vehicleLicence = vehicleLicence;
-    }
-
-    @Column(name="color_id")
-    public int getColorId() {
-        return colorId;
-    }
-
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
-    }
-
-    @Column(name="relase_year")
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    @Column(name = "car_model_id")
-    public int getCarModelId() {
-        return carModelId;
-    }
-
-    public void setCarModelId(int carModelId) {
-        this.carModelId = carModelId;
-    }
-
-   /* @Column(name = "car_maker_id")
-    public int getCarMakerId() {
-        return carMakerId;
-    }
-
-    public void setCarMakerId(int carMakerId) {
-        this.carMakerId = carMakerId;
-    }*/
 }

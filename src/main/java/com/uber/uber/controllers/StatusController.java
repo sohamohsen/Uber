@@ -18,8 +18,8 @@ public class StatusController {
     private StatusService service;
 
 
-    @GetMapping("/statuss")
-    public List<Status> getStatuss() {
+    @GetMapping("/status")
+    public List<Status> getStatus() {
         return service.getStatuss();
     }
 

@@ -1,8 +1,6 @@
 package com.uber.uber.controllers;
 
-import com.uber.uber.models.Account;
 import com.uber.uber.models.City;
-import com.uber.uber.service.AccountService;
 import com.uber.uber.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

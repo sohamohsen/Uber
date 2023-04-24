@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+
 @CrossOrigin(
         maxAge = 3600
 )
@@ -40,12 +42,10 @@ public class DriverController {
     public ResponseEntity<Object> createNewDriver(
             @RequestBody Driver payload
     ){
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(payload));
         Account account = null;
         try {
             account = accountService.getAccountById(payload.accountId);
-        }catch (Exception e){
+        }catch (NoSuchElementException e){
             System.out.println(e.getMessage());
         }
         if (account != null && account.type.equals("driver")){
@@ -53,9 +53,14 @@ public class DriverController {
             if (driverFromDb != null){
                 JSONObject object = new JSONObject();
                 object.put("error","User already exist");
-                return new ResponseEntity<>(object,HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
             }else {
-                return new ResponseEntity<>(service.save(new Driver()),HttpStatus.CREATED);
+                if (service.getDriverByPhoneNumber(payload.phoneNumber) != null){
+                    JSONObject object = new JSONObject();
+                    object.put("error","Phone Number is already in use.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }
+                return new ResponseEntity<>(service.save(payload),HttpStatus.CREATED);
             }
         }else {
              JSONObject object = new JSONObject();

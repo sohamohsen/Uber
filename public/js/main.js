@@ -49,17 +49,18 @@ function signIn(emailValue,passwordValue){
         // save user id in browser data to load its data
         localStorage.setItem('user_id',data.id);
         console.log(localStorage.getItem('user_id'));
+        //check the type of user to navigate to his/her profile
         if(data.type === "driver"){
             //navigate to driver profile
-            window.location.assign('index.html', "_self")
+            window.location.assign('rider-wallet.html', "_self")
         }else{
              //navigate to rider profile
 
-             window.location.assign('rider-wallet.html')
+             window.location.assign('takeride.html')
 
         }
 
-    }).fail(function(error){
+    }).fail(function(error){ //Return backend validation errors
             alert(error.responseJSON.error);
             console.log(JSON.stringify(error.responseJSON));
     });
@@ -110,7 +111,7 @@ function getCities(){
             // Update UI
             select = document.getElementById('city');
             cityId = data[0].id;
-            for (var i = 0; i<=data.length; i++){
+            for (var i = 0; i<data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].id;
                 opt.innerHTML = data[i].cityName;
@@ -119,7 +120,6 @@ function getCities(){
 
         }).fail(function(error){
             console.log(error.responseJSON);
-            alert(JSON.stringify(error.responseJSON.error));
         });
 }
 
@@ -138,9 +138,12 @@ function getCarMakers(){
         }).then(function(data, status, jqxhr) { // response
             // Update UI
             select = document.getElementById('car_maker');
-            carMakerId = data[0].id;
-            getCarModels()
-            for (var i = 0; i<=data.length; i++){
+            const length = data.length
+            if(length > 0){
+                carMakerId = data[0].id;
+                getCarModels()
+            }
+            for (var i = 0; i<data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].id;
                 opt.innerHTML = data[i].maker;
@@ -149,7 +152,6 @@ function getCarMakers(){
 
         }).fail(function(error){
             console.log(error.responseJSON);
-            alert(JSON.stringify(error.responseJSON.error));
         });
 }
 
@@ -176,8 +178,11 @@ function getCarModels(){
         }).then(function(data, status, jqxhr) { // response
             // Update UI
             select = document.getElementById('model');
-            removeAll(select);
-            carModelId = data[0].id;
+            const length = data.length
+            if(length > 0){
+                removeAll(select);
+                carModelId = data[0].id;
+            }
             for (var i = 0; i<data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].id;
@@ -187,7 +192,6 @@ function getCarModels(){
 
         }).fail(function(error){
             console.log(error.responseJSON);
-            alert(JSON.stringify(error.responseJSON.error));
         });
 }
 
@@ -209,7 +213,7 @@ function getYears(){
             // Update UI
             select = document.getElementById('year');
             year = data[0].year;
-            for (var i = 0; i<=data.length; i++){
+            for (var i = 0; i<data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].year;
                 opt.innerHTML = data[i].year;
@@ -218,7 +222,6 @@ function getYears(){
 
         }).fail(function(error){
             console.log(error.responseJSON);
-            alert(JSON.stringify(error.responseJSON.error));
         });
 }
 
@@ -240,7 +243,7 @@ function getColors(){
             // Update UI
             select = document.getElementById('color');
             colorId = data[0].id;
-            for (var i = 0; i<=data.length; i++){
+            for (var i = 0; i<data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].id;
                 opt.innerHTML = data[i].color;
@@ -249,7 +252,6 @@ function getColors(){
 
         }).fail(function(error){
             console.log(error.responseJSON);
-            alert(JSON.stringify(error.responseJSON.error));
         });
 }
 
@@ -275,7 +277,7 @@ function createRiderProfile(object){
             //navigate to create driver profile
             window.location.assign('rider-wallet.html', "_self")
     }).fail(function(error){
-        console.log(error.responseJSON.error);
+        console.log(JSON.stringify(error.responseJSON.error));
         alert(JSON.stringify(error.responseJSON.error));
     });
 }
@@ -301,6 +303,27 @@ function createDriverProfile(object){
     });
 }
 
+
+function createVehicleProfile(object){
+      $.ajax({ // request
+        url: BASE_URL+"/vehicle",
+        type: 'POST',
+        headers:{
+            "Access-Control-Allow-Origin": '*', // recommended
+            'Content-Type' : "application/json"
+        },
+        data: JSON.stringify(object)
+    }).then(function(data, status, jqxhr) { // response
+        // Update UI
+        // Navigate to create rider and driver profile
+        console.log(JSON.stringify(data));
+        //navigate to create driver profile
+        window.location.assign('rider-wallet.html', "_self")
+    }).fail(function(error){
+        console.log(error.responseJSON.error);
+        alert(JSON.stringify(error.responseJSON.error));
+    });
+}
 
 
 function driverSignIn(){
@@ -534,7 +557,7 @@ function attemptCreateDriverProfile(){
             phoneNumber: phoneNumber.value,
             birthdate: birthDate.value,
             cityId: cityId,
-            available: 1,
+            available: true,
             accountId: localStorage.getItem("user_id"),
             gender: isMale ? 1 : 2
     }
@@ -557,7 +580,7 @@ function attemptCreateVehicleAccount(){
         alert("Please, Enter your vehicle licence number")
         return;
     }
-    if (vehicleLicence.length !== 9){
+    if (vehicleLicence.value.length !== 9){
             alert("Invalid vehicle licence number.")
             return;
     }
@@ -566,7 +589,7 @@ function attemptCreateVehicleAccount(){
             alert("Please, Enter your licence plate number")
             return;
         }
-        if (licencePlate.length > 7){
+        if (licencePlate.value.length < 6 ||  licencePlate.value.length >7 ){
                 alert("Invalid licence plate number.")
                 return;
         }
@@ -574,7 +597,13 @@ function attemptCreateVehicleAccount(){
     const json = {
         vehicleLicence: vehicleLicence.value,
         licencePlate: licencePlate.value,
+        colorId: colorId,
+        releaseYear: year,
+        carModelId: carModelId,
+        carMakerId: carMakerId,
+        accountId: localStorage.getItem("user_id")
+
     }
 
-//    signUp(json);
+    createVehicleProfile(json)
 }

@@ -22,8 +22,12 @@ public class VehicleService {
         return repo.findById(id).get();
     }
 
-    public void save(Vehicle vehicle){
-        repo.save(vehicle);
+    public Vehicle save(Vehicle vehicle){
+        return repo.save(vehicle);
+    }
+
+    public Vehicle getVehicleByDriverId(int driverId){
+        return repo.findByDriverId(driverId);
     }
 
 }

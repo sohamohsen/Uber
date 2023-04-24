@@ -33,6 +33,8 @@ public class Driver {
     @Column(name = "account_id")
     public int accountId;
 
+
+
     public Driver() {
     }
 
