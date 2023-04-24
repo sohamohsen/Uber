@@ -132,6 +132,7 @@ function getCarMakers(){
             // Update UI
             select = document.getElementById('car_maker');
             carMakerId = data[0].id;
+            getCarModels()
             for (var i = 0; i<=data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].id;
@@ -147,13 +148,13 @@ function getCarMakers(){
 
 
 function onCarMakerSelectItem(event){
-    Id = event.target.value;
-    console.log(Id);
+    carMakerId = event.target.value;
+    getCarModels()
 }
 
 function getCarModels(){
       $.ajax({ // request
-            url: BASE_URL+"/carmodels",
+            url: BASE_URL+"/car_model/"+carMakerId,
             type: 'GET',
             headers:{
                 "Access-Control-Allow-Origin": '*' // recommended
