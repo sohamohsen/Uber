@@ -18,4 +18,13 @@ public class DriverService {
     public List<Driver> getDrivers(){
         return repo.findAll();
     }
+
+    public Driver getDriverByAccountId(int accountId){
+        return repo.findByAccountId(accountId);
+    }
+
+    public Driver save(Driver driver){
+        return repo.save(driver);
+    }
+
 }
