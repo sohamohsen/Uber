@@ -15,7 +15,7 @@ public class Driver {
     @Column(name = "last_name")
     public String lastName;
     @Column(name = "phone_number")
-    public String phoneNumbrr;
+    public String phoneNumber;
     @Column(name = "national_id")
     public int nationalId;
     @Column(name = "driver_licence")
@@ -23,7 +23,9 @@ public class Driver {
     public int gender;
     @Column(name = "birth_date")
     public Date birthDate;
-    public int avalible;
+
+    @Column(name = "available")
+    public int available;
     @Column(name = "city_id")
     public int cityId;
     @Column(name = "account_id")
@@ -32,16 +34,15 @@ public class Driver {
     public Driver() {
     }
 
-    public Driver(String firstName, String lastName, String phoneNumbrr, int nationalId, int driverLicence, int gender, Date birthDate, int avalible, int cityId, int accountId) {
+    public Driver(String firstName, String lastName, String phoneNumber, int nationalId, int driverLicence, int gender, Date birthDate, int available, int cityId) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumbrr = phoneNumbrr;
+        this.phoneNumber = phoneNumber;
         this.nationalId = nationalId;
         this.driverLicence = driverLicence;
         this.gender = gender;
         this.birthDate = birthDate;
-        this.avalible = avalible;
+        this.available = available;
         this.cityId = cityId;
-        this.accountId = accountId;
     }
 }
