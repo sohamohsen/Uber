@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "color")
 public class Color {
-    private int id;
-    private String color;
+    @Id
+    public int id;
+    public String color;
 
     public Color() {
     }
@@ -14,23 +15,7 @@ public class Color {
     public Color(String color) {
         this.color = color;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 }
+
+
+

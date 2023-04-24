@@ -3,6 +3,8 @@ package com.uber.uber.controllers;
 import com.uber.uber.models.ReleaseYear;
 import com.uber.uber.service.ReleaseYearService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +20,7 @@ public class ReleaseYearController {
 
 
     @GetMapping("/release_years")
-    public List<ReleaseYear> getReleaseYears() {
-        return service.getReleaseYears();
+    public ResponseEntity<List<ReleaseYear>> getReleaseYears() {
+        return new ResponseEntity<> (service.getReleaseYears(), HttpStatus.OK);
     }
 }

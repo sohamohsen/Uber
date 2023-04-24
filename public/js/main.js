@@ -1,9 +1,13 @@
-//
+//Global variable
 BASE_URL="http://localhost:8080"
 cityId = -1
 carMakerId = -1
 carModelId = -1
+year = -1
+colorId =-1
 
+
+//Navigation of buttons
 function navigateToDriverLogIn(){
   window.location.href = "login-driver.html";
 }
@@ -21,6 +25,8 @@ function signButton() {
     window.location.href = "signup-option.html";
 }
 
+
+
 //Account Sign in --http request
 function signIn(emailValue,passwordValue){
       $.ajax({ // request
@@ -30,6 +36,7 @@ function signIn(emailValue,passwordValue){
             "Access-Control-Allow-Origin": '*', // recommended
             'Content-Type' : "application/json"
         },
+        //put data user entered in json file to send it to backend then database
         data: JSON.stringify({
             //key: value
             email: emailValue,
@@ -39,7 +46,7 @@ function signIn(emailValue,passwordValue){
         // Update UI
         // Navigate to profile
         console.log(JSON.stringify(data));
-        // save user id in browser data
+        // save user id in browser data to load its data
         localStorage.setItem('user_id',data.id);
         console.log(localStorage.getItem('user_id'));
         if(data.type === "driver"){
@@ -152,6 +159,13 @@ function onCarMakerSelectItem(event){
     getCarModels()
 }
 
+function removeAll(selectBox) {
+
+    while (selectBox.options.length > 0) {
+        selectBox.remove(0);
+    }
+}
+
 function getCarModels(){
       $.ajax({ // request
             url: BASE_URL+"/car_model/"+carMakerId,
@@ -162,8 +176,9 @@ function getCarModels(){
         }).then(function(data, status, jqxhr) { // response
             // Update UI
             select = document.getElementById('model');
+            removeAll(select);
             carModelId = data[0].id;
-            for (var i = 0; i<=data.length; i++){
+            for (var i = 0; i<data.length; i++){
                 var opt = document.createElement('option');
                 opt.value = data[i].id;
                 opt.innerHTML = data[i].name;
@@ -178,8 +193,69 @@ function getCarModels(){
 
 
 function onCarModelSelectItem(event){
-    Id = event.target.value;
-    console.log(Id);
+    carModelId = event.target.value;
+    console.log(carModelId);
+}
+
+
+function getYears(){
+      $.ajax({ // request
+            url: BASE_URL+"/release_years",
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+            // Update UI
+            select = document.getElementById('year');
+            year = data[0].year;
+            for (var i = 0; i<=data.length; i++){
+                var opt = document.createElement('option');
+                opt.value = data[i].year;
+                opt.innerHTML = data[i].year;
+                select.appendChild(opt);
+            }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+            alert(JSON.stringify(error.responseJSON.error));
+        });
+}
+
+function onColorSelectItem(event){
+    color = event.target.value;
+    console.log(color);
+}
+
+
+
+function getColors(){
+      $.ajax({ // request
+            url: BASE_URL+"/colors",
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+            // Update UI
+            select = document.getElementById('color');
+            colorId = data[0].id;
+            for (var i = 0; i<=data.length; i++){
+                var opt = document.createElement('option');
+                opt.value = data[i].id;
+                opt.innerHTML = data[i].color;
+                select.appendChild(opt);
+            }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+            alert(JSON.stringify(error.responseJSON.error));
+        });
+}
+
+function onColorSelectItem(event){
+    year = event.target.value;
+    console.log(year);
 }
 
 
@@ -197,14 +273,33 @@ function createRiderProfile(object){
         // Navigate to create rider and driver profile
         console.log(JSON.stringify(data));
             //navigate to create driver profile
-            window.location.assign('signup-driver.html', "_self")
+            window.location.assign('rider-wallet.html', "_self")
     }).fail(function(error){
         console.log(error.responseJSON.error);
         alert(JSON.stringify(error.responseJSON.error));
     });
 }
 
-
+function createDriverProfile(object){
+      $.ajax({ // request
+        url: BASE_URL+"/driver",
+        type: 'POST',
+        headers:{
+            "Access-Control-Allow-Origin": '*', // recommended
+            'Content-Type' : "application/json"
+        },
+        data: JSON.stringify(object)
+    }).then(function(data, status, jqxhr) { // response
+        // Update UI
+        // Navigate to create rider and driver profile
+        console.log(JSON.stringify(data));
+            //navigate to create driver profile
+            window.location.assign('create-vehicle.html', "_self")
+    }).fail(function(error){
+        console.log(error.responseJSON.error);
+        alert(JSON.stringify(error.responseJSON.error));
+    });
+}
 
 
 
@@ -398,6 +493,7 @@ function attemptCreateDriverProfile(){
     const driverLicence = document.getElementById("driver_licence")
     const phoneNumber = document.getElementById("driver_phone_number")
     const birthDate = document.getElementById("driver_birthday")
+    const isMale = document.getElementById('male').checked;
 
     if (firstName.value === "" || lastName.value === ""){
         alert("Please, Enter your full name")
@@ -410,6 +506,21 @@ function attemptCreateDriverProfile(){
             alert("Invalid phone number")
             return;
     }
+    if (nationalId.value === "" ){
+                alert("Please, Enter your national id")
+                return;
+    }else if (nationalId.value.length !== 14 ){
+                alert("Invalid national id")
+                return;
+   }
+
+    if (driverLicence.value === ""){
+            alert("Please, Enter your driver licence")
+            return;
+    }else if (driverLicence.value.length !== 7 ){
+             alert("Invalid driver licence")
+             return;
+       }
     if (birthDate.value === "" ){
                 alert("Please, Enter your birthdate")
                 return;
@@ -418,11 +529,52 @@ function attemptCreateDriverProfile(){
     const json = {
             firstName: firstName.value,
             lastName: lastName.value,
+            nationalId: nationalId.value,
+            driverLicence: driverLicence.value,
             phoneNumber: phoneNumber.value,
             birthdate: birthDate.value,
             cityId: cityId,
-            accountId: localStorage.getItem("user_id")
+            available: 1,
+            accountId: localStorage.getItem("user_id"),
+            gender: isMale ? 1 : 2
     }
-    createRiderProfile(json);
+    console.log(JSON.stringify(json));
+    createDriverProfile(json);
 
+}
+
+function attemptCreateVehicleAccount(){
+    /**
+    * get values from html fields
+    * check for values validation
+    * show errors if founded
+    * if all inputs valid make an api request
+    **/
+    const vehicleLicence = document.getElementById("vehicle-licence")
+    const licencePlate = document.getElementById("licence_plate")
+    if (vehicleLicence.value === "")
+    {
+        alert("Please, Enter your vehicle licence number")
+        return;
+    }
+    if (vehicleLicence.length !== 9){
+            alert("Invalid vehicle licence number.")
+            return;
+    }
+    if (licencePlate.value === "")
+        {
+            alert("Please, Enter your licence plate number")
+            return;
+        }
+        if (licencePlate.length > 7){
+                alert("Invalid licence plate number.")
+                return;
+        }
+
+    const json = {
+        vehicleLicence: vehicleLicence.value,
+        licencePlate: licencePlate.value,
+    }
+
+//    signUp(json);
 }

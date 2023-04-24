@@ -20,6 +20,8 @@ public class Driver {
     public long nationalId;
     @Column(name = "driver_licence")
     public long driverLicence;
+
+    @Column(name = "gender")
     public int gender;
     @Column(name = "birth_date")
     public Date birthdate;
