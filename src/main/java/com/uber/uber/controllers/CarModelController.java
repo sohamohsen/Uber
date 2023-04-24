@@ -25,7 +25,6 @@ public class CarModelController {
                     name = "car_maker_id"
             ) int carMakerId
     ){
-        System.out.println(carMakerId);
       return new ResponseEntity<>(service.getCarModelsByCarMakerId(carMakerId),HttpStatus.OK);
     }
 }

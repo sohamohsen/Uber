@@ -1,5 +1,6 @@
 package com.uber.uber.controllers;
 
+import com.google.gson.Gson;
 import com.uber.uber.models.Account;
 import com.uber.uber.models.Driver;
 import com.uber.uber.service.AccountService;
@@ -31,7 +32,7 @@ public class DriverController {
 
 
     @RequestMapping(
-            path = "/create_driver",
+            path = "/driver",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
@@ -39,19 +40,27 @@ public class DriverController {
     public ResponseEntity<Object> createNewDriver(
             @RequestBody Driver payload
     ){
-        Account account = accountService.getAccountById(payload.accountId);
-        if (account == null){
-            JSONObject object = new JSONObject();
-            object.put("error","User does not have account.");
-            return new ResponseEntity<>(object,HttpStatus.NOT_FOUND);
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(payload));
+        Account account = null;
+        try {
+            account = accountService.getAccountById(payload.accountId);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        Driver driverFromDb = service.getDriverByAccountId(account.id);
-        if (driverFromDb != null){
-            JSONObject object = new JSONObject();
-            object.put("error","User already exist");
-            return new ResponseEntity<>(object,HttpStatus.FORBIDDEN);
+        if (account != null && account.type.equals("driver")){
+            Driver driverFromDb = service.getDriverByAccountId(account.id);
+            if (driverFromDb != null){
+                JSONObject object = new JSONObject();
+                object.put("error","User already exist");
+                return new ResponseEntity<>(object,HttpStatus.FORBIDDEN);
+            }else {
+                return new ResponseEntity<>(service.save(new Driver()),HttpStatus.CREATED);
+            }
         }else {
-            return new ResponseEntity<>(service.save(payload),HttpStatus.CREATED);
+             JSONObject object = new JSONObject();
+            object.put("error","User does not have account.");
+            return new ResponseEntity<>(object.toString(),HttpStatus.NOT_FOUND);
         }
     }
 

@@ -17,15 +17,16 @@ public class Driver {
     @Column(name = "phone_number")
     public String phoneNumber;
     @Column(name = "national_id")
-    public int nationalId;
+    public long nationalId;
     @Column(name = "driver_licence")
-    public int driverLicence;
+    public long driverLicence;
+
     @Column(name = "gender")
     public int gender;
     @Column(name = "birth_date")
-    public Date birthDate;
+    public Date birthdate;
 
-    @Column(name = "avalible")
+    @Column(name = "available")
     public boolean available;
     @Column(name = "city_id")
     public int cityId;
@@ -42,7 +43,7 @@ public class Driver {
         this.nationalId = nationalId;
         this.driverLicence = driverLicence;
         this.gender = gender;
-        this.birthDate = birthDate;
+        this.birthdate = birthDate;
         this.available = available;
         this.cityId = cityId;
     }
