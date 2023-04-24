@@ -22,6 +22,10 @@ public class CarModelService {
         return repo.findById(id).get();
     }
 
+    public List<CarModel> getCarModelsByCarMakerId(int carMakerId){
+        return repo.findByCarMakerId(carMakerId);
+    }
+
 
 
     public void save(CarModel carmodel){
