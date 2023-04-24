@@ -10,7 +10,8 @@
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-        
+        <script src="js/jquery-3.6.4.min.js"></script>
+
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
         <link rel="stylesheet" href="css/sign.css" />
@@ -65,19 +66,13 @@
                     </div>
                     
                     <!-- Car Maker -->
-                    <label for="carmaker">Car Maker</label>
-                    <select id="carmaker" name="carmaker">
-                      <option value="KIA">KIA</option>
-                      <option value="Houndy">Houndy</option>
-                      <option value="Nessan">Nessan</option>
+                    <label for="car_maker">Car Maker</label>
+                    <select id="car_maker" name="carmaker" onchange="onCarMakerSelectItem(event)" >
                     </select>
 
                     <!-- Model -->
-                    <label for="model">Car Model</label>
-                    <select id="model" name="model">
-                      <option value="Sunny">Sunny</option>
-                      <option value="Houndy">Houndy</option>
-                      <option value="Nessan">Nessan</option>
+                    <label for="model" > Car Model</label>
+                    <select id="model" name="model" onchange="onCarModelSelectItem(event)">
                     </select>
 
                     <!-- Reales Year -->
@@ -97,8 +92,8 @@
                     </select>
                         
                 <!-- submit button -->
-                <div class="sumit">
-                    <button type="submit" class="next" id="sumit">Sunmit</button> 
+                <div class="summit">
+                    <button type="submit" class="next" id="summit">Submit</button>
                 </div>                      
         </div>
 
@@ -117,5 +112,10 @@
                 </p>
             </div>
         </div>
+        <script src="js/main.js"></script>
+        <script>getCarMakers()</script>
+        <script>getCarModels()</script>
+
+
     </body>
 </html>

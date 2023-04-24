@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "carmaker")
 public class CarMaker {
-    private int id;
-    private String maker;
+    public int id;
+    public String maker;
 
     public CarMaker() {
     }

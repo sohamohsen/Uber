@@ -5,6 +5,8 @@ import com.uber.uber.models.City;
 import com.uber.uber.service.AccountService;
 import com.uber.uber.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,7 @@ public class CityController {
 
 
     @GetMapping("/cities")
-    public List<City> getCities() {
-        return service.getCities();
+    public ResponseEntity<List<City>> getCities() {
+        return new ResponseEntity<>(service.getCities(), HttpStatus.OK);
     }
 }

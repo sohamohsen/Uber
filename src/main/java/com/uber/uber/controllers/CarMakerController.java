@@ -4,6 +4,9 @@ package com.uber.uber.controllers;
 import com.uber.uber.models.CarMaker;
 import com.uber.uber.service.CarMakerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class CarMakerController {
 
 
     @GetMapping("/carmakers")
-    public List<CarMaker> getCarMakers() {
-        return service.getCarMakers();
+    public ResponseEntity<List<CarMaker>> getCarMakers() {
+        return new ResponseEntity<>(service.getCarMakers(), HttpStatus.OK) ;
     }
 
 

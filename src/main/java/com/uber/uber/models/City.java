@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="city")
 public class City {
-    private int id;
+    @Id
+    public int id;
+
     @Column(name="city_name")
-    private String cityName;
+    public String cityName;
 
     public City() {
     }
@@ -16,21 +18,5 @@ public class City {
         this.cityName = cityName;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
 }

@@ -5,10 +5,15 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "carmodel")
 public class CarModel {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
     @Column(name = "car_maker_id")
-    private int carMakerId;
-    private String name;
+    public int carMakerId;
+
+    @Column(name = "name")
+    public String name;
     public CarModel() {
     }
 
@@ -17,30 +22,4 @@ public class CarModel {
         this.name = name;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCarMakerId() {
-        return carMakerId;
-    }
-
-    public void setCarMakerId(int carMakerId) {
-        this.carMakerId = carMakerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

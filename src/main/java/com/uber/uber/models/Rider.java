@@ -3,29 +3,37 @@ package com.uber.uber.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name="rider")
 public class Rider implements Serializable {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
 
     @Column(name = "first_name")
-    private String firstName;
+    public String firstName;
     @Column(name = "last_name")
-    private String lastName;
+    public String lastName;
 
-    private int account_id;
+    @Column(name = "account_id")
+    public int accountId;
     @Column(name = "phone_number")
-    private String phoneNumber;
+    public String phoneNumber;
 
-    private int city_id;
+    @Column(name = "birthdate")
+    public Date birthdate;
+
+    @Column(name = "city_id")
+    public int cityId;
 
 
     public Rider() {
     }
 
-    @Id
+   /* @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
@@ -67,11 +75,13 @@ public class Rider implements Serializable {
         this.city_id = city_id;
     }
 
-    public int getAccount_id() {
-        return account_id;
+    @Column(name = "account_id")
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
-    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }*/
 }

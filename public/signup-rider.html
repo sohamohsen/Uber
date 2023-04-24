@@ -42,52 +42,42 @@
             </div>
         </header>
 
-        </br>
+        <br>
         
         <!--Sign Up  -->
             <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
                     <div class="title">
                         <h2 id="title" class="title">
-                            Personal information
+                            Create rider account
                         </h2>
                     </div>
 
-                    <label for="fname">First Name</label>
-                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                    <label for="rider-first-name">First Name</label>
+                    <input type="text" id="rider-first-name" name="firstname" placeholder="Your name..">
                 
-                    <label for="lname">Last Name</label>
-                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    <label for="rider-last-name">Last Name</label>
+                    <input type="text" id="rider-last-name" name="lastname" placeholder="Your last name..">
 
                     <!-- Phone  -->
                     <div class="phone">
-                        <label for="Phone"><b>Phone Number</b></label>
-                        <input type="tel" id="phone" name="phone" placeholder="01x-xxx-xxx-xx" pattern="{0}{1}[0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]" required>
+                        <label for="rider-phone-number"><b>Phone Number</b></label>
+                        <input type="tel" id="rider-phone-number" name="phone" placeholder="01x-xxx-xxx-xx"  >
                     </div>
                     <div class="birthday">
-                        <label for="birthday">Birthday:</label>
-                        <input type="date" id="birthday" name="birthday">
+                        <label for="rider-birthday">Birthday:</label>
+                        <input type="date" id="rider-birthday" name="birthday">
                     </div>
                     
                     <!-- City -->
 
                     <label for="city">City</label>
-                    <select id="city" name="city">
-                      <option value="Cairo">Cairo</option>
-                      <option value="Alexinria">Alexinria</option>
-                      <option value="Giza">Giza</option>
-                    </select>
+                    <select id="city" name="city" onchange="onCitySelectItem(event)">
 
-                    <div data-role="controlgroup" class="gender">
-                        <legend>Choose your gender:</legend>
-                          <label for="male" class="male" >Male</label>
-                          <input type="radio" name="gender" id="male" value="male" checked>
-                          <label for="female" class="female">Female</label>
-                          <input type="radio" name="gender" id="female" value="female">
-                        </div>
+                    </select>
                         
                 <!-- submit button -->
-                <div class="continune">
-                    <button type="submit" class="next" id="signup">Sign Up</button> 
+                <div class="continue">
+                    <button type="submit" class="next" id="CreateRiderAccount" onclick="attemptCreateRiderProfile()">Sign Up</button>
                 </div>                      
         </div>
 
@@ -106,5 +96,8 @@
                 </p>
             </div>
         </div>
+        <script src="js/main.js"></script>
+
+        <script>getCities()</script>
     </body>
 </html>

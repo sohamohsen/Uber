@@ -47,50 +47,47 @@
         <!--Sign Up  -->
             <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
                     <div class="title">
+
                         <h2 id="title" class="title">
-                            Personal information
+                            Create driver account
                         </h2>
                     </div>
 
-                    <label for="fname">First Name</label>
-                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                    <label for="driver_first_name">First Name</label>
+                    <input type="text" id="driver_first_name" name="firstname" placeholder="Your name..">
                 
-                    <label for="lname">Last Name</label>
-                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    <label for="driver_last_name">Last Name</label>
+                    <input type="text" id="driver_last_name" name="lastname" placeholder="Your last name..">
                 
                     <!-- National id -->
-                    <div class="nationalid">
-                        <label for="nid"><b>National ID</b></label>
-                            <input type="tel" id="nid" name="nationalid" placeholder="National ID" pattern="{2}[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
+                    <div class="national_id">
+                        <label for="driver_national_id"><b>National ID</b></label>
+                            <input type="tel" id="driver_national_id" name="national_id" placeholder="National ID" pattern="{2}[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
                     </div>
 
                     <!-- Driver Licence -->
-                    <div class="driverlicence">
-                        <label for="dlicence"><b>Driver Licence ID</b></label>
-                            <input type="tel" id="dlicence" name="driverlicence" placeholder="Driver Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
+                    <div class="driver_licence">
+                        <label for="driver_licence"><b>Driver Licence ID</b></label>
+                            <input type="tel" id="driver_licence" name="driverlicence" placeholder="Driver Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
                     </div>
 
                     <!-- Phone  -->
-                    <div class="phone">
-                        <label for="Phone"><b>Phone Number</b></label>
-                        <input type="tel" id="phone" name="phone" placeholder="01x-xxx-xxx-xx" pattern="{0}{1}[0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]" required>
+                    <div class="phone_number">
+                        <label for="driver_Phone_number"><b>Phone Number</b></label>
+                        <input type="tel" id="driver_Phone_number" name="phone" placeholder="01x-xxx-xxx-xx" pattern="{0}{1}[0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]" required>
                     </div>
                     <div class="birthday">
-                        <label for="birthday">Birthday:</label>
-                        <input type="date" id="birthday" name="birthday">
+                        <label for="driver_birthday">Birthday:</label>
+                        <input type="date" id="driver_birthday" name="birthday">
                     </div>
                     
                     <!-- City -->
 
                     <label for="city">City</label>
-                    <select id="city" name="city">
-                      <option value="Cairo">Cairo</option>
-                      <option value="Alexinria">Alexinria</option>
-                      <option value="Giza">Giza</option>
-                    </select>
+                <select id="city" name="city" onchange="onCitySelectItem(event)"></select>
 
-                    <div data-role="controlgroup" class="gender">
-                        <legend>Choose your gender:</legend>
+                    <div data-role="control-group" class="gender">
+                        <legend>Choose your gender:   </legend>
                           <label for="male" class="male" >Male</label>
                           <input type="radio" name="gender" id="male" value="male" checked>
                           <label for="female" class="female">Female</label>
@@ -98,8 +95,8 @@
                     </div>
                         
                 <!-- submit button -->
-                <div class="continune">
-                    <button type="submit" class="next" id="continune">Continue</button> 
+                <div class="continue">
+                    <button type="submit" class="next" id="continue" onclick="attemptCreateDriverProfile()">Continue</button>
                 </div>                      
         </div>
 
@@ -119,5 +116,6 @@
             </div>
         </div>
         <script src="js/main.js"></script>
+    <script>getCities()</script>
     </body>
 </html>

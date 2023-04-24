@@ -19,4 +19,11 @@ public class RiderService {
         return repo.findAll();
     }
 
+    public Rider getRiderByUserId(int accountId){
+        return repo.findByAccountId(accountId);
+    }
+
+    public Rider save(Rider rider){
+        return repo.save(rider);
+    }
 }
