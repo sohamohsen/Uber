@@ -24,7 +24,7 @@ public class RiderWalletService {
         return repo.findById(id).get();
     }
 
-    public void save(RiderWallet riderwallet){
-        repo.save(riderwallet);
+    public RiderWallet save(RiderWallet riderwallet){
+        return repo.save(riderwallet);
     }
 }

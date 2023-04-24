@@ -2,8 +2,10 @@ package com.uber.uber.controllers;
 
 import com.uber.uber.models.Account;
 import com.uber.uber.models.Rider;
+import com.uber.uber.models.RiderWallet;
 import com.uber.uber.service.AccountService;
 import com.uber.uber.service.RiderService;
+import com.uber.uber.service.RiderWalletService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class RiderController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private RiderWalletService riderWalletService;
 
     @GetMapping("/riders")
     public List<Rider> getRiders() {
@@ -57,7 +62,24 @@ public class RiderController {
                     object.put("error","Phone Number is already in use.");
                     return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
                 }
-                return new ResponseEntity<>(service.save(payLoad), HttpStatus.CREATED);
+                // on success creating rider create a wallet
+                Rider newRider = null;
+                try{
+                    newRider = service.save(payLoad);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (newRider != null){
+                    //create wallet here
+                    RiderWallet wallet = new RiderWallet(0.0f, newRider.id);
+                    RiderWallet newWallet = riderWalletService.save(wallet);
+
+                    return new ResponseEntity<>(newRider,HttpStatus.CREATED);
+                }else {
+                    JSONObject object = new JSONObject();
+                    object.put("error","Something went wrong.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }
             }
         }else {
             JSONObject object = new JSONObject();

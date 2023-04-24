@@ -19,4 +19,5 @@ public class DriverWalletService {
     public List<DriverWallet> getDriverWallets(){
         return repo.findAll();
     }
+    public DriverWallet save(DriverWallet driverWallet) {return repo.save(driverWallet);}
 }

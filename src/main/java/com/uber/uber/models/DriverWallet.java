@@ -11,6 +11,7 @@ public class DriverWallet {
     public int id;
     @Column(name="driver_id")
     public int driverId;
+    @Column(name = "balance")
     public float balance;
 
     public DriverWallet() {

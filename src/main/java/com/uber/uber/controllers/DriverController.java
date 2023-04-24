@@ -3,8 +3,10 @@ package com.uber.uber.controllers;
 import com.google.gson.Gson;
 import com.uber.uber.models.Account;
 import com.uber.uber.models.Driver;
+import com.uber.uber.models.DriverWallet;
 import com.uber.uber.service.AccountService;
 import com.uber.uber.service.DriverService;
+import com.uber.uber.service.DriverWalletService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ public class DriverController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private DriverWalletService driverWalletService;
 
     @GetMapping("/drivers")
     public ResponseEntity<List<Driver>> getDrivers() {
@@ -60,7 +64,22 @@ public class DriverController {
                     object.put("error","Phone Number is already in use.");
                     return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
                 }
-                return new ResponseEntity<>(service.save(payload),HttpStatus.CREATED);
+                // success creating driver create a wallet
+                Driver newdriver = null;
+                try {
+                    newdriver = service.save(payload);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (newdriver != null){
+                    DriverWallet wallet = new DriverWallet(newdriver.id,0.0f);
+                    driverWalletService.save(wallet);
+                    return new ResponseEntity<>(newdriver,HttpStatus.CREATED);
+                }else{
+                    JSONObject object = new JSONObject();
+                    object.put("error","Something went wrong.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }
             }
         }else {
              JSONObject object = new JSONObject();
