@@ -31,7 +31,7 @@ public class DriverController {
 
 
     @RequestMapping(
-            path = "/driver",
+            path = "/create_driver",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE

@@ -196,14 +196,33 @@ function createRiderProfile(object){
         // Navigate to create rider and driver profile
         console.log(JSON.stringify(data));
             //navigate to create driver profile
-            window.location.assign('signup-driver.html', "_self")
+            window.location.assign('rider-wallet.html', "_self")
     }).fail(function(error){
         console.log(error.responseJSON.error);
         alert(JSON.stringify(error.responseJSON.error));
     });
 }
 
-
+function createDriverProfile(object){
+      $.ajax({ // request
+        url: BASE_URL+"/driver",
+        type: 'POST',
+        headers:{
+            "Access-Control-Allow-Origin": '*', // recommended
+            'Content-Type' : "application/json"
+        },
+        data: JSON.stringify(object)
+    }).then(function(data, status, jqxhr) { // response
+        // Update UI
+        // Navigate to create rider and driver profile
+        console.log(JSON.stringify(data));
+            //navigate to create driver profile
+            window.location.assign('create-vehicle.html', "_self")
+    }).fail(function(error){
+        console.log(error.responseJSON.error);
+        alert(JSON.stringify(error.responseJSON.error));
+    });
+}
 
 
 
@@ -397,6 +416,7 @@ function attemptCreateDriverProfile(){
     const driverLicence = document.getElementById("driver_licence")
     const phoneNumber = document.getElementById("driver_phone_number")
     const birthDate = document.getElementById("driver_birthday")
+    const isMale = document.getElementById('male').checked;
 
     if (firstName.value === "" || lastName.value === ""){
         alert("Please, Enter your full name")
@@ -409,6 +429,21 @@ function attemptCreateDriverProfile(){
             alert("Invalid phone number")
             return;
     }
+    if (nationalId.value === "" ){
+                alert("Please, Enter your national id")
+                return;
+    }else if (nationalId.value.length !== 14 ){
+                alert("Invalid national id")
+                return;
+   }
+
+    if (driverLicence.value === ""){
+            alert("Please, Enter your driver licence")
+            return;
+    }else if (driverLicence.value.length !== 7 ){
+             alert("Invalid driver licence")
+             return;
+       }
     if (birthDate.value === "" ){
                 alert("Please, Enter your birthdate")
                 return;
@@ -417,11 +452,16 @@ function attemptCreateDriverProfile(){
     const json = {
             firstName: firstName.value,
             lastName: lastName.value,
+            nationalId: nationalId.value,
+            driverLicence: driverLicence.value,
             phoneNumber: phoneNumber.value,
             birthdate: birthDate.value,
             cityId: cityId,
-            accountId: localStorage.getItem("user_id")
+            available: 1,
+            accountId: localStorage.getItem("user_id"),
+            gender: isMale ? 1 : 2
     }
-    createRiderProfile(json);
+    console.log(JSON.stringify(json));
+    createDriverProfile(json);
 
 }

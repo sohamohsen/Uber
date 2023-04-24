@@ -20,12 +20,13 @@ public class Driver {
     public int nationalId;
     @Column(name = "driver_licence")
     public int driverLicence;
+    @Column(name = "gender")
     public int gender;
     @Column(name = "birth_date")
     public Date birthDate;
 
-    @Column(name = "available")
-    public int available;
+    @Column(name = "avalible")
+    public boolean available;
     @Column(name = "city_id")
     public int cityId;
     @Column(name = "account_id")
@@ -34,7 +35,7 @@ public class Driver {
     public Driver() {
     }
 
-    public Driver(String firstName, String lastName, String phoneNumber, int nationalId, int driverLicence, int gender, Date birthDate, int available, int cityId) {
+    public Driver(String firstName, String lastName, String phoneNumber, int nationalId, int driverLicence, int gender, Date birthDate, boolean available, int cityId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
