@@ -59,6 +59,7 @@ public class VehicleController {
                 return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
             }else {
                 Vehicle vehicle = new Vehicle(
+
                         payload.licencePlate,
                         payload.vehicleLicence,
                         payload.colorId,
@@ -67,6 +68,15 @@ public class VehicleController {
                         payload.carMakerId,
                         driver.id
                 );
+                if(service.getVehicleByVehicleLicence(payload.vehicleLicence) != null) {
+                    JSONObject object = new JSONObject();
+                    object.put("error", "Maybe your Vehicle Licence is wrong or is already in use.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }else if (service.getVehicleByLicencePlate(payload.licencePlate) != null){
+                    JSONObject object = new JSONObject();
+                    object.put("error", "Maybe your Licence Plate is wrong or is already in use.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }
                 Gson gson = new Gson();
                 System.out.println(gson.toJson(vehicle));
                 return new ResponseEntity<>(service.save(vehicle),HttpStatus.CREATED);

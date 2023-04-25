@@ -27,7 +27,16 @@ public class VehicleService {
     }
 
     public Vehicle getVehicleByDriverId(int driverId){
+
         return repo.findByDriverId(driverId);
+    }
+
+    public Vehicle getVehicleByVehicleLicence(int vehicleLicence){
+        return repo.findByVehicleLicence(vehicleLicence);
+    }
+
+    public Vehicle getVehicleByLicencePlate(String licencePlat){
+        return repo.findByLicencePlate(licencePlat);
     }
 
 }

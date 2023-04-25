@@ -5,6 +5,17 @@ carMakerId = -1
 carModelId = -1
 year = -1
 colorId =-1
+var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+var letterNumber = /^[0-9a-zA-Z]+$/;
+var letters = /^[a-z][a-z\s]*$/;
+var Numbers = /^[0-9]+$/;
+var password=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+let currentDate = new Date();
+let birthdate = new Date(birthDate.value);
+let diff = new Date(currentDate - birthdate)
+let age = Math.abs(diff.getUTCFullYear() - 1970);
+
+
 
 
 //Navigation of buttons
@@ -345,11 +356,6 @@ function driverSignIn(){
                 return;
             }
 
-            if(email.value.indexOf('@') === -1 || !email.value.includes(".com")){
-                alert("Invalid Email Format.")
-                return;
-            }
-
     signIn(email.value,password.value)
 }
 
@@ -368,11 +374,6 @@ function riderSignIn(){
 
         if(password.value === ""){
             alert("Please enter your Password.")
-            return;
-        }
-
-        if(email.value.indexOf('@') === -1 || !email.value.includes(".com")){
-            alert("Invalid Email Format.")
             return;
         }
         signIn(email.value,password.value)
@@ -394,13 +395,11 @@ function attemptCreateRiderAccount(){
     {
         alert("Please, Enter your mail")
         return;
-    }
-    else if(email.value.indexOf('@') === -1 || !email.value.includes(".com")){
+    }else if(email.value.match(emailFormat)){
          alert("Invalid Email Format.")
          return;
     }
-    if (password.length < 8){
-            alert("Invalid Password.")
+    if (password.value.length < 8 || password.value.length < 20 || password.value.match(password)){            alert("Invalid Password.")
             return;
     }
     if(password.value === ""){
@@ -431,16 +430,17 @@ function attemptCreateDriverAccount(){
     const email = document.getElementById("create_driver_email")
     const password = document.getElementById("create_driver_password")
     const repeatPassword = document.getElementById("create_driver_password-repeat")
+    var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email.value === "")
     {
         alert("Please, Enter your mail")
         return;
     }
-    else if(email.value.indexOf('@') === -1 || !email.value.includes(".com")){
+    else if(!email.value.match(emailFormat)){
          alert("Invalid Email Format.")
          return;
     }
-    if (password.length < 8){
+    if (password.value.length < 8 || password.value.length < 20 || password.value.match(password)){
         alert("Invalid Password.")
         return;
     }
@@ -472,23 +472,26 @@ function attemptCreateRiderProfile(){
     const lastName = document.getElementById("rider-last-name")
     const phoneNumber = document.getElementById("rider-phone-number")
     const birthDate = document.getElementById("rider-birthday")
-
     if (firstName.value === "" || lastName.value === ""){
         alert("Please, Enter your full name")
         return;
+    }else if (firstName.value.length > 100 || lastName.length > 100 || !firstName.value.match(letters)) || !lastName.value.match(letters)){
+             alert("Please, Enter your first name or last name only")
     }
     if (phoneNumber.value === "" ){
             alert("Please, Enter your phone number")
             return;
-    }else if (phoneNumber.value.length !== 11 ){
+    }else if (phoneNumber.value.length !== 11 || !phoneNumber.values.match(Numbers)){
             alert("Invalid phone number")
             return;
     }
     if (birthDate.value === "" ){
                 alert("Please, Enter your birthdate")
                 return;
+    }else if(age < 10){
+            alert("You can't create Account if your age under 10 years")
+            return;
     }
-
     const json = {
             firstName: firstName.value,
             lastName: lastName.value,
@@ -518,35 +521,45 @@ function attemptCreateDriverProfile(){
     const birthDate = document.getElementById("driver_birthday")
     const isMale = document.getElementById('male').checked;
 
+    let currentDate = new Date();
+    let birthdate = new Date(birthDate.value);
+    let diff = new Date(currentDate - birthdate)
+    let age = Math.abs(diff.getUTCFullYear() - 1970);
+
     if (firstName.value === "" || lastName.value === ""){
         alert("Please, Enter your full name")
         return;
+    }else if (firstName.value.length > 100 || lastName.length > 100 || !firstName.value.match(letters)) || !lastName.value.match(letters)){
+        alert("Please, Enter your first name or last name only")
     }
     if (phoneNumber.value === "" ){
             alert("Please, Enter your phone number")
             return;
-    }else if (phoneNumber.value.length !== 11 ){
+    }else if (phoneNumber.value.length !== 11 || !phoneNumber.values.match(Numbers)){
             alert("Invalid phone number")
             return;
     }
     if (nationalId.value === "" ){
                 alert("Please, Enter your national id")
                 return;
-    }else if (nationalId.value.length !== 14 ){
-                alert("Invalid national id")
+    }else if (nationalId.value.length !== 14 || !nationalId.value.match(Numbers)){
+                alert("Maybe your National id is wrong or is already in use.")
                 return;
    }
 
     if (driverLicence.value === ""){
-            alert("Please, Enter your driver licence")
+            alert("Please, Enter your driver licence.")
             return;
-    }else if (driverLicence.value.length !== 7 ){
-             alert("Invalid driver licence")
+    }else if (driverLicence.value.length !== 7 || !driverLicence.value.match(Numbers) ){
+             alert("Maybe your driver licence is wrong or is already in use.")
              return;
        }
     if (birthDate.value === "" ){
                 alert("Please, Enter your birthdate")
                 return;
+    }else if(age < 10){
+                 alert("You can't create Account if your age under 18 years")
+                 return;
     }
 
     const json = {
@@ -580,7 +593,7 @@ function attemptCreateVehicleAccount(){
         alert("Please, Enter your vehicle licence number")
         return;
     }
-    if (vehicleLicence.value.length !== 9){
+    if (vehicleLicence.value.length !== 9 || !licencePlate.value.match(Numbers)){
             alert("Invalid vehicle licence number.")
             return;
     }
@@ -589,7 +602,7 @@ function attemptCreateVehicleAccount(){
             alert("Please, Enter your licence plate number")
             return;
         }
-        if (licencePlate.value.length < 6 ||  licencePlate.value.length >7 ){
+        if (licencePlate.value.length < 6 ||  licencePlate.value.length >7 || !licencePlate.value.match(letterNumber) ){
                 alert("Invalid licence plate number.")
                 return;
         }

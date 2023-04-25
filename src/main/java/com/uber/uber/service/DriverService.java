@@ -3,6 +3,7 @@ package com.uber.uber.service;
 import com.uber.uber.models.Account;
 import com.uber.uber.models.Color;
 import com.uber.uber.models.Driver;
+import com.uber.uber.models.Rider;
 import com.uber.uber.repository.ColorRepo;
 import com.uber.uber.repository.DriverRepo;
 import jakarta.transaction.Transactional;
@@ -34,6 +35,12 @@ public class DriverService {
     public Driver getDriverByPhoneNumber(String phoneNumber){
        return repo.findByPhoneNumber(phoneNumber);
 
+    }
+    public Driver getDriverByNationalId(long nationalId){
+        return repo.findByNationalId(nationalId);
+    }
+    public Driver getDriverByDriverLicence(long driverLicence){
+        return repo.findByDriverLicence(driverLicence);
     }
 
 }
