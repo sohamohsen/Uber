@@ -42,6 +42,11 @@ public class Rider{
     @JsonIgnore
     public Account account;
 
+    @OneToOne(
+            mappedBy = "rider"
+    )
+    public RiderWallet wallet;
+
 
 
     public Rider() {

@@ -47,6 +47,16 @@ public class Driver    {
     @JsonIgnore
     public Account account;
 
+    @OneToOne(
+            mappedBy = "driver"
+    )
+    public DriverWallet wallet;
+
+    /*@OneToOne(
+            mappedBy = "driver"
+    )
+    public Vehicle vehicle;*/
+
 
 
 

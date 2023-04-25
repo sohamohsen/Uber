@@ -1,12 +1,13 @@
 package com.uber.uber.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name="vehicle")
-public class Vehicle implements Serializable {
+public class Vehicle  {
 
     @Id // this means the variable is primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)// indicate it's auto generated
@@ -32,10 +33,17 @@ public class Vehicle implements Serializable {
     )
     public int driverId;
 
-    /*@OneToOne
-    @JoinColumn(
-            name = "driver_id"
+    /*@OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
+    @JoinColumn(
+            name = "driver_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    @JsonIgnore
     public Driver driver;*/
 
     public Vehicle() {

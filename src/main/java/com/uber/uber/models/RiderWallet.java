@@ -1,5 +1,6 @@
 package com.uber.uber.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,19 @@ public class RiderWallet {
         this.balance = balance;
         this.riderId = riderId;
     }
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "rider_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    @JsonIgnore
+    public Rider rider;
 
     public RiderWallet() {
     }
