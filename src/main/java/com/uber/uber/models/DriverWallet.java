@@ -1,5 +1,6 @@
 package com.uber.uber.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,19 @@ public class DriverWallet {
     public int driverId;
     @Column(name = "balance")
     public float balance;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "driver_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    @JsonIgnore
+    public Driver driver;
 
     public DriverWallet() {
     }
