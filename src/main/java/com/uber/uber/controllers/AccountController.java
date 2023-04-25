@@ -61,7 +61,7 @@ public class AccountController {
             @RequestBody Account payLoad
     ){
         //1. check if email exists in database
-        Account accountFromDb = service.getAccountByEmail(payLoad.getEmail());
+        Account accountFromDb = service.getAccountByEmail(payLoad.email);
         if (accountFromDb != null){
             // return error
             JSONObject object = new JSONObject();
@@ -73,9 +73,9 @@ public class AccountController {
             Account account = new Account();
             JSONObject object = new JSONObject();
             JSONObject error = new JSONObject();
-            String email = payLoad.getEmail();
-            String password = payLoad.getPassword();
-            String type = payLoad.getType();
+            String email = payLoad.email;
+            String password = payLoad.password;
+            String type = payLoad.type;
             boolean isEmailInvalid = email.isBlank() || !email.contains("@") || !email.contains(".com");
             boolean isPasswordInValid = password.isBlank() || password.length() < 8;
             boolean isTypeInvalid = !type.equals("rider") && !type.equals("driver");
@@ -94,9 +94,9 @@ public class AccountController {
               return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
             }else {
                 // create new account and return account
-                account.setEmail(email);
-                account.setPassword(password);
-                account.setType(type);
+                account.email = (email);
+                account.password = (password);
+                account.type = (type);
                 return new ResponseEntity<>(service.save(account),HttpStatus.CREATED);
             }
 
@@ -111,10 +111,10 @@ public class AccountController {
     )
     public ResponseEntity<Object> signIn(@RequestBody Account payLoad){
         //1. check if email exists in database
-        Account account = service.getAccountByEmail(payLoad.getEmail());
+        Account account = service.getAccountByEmail(payLoad.email);
         if (account != null) { // if exist
             //2. check if password matches
-            if (account.getPassword().equals(payLoad.getPassword())) {
+            if (account.password.equals(payLoad.password)) {
                 // sign in success
                 //3. return account
                 return new ResponseEntity<>(account, HttpStatus.OK);
