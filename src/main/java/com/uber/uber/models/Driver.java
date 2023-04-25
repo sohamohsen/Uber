@@ -52,10 +52,10 @@ public class Driver    {
     )
     public DriverWallet wallet;
 
-    /*@OneToOne(
+    @OneToOne(
             mappedBy = "driver"
     )
-    public Vehicle vehicle;*/
+    public Vehicle vehicle;
 
 
 

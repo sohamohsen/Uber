@@ -33,7 +33,7 @@ public class Vehicle  {
     )
     public int driverId;
 
-    /*@OneToOne(
+    @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
@@ -44,7 +44,7 @@ public class Vehicle  {
             insertable = false
     )
     @JsonIgnore
-    public Driver driver;*/
+    public Driver driver;
 
     public Vehicle() {
     }

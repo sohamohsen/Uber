@@ -7,14 +7,12 @@ year = -1
 colorId =-1
 var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 var letterNumber = /^[0-9a-zA-Z]+$/;
-var letters = /^[a-z][a-z\s]*$/;
-var Numbers = /^[0-9]+$/;
+var letters = /^[a-zA-Z]+$/;
+var Numbers = /^\d{11}$/;
+var nationalIdRegex = /^\d{14}$/;
+var driverLicenceRegex = /^\d{7}$/;
+var vehicleLicenceRegex = /^\d{9}$/;
 var password=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
-let currentDate = new Date();
-let birthdate = new Date(birthDate.value);
-let diff = new Date(currentDate - birthdate)
-let age = Math.abs(diff.getUTCFullYear() - 1970);
-
 
 
 
@@ -395,11 +393,12 @@ function attemptCreateRiderAccount(){
     {
         alert("Please, Enter your mail")
         return;
-    }else if(email.value.match(emailFormat)){
+    }else if(!email.value.match(emailFormat)){
          alert("Invalid Email Format.")
          return;
     }
-    if (password.value.length < 8 || password.value.length < 20 || password.value.match(password)){            alert("Invalid Password.")
+    if (password.value.length < 8 || password.value.length > 20 || !password.value.match(letterNumber)){
+            alert("Your password should Contain letters, numbers only and at least 8 chars.")
             return;
     }
     if(password.value === ""){
@@ -436,12 +435,12 @@ function attemptCreateDriverAccount(){
         alert("Please, Enter your mail")
         return;
     }
-    else if(!email.value.match(emailFormat)){
+    else if(!emailFormat.test(email.value)){
          alert("Invalid Email Format.")
          return;
     }
-    if (password.value.length < 8 || password.value.length < 20 || password.value.match(password)){
-        alert("Invalid Password.")
+    if (password.value.length < 8 || password.value.length > 20 || !password.value.match(letterNumber)){
+        alert("Your password should Contain letters, numbers only at least 8 chars")
         return;
     }
     if(password.value === ""){
@@ -472,16 +471,21 @@ function attemptCreateRiderProfile(){
     const lastName = document.getElementById("rider-last-name")
     const phoneNumber = document.getElementById("rider-phone-number")
     const birthDate = document.getElementById("rider-birthday")
+    let currentDate = new Date();
+    let birthdate = new Date(birthDate.value);
+    let diff = new Date(currentDate - birthdate);
+    let age = Math.abs(diff.getUTCFullYear() - 1970);
     if (firstName.value === "" || lastName.value === ""){
         alert("Please, Enter your full name")
         return;
-    }else if (firstName.value.length > 100 || lastName.length > 100 || !firstName.value.match(letters)) || !lastName.value.match(letters)){
+    }else if (firstName.value.length > 100 || lastName.value.length > 100 || !firstName.value.match(letters) || !lastName.value.match(letters)){
              alert("Please, Enter your first name or last name only")
+             return;
     }
     if (phoneNumber.value === "" ){
             alert("Please, Enter your phone number")
             return;
-    }else if (phoneNumber.value.length !== 11 || !phoneNumber.values.match(Numbers)){
+    }else if (!Numbers.test(phoneNumber.value)){
             alert("Invalid phone number")
             return;
     }
@@ -520,29 +524,30 @@ function attemptCreateDriverProfile(){
     const phoneNumber = document.getElementById("driver_phone_number")
     const birthDate = document.getElementById("driver_birthday")
     const isMale = document.getElementById('male').checked;
-
     let currentDate = new Date();
     let birthdate = new Date(birthDate.value);
-    let diff = new Date(currentDate - birthdate)
+    let diff = new Date(currentDate - birthdate);
     let age = Math.abs(diff.getUTCFullYear() - 1970);
+
 
     if (firstName.value === "" || lastName.value === ""){
         alert("Please, Enter your full name")
         return;
-    }else if (firstName.value.length > 100 || lastName.length > 100 || !firstName.value.match(letters)) || !lastName.value.match(letters)){
-        alert("Please, Enter your first name or last name only")
+    }else if (firstName.value.length > 100 || lastName.length > 100 || !letters.test(firstName.value) || !letters.test(lastName.value)){
+        alert("Please, Enter your first name or last name only");
+        return;
     }
     if (phoneNumber.value === "" ){
             alert("Please, Enter your phone number")
             return;
-    }else if (phoneNumber.value.length !== 11 || !phoneNumber.values.match(Numbers)){
+    }else if (!Numbers.test(phoneNumber.value)){
             alert("Invalid phone number")
             return;
     }
     if (nationalId.value === "" ){
                 alert("Please, Enter your national id")
                 return;
-    }else if (nationalId.value.length !== 14 || !nationalId.value.match(Numbers)){
+    }else if (!nationalIdRegex.test(nationalId.value)){
                 alert("Maybe your National id is wrong or is already in use.")
                 return;
    }
@@ -550,7 +555,7 @@ function attemptCreateDriverProfile(){
     if (driverLicence.value === ""){
             alert("Please, Enter your driver licence.")
             return;
-    }else if (driverLicence.value.length !== 7 || !driverLicence.value.match(Numbers) ){
+    }else if (!driverLicenceRegex.test(driverLicence.value)){
              alert("Maybe your driver licence is wrong or is already in use.")
              return;
        }
@@ -593,7 +598,7 @@ function attemptCreateVehicleAccount(){
         alert("Please, Enter your vehicle licence number")
         return;
     }
-    if (vehicleLicence.value.length !== 9 || !licencePlate.value.match(Numbers)){
+    if (!vehicleLicenceRegex.test(vehicleLicence.value)){
             alert("Invalid vehicle licence number.")
             return;
     }
@@ -602,7 +607,7 @@ function attemptCreateVehicleAccount(){
             alert("Please, Enter your licence plate number")
             return;
         }
-        if (licencePlate.value.length < 6 ||  licencePlate.value.length >7 || !licencePlate.value.match(letterNumber) ){
+        if (licencePlate.value.length < 6 ||  licencePlate.value.length > 7 || !licencePlate.value.match(letterNumber) ){
                 alert("Invalid licence plate number.")
                 return;
         }
