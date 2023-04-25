@@ -63,6 +63,14 @@ public class DriverController {
                     JSONObject object = new JSONObject();
                     object.put("error","Phone Number is already in use.");
                     return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }else if (service.getDriverByNationalId(payload.nationalId) != null){
+                    JSONObject object = new JSONObject();
+                    object.put("error", "Maybe your National id is wrong or is already in use.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+                }else if (service.getDriverByDriverLicence(payload.driverLicence) != null){
+                    JSONObject object = new JSONObject();
+                    object.put("error", "Maybe your Driver Licence is wrong or is already in use.");
+                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
                 }
                 // success creating driver create a wallet
                 Driver newdriver = null;

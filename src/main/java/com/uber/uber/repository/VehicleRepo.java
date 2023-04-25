@@ -7,4 +7,7 @@ public interface VehicleRepo extends JpaRepository <Vehicle, Integer> {
 
     Vehicle findByDriverId(int driverId);
 
+    Vehicle findByVehicleLicence(int vehicleLicence);
+
+    Vehicle findByLicencePlate(String licencePlate);
 }
