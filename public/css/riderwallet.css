@@ -48,7 +48,7 @@ header .header-content{
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-    background-color: white;
+    background-color: black;
     align-items: center;
     padding-bottom: 20px;
 
@@ -72,7 +72,7 @@ nav {
     border-bottom-width: 0;
     border-bottom-style: solid;
     border-bottom-color: wheat;
-    background-color: white;
+    background-color: black;
     /* position: relative; */
     /* z-index: 2002; */
     height: 64px;
@@ -84,7 +84,7 @@ nav {
     font-family: Arial, sans-serif;
     font-size: 40px;
     font-weight: 400;
-    color: black;
+    color: white;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
@@ -113,8 +113,8 @@ nav {
 .taps a{
     float: left;
     display: inline;
-    background: white;
-    color:black;
+    background: black;
+    color:white;
     text-decoration: none;
 }
 
@@ -122,7 +122,7 @@ nav {
 
 li a, .dropbtn {
     display: inline-block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -223,4 +223,190 @@ li a, .dropbtn {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+}
+
+.container{
+    /* width: 95%;
+    height: 25%; */
+    margin: auto;
+    background-color: black;
+    height: 64px;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
+    top: 0;
+}
+
+.li-unstyled  {
+    list-style-type: none;
+}
+
+/* Header */
+
+header .header-content{
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+}
+
+.header-content{
+    width: 95%;
+}
+
+.uberlogo {
+    padding-left: 50%;
+}
+
+.header-content ul li{
+    display: inline-block;
+}
+
+nav {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom-width: 0;
+    border-bottom-style: solid;
+    border-bottom-color: #E2E2E2;
+    background-color: #000000;
+    position: relative;
+    z-index: 2002;
+    height: 64px;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
+    top: 0;
+}
+.uberlogo{
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+.signbut:hover{
+    opacity: 0.5;
+}
+
+.logbut:hover{
+    opacity: 0.5;
+}
+.signbut{
+    transition: opacity .5s;
+    display: inline-flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    transition-property: background;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 1, 1);
+    cursor: pointer;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #000000;
+    background-color: #FFFFFF;
+    white-space: nowrap;
+}
+
+.logbut{
+    transition: opacity .5s;
+    display: inline-block;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    transition-property: background;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 1, 1);
+    cursor: pointer;
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #FFFFFF;
+    background-color: #000000;
+    white-space: nowrap;
 }

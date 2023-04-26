@@ -2,10 +2,8 @@ package com.uber.uber.controllers;
 
 import com.google.gson.Gson;
 import com.uber.uber.form.VehicleForm;
-import com.uber.uber.models.Account;
 import com.uber.uber.models.Driver;
 import com.uber.uber.models.Vehicle;
-import com.uber.uber.service.AccountService;
 import com.uber.uber.service.DriverService;
 import com.uber.uber.service.VehicleService;
 import org.json.JSONObject;
@@ -59,7 +57,6 @@ public class VehicleController {
                 return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
             }else {
                 Vehicle vehicle = new Vehicle(
-
                         payload.licencePlate,
                         payload.vehicleLicence,
                         payload.colorId,

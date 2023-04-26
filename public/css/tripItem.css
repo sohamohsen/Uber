@@ -1,0 +1,229 @@
+._css-gtxWCh {
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(226, 226, 226);
+    border-radius: 12px;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    margin-top: 12px;
+    width: 100%;
+}
+
+
+._css-hPOtBI {
+    margin: 16px;
+}
+
+._css-hDJoXZ {
+    margin-bottom: 16px;
+    color: rgb(0, 0, 0);
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 24px;
+}
+
+._css-jceiuG {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+._css-hkJruY {
+    color: rgb(84, 84, 84);
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+._css-dTqljZ {
+    color: rgb(0, 0, 0);
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+._css-byJCfZ {
+    color: rgb(0, 0, 0);
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+._css-jXTBqT {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+
+._css-lpcwSG {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+}
+
+
+._css-iKPUZI {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+._css-ctmInd {
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+
+._css-lnLMDC {
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    height: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 10px;
+}
+
+._css-eVVEDd {
+    background-color: rgb(0, 0, 0);
+    height: calc((100% - 10px) - 10px);
+    width: 3px;
+}
+
+._css-ivekrt {
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 24px;
+    padding-left: 8px;
+}
+
+._css-igiwyy {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+
+._css-jBkfju {
+    color: rgb(0, 0, 0);
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 80%;
+}
+
+._css-lpcwSG {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+}
+._css-eoUfwg {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 12px;
+}
+
+
+._css-kmFJRi {
+    display: inline-flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-width: 0px;
+    border-style: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    appearance: none;
+    transition-property: background;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 1, 1);
+    cursor: pointer;
+    margin: 0px 12px;
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-radius: 30px;
+    padding: 10px 12px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(238, 238, 238);
+}
+
+._css-hBHgGw {
+    display: inline-flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-width: 0px;
+    border-style: none;
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+    appearance: none;
+    transition-property: background;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 1, 1);
+    cursor: pointer;
+    margin: 0px;
+    font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    border-radius: 30px;
+    padding: 10px 12px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(238, 238, 238);
+}
+
+._css-jXTBqT {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+
+##wrapper > div._css-dqxzrQ > div._css-jjNqJr > div._css-hAxyOk > div > div._css-gemfqT > section:nth-child(3)
+
