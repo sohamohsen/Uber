@@ -11,6 +11,7 @@ public class Rider{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",nullable = false)
     public int id;
 
     @Column(name = "first_name")
