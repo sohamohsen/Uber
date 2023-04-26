@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class DriverWallet {
     @Id // this means the variable is primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)// indicate it's auto generated
-
+    @Column(name = "id",nullable = false)
     public int id;
     @Column(name="driver_id")
     public int driverId;

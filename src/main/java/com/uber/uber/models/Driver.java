@@ -7,9 +7,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "driver")
-public class Driver    {
+public class Driver {
     @Id // this means the variable is primary key
-    @GeneratedValue(strategy = GenerationType.AUTO)// indicate it's auto generated
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",nullable = false)// indicate it's auto generated
     public int id;
     @Column(name = "first_name")
     public String firstName;
