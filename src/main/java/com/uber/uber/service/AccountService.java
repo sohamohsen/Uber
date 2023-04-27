@@ -16,11 +16,12 @@ public class AccountService {
     @Autowired
     private AccountRepo repo;
 
+    //method to return all accounts
     public List<Account> getAccounts(){
         return repo.findAll();
     }
 
-
+    //return each account by id
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Account getAccountById(int id) throws NoSuchElementException {
         Account account = null;
@@ -32,6 +33,7 @@ public class AccountService {
         return account;
     }
 
+    //return each account by id
     public Account getAccountByEmail(String email){
         return repo.findByEmailIs(email);
     }

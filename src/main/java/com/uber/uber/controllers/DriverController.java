@@ -80,7 +80,7 @@ public class DriverController {
                     e.printStackTrace();
                 }
                 if (newdriver != null){
-                    DriverWallet wallet = new DriverWallet(newdriver.id,0.0f);
+                    DriverWallet wallet = new DriverWallet(newdriver.id,500.0f);
                     driverWalletService.save(wallet);
                     return new ResponseEntity<>(newdriver,HttpStatus.CREATED);
                 }else{

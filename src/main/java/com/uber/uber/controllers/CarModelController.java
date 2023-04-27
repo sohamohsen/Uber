@@ -20,10 +20,7 @@ public class CarModelController {
 
     @GetMapping("car_model/{car_maker_id}")
     public ResponseEntity<List<CarModel>> getCarModelsByCarMakerId(
-            @PathVariable(
-                    name = "car_maker_id"
-            ) int carMakerId
-    ){
+            @PathVariable(name = "car_maker_id") int carMakerId){
       return new ResponseEntity<>(service.getCarModelsByCarMakerId(carMakerId),HttpStatus.OK);
     }
 }

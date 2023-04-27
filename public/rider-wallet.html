@@ -13,7 +13,8 @@
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-        
+        <script src="js/jquery-3.6.4.min.js"></script>
+
         <!--Css files -->
         <link rel="stylesheet" href="css/css/all.min.css" />
         <link rel="stylesheet" href="css/font-awesome.min.css" />
@@ -42,7 +43,7 @@
                             <li class="walletli">
                                 <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
                                     <i class="fa-solid fa-wallet"></i>
-                                Wallet</a>    
+                                Wallet</a>
                             </li>
                             <li class="tripsli">
                                 <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
@@ -71,10 +72,13 @@
                     </span>
                     <br>
                     <span class="amount">
-                        <span class="" id="">EGP&nbsp;0.00</span>
+                        <span class="" id="wallet">EGP&nbsp;0.00</span>
                 </span>
             </div>
         </div>
    </body>
     <script src="js/main.js"></script>
+    <script>
+        getAccountByUserId();
+    </script>
 </html>

@@ -1,6 +1,5 @@
 package com.uber.uber.service;
 
-import com.uber.uber.models.Account;
 import com.uber.uber.models.City;
 import com.uber.uber.repository.CityRepo;
 import jakarta.transaction.Transactional;
@@ -15,11 +14,14 @@ public class CityService {
     @Autowired
     private CityRepo repo;
 
+    //method to return all cites
     public List<City> getCities(){
         return repo.findAll();
     }
 
+
     public City getAccountById(int id){
+
         return repo.findById(id).get();
     }
 }

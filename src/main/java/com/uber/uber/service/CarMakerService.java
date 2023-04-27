@@ -19,12 +19,14 @@ public class CarMakerService {
     }
 
     public CarMaker getCarMakerById(int id){
+
         return repo.findById(id).get();
     }
 
 
 
     public void save(CarMaker carmaker){
+
         repo.save(carmaker);
     }
 }

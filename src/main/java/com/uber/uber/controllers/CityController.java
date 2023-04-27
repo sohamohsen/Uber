@@ -21,6 +21,7 @@ public class CityController {
     private CityService service;
 
 
+    //Request to get all cities
     @GetMapping("/cities")
     public ResponseEntity<List<City>> getCities() {
         return new ResponseEntity<>(service.getCities(), HttpStatus.OK);

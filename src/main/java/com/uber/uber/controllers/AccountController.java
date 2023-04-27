@@ -24,24 +24,28 @@ public class AccountController {
     private AccountService service;
 
 
-    /*
+    /* Request types
     post
     get
      */
     //end point or url path
+
+    //List all accounts
     @GetMapping("/accounts") //http://localhost:8080/accounts
     public List<Account> getAccounts() {
         return service.getAccounts();
     }
 
 
+    //Request to get each account by id
     @GetMapping("/accounts/{user_id}") // http://localhost:8080/account/2
-    public Account getAccount(
+    public ResponseEntity<Account> getAccount(
             @PathVariable("user_id") int id
     ){
-        return service.getAccountById(id);
+        return new ResponseEntity<>(service.getAccountById(id),HttpStatus.OK);
     }
 
+    //Request to get each account by email
     @GetMapping("/accounts/email/{email}")
     public Account getAccountByEmail(
             @PathVariable("email") String email
@@ -49,17 +53,17 @@ public class AccountController {
         return service.getAccountByEmail(email);
     }
 
-
-    //
+    //Post request to sign up
     @RequestMapping(
             path = "/sign_up", // path after base url http://localhost:8080/sign_up
             method = RequestMethod.POST, // request type
-            produces = MediaType.APPLICATION_JSON_VALUE, // request data type
-            consumes = MediaType.APPLICATION_JSON_VALUE // response data type
+            produces = MediaType.APPLICATION_JSON_VALUE, // request data type (Json)
+            consumes = MediaType.APPLICATION_JSON_VALUE // response data type (Json)
     )
     public ResponseEntity<Object> signUp(
             @RequestBody Account payLoad
     ){
+        //Validation
         //1. check if email exists in database
         Account accountFromDb = service.getAccountByEmail(payLoad.email);
         if (accountFromDb != null){
@@ -103,13 +107,15 @@ public class AccountController {
         }
     }
 
+    //Request for sign in
     @RequestMapping(
             path = "/sign_in", // path after base url http://localhost:8080/sign_in
             method = RequestMethod.POST, // request type
             produces = MediaType.APPLICATION_JSON_VALUE, // request data type
             consumes = MediaType.APPLICATION_JSON_VALUE // response data type
     )
-    public ResponseEntity<Object> signIn(@RequestBody Account payLoad){
+    public ResponseEntity<Object> signIn(
+            @RequestBody Account payLoad){
         //1. check if email exists in database
         Account account = service.getAccountByEmail(payLoad.email);
         if (account != null) { // if exist

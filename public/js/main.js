@@ -54,19 +54,33 @@ function signIn(emailValue,passwordValue){
     }).then(function(data, status, jqxhr) { // response
         // Update UI
         // Navigate to profile
-        console.log(JSON.stringify(data));
+        //console.log(JSON.stringify(data));
+        console.log(JSON.stringify(data.driver));
         // save user id in browser data to load its data
         localStorage.setItem('user_id',data.id);
         console.log(localStorage.getItem('user_id'));
         //check the type of user to navigate to his/her profile
         if(data.type === "driver"){
             //navigate to driver profile
-            window.location.assign('rider-wallet.html', "_self")
+            if(data.driver === null){
+                // navigate user to create driver account
+                window.location.assign('signup-driver.html', "_self")
+            }else if(data.driver.vehicle === null){
+                // navigate user to create vehicle
+                window.location.assign('create-vehicle.html', "_self")
+            }else{
+                // navigate user to profile page
+                window.location.assign('rider-wallet.html', "_self")
+            }
         }else{
              //navigate to rider profile
-
+            if(data.rider === null){
+                // navigate user to create driver account
+                window.location.assign('signup-rider.html', "_self")
+            }else{
+                // navigate user to profile page
              window.location.assign('takeride.html')
-
+            }
         }
 
     }).fail(function(error){ //Return backend validation errors
@@ -75,6 +89,33 @@ function signIn(emailValue,passwordValue){
     });
 }
 
+function getAccountByUserId(){
+    $.ajax({
+        url: BASE_URL+"/accounts/"+localStorage.getItem('user_id'),
+        type: 'GET',
+        headers:{
+            "Access-Control-Allow-Origin": '*', // recommended
+        }
+    }).then(function(data, status, jqxhr){
+        // Update UI
+
+        updateProfileUi(data);
+
+    }).fail(function(error){
+    console.log(JSON.stringify(error));
+    })
+}
+
+function updateProfileUi(profile){
+    // declare ui elements
+    const balanceView = document.getElementById('wallet')
+    if(profile.driver !== null){
+       balanceView.innerHTML = "EGP "+profile.driver.wallet.balance
+    }
+    if(profile.rider !== null){
+        balanceView.innerHTML = "EGP "+profile.rider.wallet.balance
+    }
+}
 
 
 function signUp(object){

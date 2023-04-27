@@ -29,13 +29,14 @@ public class RiderController {
     @Autowired
     private RiderWalletService riderWalletService;
 
+    //Request all riders
     @GetMapping("/riders")
     public List<Rider> getRiders() {
         return service.getRiders();
     }
 
 
-
+    //Request to make new rider profile
     @RequestMapping(
             path = "/rider", // path after base url http://localhost:8080/sign_up
             method = RequestMethod.POST, // request type
@@ -46,7 +47,7 @@ public class RiderController {
         // check if user exist in account table
         // check if account is type rider
         // check if user exists in database
-
+        // Validation
         Account account = accountService.getAccountById(payLoad.accountId);
 
         if (account != null && account.type.equals("rider")){
