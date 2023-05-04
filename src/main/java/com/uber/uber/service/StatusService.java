@@ -14,7 +14,7 @@ public class StatusService {
     @Autowired
     private StatusRepo repo;
 
-    public List<Status> getStatuss(){
+    public List<Status> getStatus(){
         return repo.findAll();
     }
 

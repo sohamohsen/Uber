@@ -31,4 +31,6 @@ public class RiderService {
     public Rider save(Rider rider){
         return repo.save(rider);
     }
+
+
 }

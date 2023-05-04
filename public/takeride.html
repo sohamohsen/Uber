@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head >
     <meta charset="utf-8"/>
     <meta name="keywords" content="Log in"/>
     <meta name="description" content="Log in"/>
-    <title>Pick Up</title>
+    <title>Ride</title>
 
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.6.4.min.js"></script>
 
 
     <!-- Font -->
@@ -67,18 +66,22 @@
 <div class="ridebody">
     <section class="rideinputs">
         <div class="rideinputcontant">
-            <h1>Get a Ride</h1>
+            <h1 class="rideheader1">Get a Ride</h1>
             <div class="inputs">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" data-baseweb="icon"><title>search</title><path fill-rule="evenodd" clip-rule="evenodd" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11Zm0-8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="currentColor"></path></svg>
-                <input type="text" name="Pick Up" placeholder="PickuP Location">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" data-baseweb="icon"><title>search</title><path fill-rule="evenodd" clip-rule="evenodd" d="M22 2H2v20h20V2Zm-6 6H8v8h8V8Z" fill="currentColor"></path></svg>
-                <input type="text" name="Drop off" placeholder="Dropoff Location">
+                <svg style="position: absolute;" width="16" height="16" viewBox="0 0 24 24" fill="none" data-baseweb="icon"><title>search</title><path fill-rule="evenodd" clip-rule="evenodd" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11Zm0-8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="currentColor"></path></svg>
+                <h3 id="pickLocation" class="rideheader2" style="color:#7f7f7f;">Pick your pick up location from map</h3>
+                </br></br>
+                <svg style="position: absolute;" width="16" height="16" viewBox="0 0 24 24" fill="none" data-baseweb="icon"><title>search</title><path fill-rule="evenodd" clip-rule="evenodd" d="M22 2H2v20h20V2Zm-6 6H8v8h8V8Z" fill="currentColor"></path></svg>
+                <h3 id="dropLocation" class="rideheader2" style="color:#7f7f7f;">Pick your destination location from map</h3>
             </div>
             <div class="search">
-                <button data-baseweb="button" class="_css-cztaBj">Search</button>
+                <button data-baseweb="button" class="search" onclick="bookTrip()">Request</button>
             </div>
         </div>
-    </section>
+    </section> 
 </div>
+    <div class="map" id="map"></div>
+    <script src="js/main.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClg9bvRoogFJZd5rh-IXw0CneiY7Xs06Q&callback=initMap"></script>
 </body>
 </html>

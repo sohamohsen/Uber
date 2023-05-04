@@ -20,7 +20,7 @@ public class StatusController {
 
     @GetMapping("/status")
     public List<Status> getStatus() {
-        return service.getStatuss();
+        return service.getStatus();
     }
 
 }

@@ -5,6 +5,13 @@ carMakerId = -1
 carModelId = -1
 year = -1
 colorId =-1
+let map;
+var isPickupSelected = false
+var isDropSelected = false
+let pickLocation = {};
+let dropLocation = {}
+
+//validation
 var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 var letterNumber = /^[0-9a-zA-Z]+$/;
 var letters = /^[a-zA-Z]+$/;
@@ -325,7 +332,7 @@ function createRiderProfile(object){
         // Navigate to create rider and driver profile
         console.log(JSON.stringify(data));
             //navigate to create driver profile
-            window.location.assign('rider-wallet.html', "_self")
+            window.location.assign('takeride.html', "_self")
     }).fail(function(error){
         console.log(JSON.stringify(error.responseJSON.error));
         alert(JSON.stringify(error.responseJSON.error));
@@ -371,6 +378,28 @@ function createVehicleProfile(object){
         window.location.assign('rider-wallet.html', "_self")
     }).fail(function(error){
         console.log(error.responseJSON.error);
+        alert(JSON.stringify(error.responseJSON.error));
+    });
+}
+
+
+function createTrip(object){
+      $.ajax({ // request
+        url: BASE_URL+"/trip",
+        type: 'POST',
+        headers:{
+            "Access-Control-Allow-Origin": '*', // recommended
+            'Content-Type' : "application/json"
+        },
+        data: JSON.stringify(object)
+    }).then(function(data, status, jqxhr) { // response
+        // Update UI
+        // Navigate to create rider and driver profile
+        console.log(JSON.stringify(data));
+            //navigate to create driver profile
+            window.location.assign('waiting_Request.html', "_self")
+    }).fail(function(error){
+        console.log(JSON.stringify(error.responseJSON.error));
         alert(JSON.stringify(error.responseJSON.error));
     });
 }
@@ -666,3 +695,127 @@ function attemptCreateVehicleAccount(){
 
     createVehicleProfile(json)
 }
+
+function bookTrip(){
+    /**
+    * get values from html fields
+    * check for values validation
+    * show errors if founded
+    * if all inputs valid make an api request
+    **/
+
+    if (!isPickupSelected)
+    {
+        alert("Please, choose your location")
+        return;
+    }
+
+    if (!isDropSelected)
+    {
+        alert("Please, choose your destination")
+        return;
+    }
+    if (getDistanceFromLatLonInKm(pickLocation.lat,pickLocation.lng,dropLocation.lat,dropLocation.lng)>50){
+        alert("Invalid location")
+                return;
+    }
+
+        const json = {
+            pickLocLat: pickLocation.lat,
+            pickLocLng: pickLocation.lng,
+            dropLocLat: dropLocation.lat,
+            dropLocLng: dropLocation.lng,
+            accountId: localStorage.getItem("user_id")
+        }
+        createTrip(json);
+}
+
+
+
+function initMap() {
+  const myLatlng = { lat: 30.0595563, lng: 31.2995782 };
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 11,
+    center: myLatlng,
+  });
+  // Create the initial InfoWindow.
+  let infoWindow = new google.maps.InfoWindow({
+    content: "Click the map to get Lat/Lng!",
+    position: myLatlng,
+  });
+
+  infoWindow.open(map);
+  // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    // Close the current InfoWindow.
+
+    infoWindow.close();
+    if(isDropSelected && isPickupSelected){
+      return
+    }
+
+  console.log(mapsMouseEvent.latLng.toJSON())
+
+  if(!isPickupSelected){
+    const marker = new google.maps.Marker({
+      // The below line is equivalent to writing:
+      // position: new google.maps.LatLng(-34.397, 150.644)
+      position: mapsMouseEvent.latLng,
+      label: 'Pick',
+      map: map,
+    });
+    isPickupSelected = true
+    pickLocation = mapsMouseEvent.latLng.toJSON()
+    return
+  }
+
+  if(isPickupSelected && !isDropSelected){
+    const marker = new google.maps.Marker({
+      // The below line is equivalent to writing:
+      // position: new google.maps.LatLng(-34.397, 150.644)
+      position: mapsMouseEvent.latLng,
+      label: 'Drop',
+      title: 'Drop Location',
+      map: map,
+    });
+    dropLocation = mapsMouseEvent.latLng.toJSON()
+    isDropSelected = true
+  }
+
+    document.getElementById("pickLocation").innerHTML = "<span style=\"color:black\">"+ "Longitude: "+ pickLocation.lng +
+  " </span> <br> <br> <span style=\"color:black\">"+ "Latitude: " + pickLocation.lat;
+
+    document.getElementById("dropLocation").innerHTML = "<span style=\"color:black\">"+ "Longitude: "+ dropLocation.lng +
+    "</span> <br> <br> <span style=\"color:black\">"+ "Latitude: " + dropLocation.lat;
+    //TODO delete 
+    console.log(pickLocation.lat)
+    console.log(pickLocation.lng)
+    console.log(dropLocation.lat)
+    console.log(dropLocation.lng)
+  });
+
+}
+
+window.initMap = initMap;
+
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1);
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
+
+

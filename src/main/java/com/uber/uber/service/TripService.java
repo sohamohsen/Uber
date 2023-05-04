@@ -1,8 +1,7 @@
 package com.uber.uber.service;
 
-import com.uber.uber.models.Transaction;
+import com.uber.uber.form.TripForm;
 import com.uber.uber.models.Trip;
-import com.uber.uber.repository.TransactionRepo;
 import com.uber.uber.repository.TripRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,12 @@ public class TripService {
     public Trip getTripById(int id){
         return repo.findById(id).get();
     }
+    public Trip getTripByRiderId(int riderId) {
+        return repo.findByRiderId(riderId);
+    }
 
-    public void save(Trip trip){
-        repo.save(trip);
+    public Trip save(Trip trip){
+        return repo.save(trip);
     }
 
 }

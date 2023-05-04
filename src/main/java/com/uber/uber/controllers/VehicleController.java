@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 public class VehicleController {
     @Autowired
     private VehicleService service;
-
     @Autowired
     private DriverService driverService;
 
