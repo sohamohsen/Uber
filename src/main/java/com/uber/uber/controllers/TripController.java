@@ -1,6 +1,5 @@
 package com.uber.uber.controllers;
 
-import com.google.gson.Gson;
 import com.uber.uber.form.TripForm;
 import com.uber.uber.models.*;
 import com.uber.uber.service.*;
@@ -11,8 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 @CrossOrigin(
         maxAge = 3600
@@ -28,21 +30,52 @@ public class TripController {
     @Autowired
     private StatusService statusService;
 
-
-
-
+    //Requests
     @GetMapping("/trips")
     public List<Trip> getTrips() {
         return service.getTrips();
     }
 
-    //TODO requirements of trip creation
-    /**
-     * rider id
-     * driver id
-     *
-     *
-     */
+    @GetMapping("/trip/{id}")
+    public Trip getTripById(@PathVariable("id") int id) {
+        return service.getTripById(id);
+    }
+
+    @GetMapping("/new_request/{account_id}")
+    public ResponseEntity<Object> getDriverRequestedTrips(
+            @PathVariable("account_id") int accountId
+    ) {
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderRequestedTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getRequestedTripByDriverId(driver.id), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/trips/{account_id}")
+    public ResponseEntity<Object> getAllTripByDriverId(
+            @PathVariable("account_id") int accountId
+    ) {
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        Rider rider = riderService.getRiderByUserId(accountId);
+
+        if (driver == null && rider == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        } else if (driver != null && rider == null) {
+            return new ResponseEntity<>(service.getTripByDriverId(driver.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getTripByRiderId(rider.id), HttpStatus.OK);
+        }
+    }
+
     @RequestMapping(
             path = "/trip",
             method = RequestMethod.POST,
@@ -51,16 +84,20 @@ public class TripController {
 
     public ResponseEntity<Object> createTrip(
             @RequestBody TripForm payload
-    ){
+    ) {
         Rider rider = null;
         try {
             rider = riderService.getRiderByUserId(payload.accountId);
-        }catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
         }
         if (rider != null) {
-            //TODO do this later , we need to check if rider or driver do not have an opened trip
 
+            if (!service.getRiderRequestedTrips(rider.id).isEmpty()) {
+                JSONObject object = new JSONObject();
+                object.put("error", "You already have request in progress");
+                return new ResponseEntity<>(object.toString(), HttpStatus.NOT_ACCEPTABLE);
+            }
             //check if rider does not have a trip
             List<Driver> drivers = driverService.getDriverByCityId(rider.cityId);
 
@@ -70,18 +107,19 @@ public class TripController {
                 Driver driver = null; //this is our driver that we will join him the trip
                 for (Driver d : drivers) {
                     if (d.available) {
-                        //check if driver does not have a trip
+                        //Check if driver does not have a trip
+                        if (!service.getRequestedTripByDriverId(d.id).isEmpty()) {
+                            continue;
+                        }
                         driver = d;
-
                         break;
                     }
-                }
-                //here add this condition
-                if (driver == null){
+                }//here add this condition
+                if (driver == null) {
                     JSONObject object = new JSONObject();
                     object.put("error", "There are no available drivers right now.");
                     return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
-                }else {
+                } else {
                     //create a trip
                     Trip trip = new Trip(
                             payload.pickLocLat,
@@ -92,25 +130,99 @@ public class TripController {
                             driver.id,
                             rider.id
                     );
-                    //complete
 
                     return new ResponseEntity<>(service.save(trip), HttpStatus.CREATED);
                 }
-
-            }else{
+            } else {
                 JSONObject object = new JSONObject();
                 object.put("error", "There are no available drivers in your city.");
                 return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
             }
-        }else{
+        } else {
             JSONObject object = new JSONObject();
             object.put("error", "Something wrong.");
-            return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(object.toString(), HttpStatus.FORBIDDEN);
         }
-
     }
 
+    @RequestMapping(
+            path = "/start_trip/{id}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Object> startTrip(@PathVariable("id") int id) {
+        Trip trip = service.getTripById(id);
+        Calendar calendar = Calendar.getInstance();
+        if (trip != null && trip.statusId==4){
+            trip.actPickLocLat = trip.pickLocLat;
+            trip.actPickLocLng = trip.pickLocLng;
+            trip.pickTime = calendar.getTime();
+            trip.statusId = 2;
+            return new ResponseEntity<>(service.save(trip),HttpStatus.OK);
+
+        }else{
+            JSONObject object = new JSONObject();
+            object.put("error", "Something went Wrong.");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(
+            path = "/cancel_trip/{id}",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<Trip> cancelTrip(@PathVariable("id") int id) {
+        return new ResponseEntity<>(service.updateStatus(id, 1),HttpStatus.OK);
+    }
+
+    @RequestMapping(
+            path = "/finish_trip/{id}",
+            method = RequestMethod.GET)
+    public ResponseEntity<Object> finishTrip(@PathVariable("id") int id) {
+        Trip trip = service.getTripById(id);
+        Calendar calendar = Calendar.getInstance();
+        if (trip != null && trip.statusId==2) {
+            trip.statusId = 3;
+            trip.actDropLocLng = trip.dropLocLng;
+            trip.actDropLocLat = trip.dropLocLat;
+            trip.dropTime = calendar.getTime();
+            //distance
+            trip.distance = (float) distance(trip.actPickLocLat, trip.actPickLocLng, trip.actDropLocLat, trip.actDropLocLng);
+            long diffInMillis = Math.abs(trip.pickTime.getTime() - trip.dropTime.getTime());
+            //duration
+            trip.duration = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+            trip.fare = (float) ((trip.distance * 4.87) + 10.0);
+            trip.statusId = 3;
+            return new ResponseEntity<>(service.save(trip),HttpStatus.OK);
+        }else{
+            JSONObject object = new JSONObject();
+            object.put("error", "Something Wrong.");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            dist = dist * 60 * 1.1515 * 1.609344;
+            return (dist);
+        }
+    }
 }
+
+
+// 1- Start trip button
+// 2- finish
+// 3- fare
+// 4- driver choose which way rider will pay (cash or credit)
 
 
 

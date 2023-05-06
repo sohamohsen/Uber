@@ -1,5 +1,6 @@
 package com.uber.uber.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,7 +37,6 @@ public class Trip {
     @Column(name = "drop_time")
     public Date dropTime ;
 
-
     @Column(name = "create_date")
     @CreationTimestamp
     public Date createDate ;// database will create it for you, auto creation
@@ -53,6 +53,31 @@ public class Trip {
     @Column(name = "rider_id")
     public int riderId;
 
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "status_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    public Status status;
+
+
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "driver_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    public Driver driver;
+
     public Trip() {
     }
 
@@ -65,4 +90,6 @@ public class Trip {
         this.driverId = driverId;
         this.riderId = riderId;
     }
+
+
 }

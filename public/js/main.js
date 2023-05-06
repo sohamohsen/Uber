@@ -108,6 +108,7 @@ function getAccountByUserId(){
 
         updateProfileUi(data);
 
+
     }).fail(function(error){
     console.log(JSON.stringify(error));
     })

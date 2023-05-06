@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "driver")
@@ -57,6 +58,12 @@ public class Driver {
             mappedBy = "driver"
     )
     public Vehicle vehicle;
+
+    @ManyToMany(
+            mappedBy = "driver"
+    )
+    @JsonIgnore
+    public List<Trip> trips;
 
 
 

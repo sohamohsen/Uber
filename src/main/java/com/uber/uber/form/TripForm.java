@@ -9,5 +9,7 @@ public class TripForm {
     public double pickLocLng;
     public double dropLocLng;
     public double dropLocLat;
+    public int driverId;
+    public int statusId;
 
 }

@@ -1,6 +1,9 @@
 package com.uber.uber.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "status")
@@ -11,6 +14,11 @@ public class Status {
     public int id;
     @Column(name = "status")
     public String status;
+    @ManyToMany(
+            mappedBy = "status"
+    )
+    @JsonIgnore
+    public List<Trip> trips;
 
     public Status() {
     }
