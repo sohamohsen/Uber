@@ -8,6 +8,7 @@
     <meta name="description" content="All user trips"/>
 
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.6.4.min.js"></script>
 
 
     <!-- Font -->
@@ -20,6 +21,57 @@
     <link rel="stylesheet" href="css/riderwallet.css" />
 <!--     Trip style-->
     <link rel="stylesheet" href="trips.html"/>
+    <style>
+
+
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: white;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+opacity:0.75;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+</style>
 </head>
 <body>
 <!--header-->
@@ -36,47 +88,83 @@
             <div class="taps">
                 <ul class="list-unstyled">
                     <li class="rideli">
-                        <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
+                        <a data-baseweb="button" data-buttonkey="//ride" href="takeride.html" class="_css-cBkCoG">
                             <i class="fa fa-taxi" aria-hidden="true"></i>
                             Ride</a>                            </li>
                     <li class="walletli">
-                        <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
+                        <a data-baseweb="button" data-buttonkey="//ride" href="rider-wallet.html" class="_css-cBkCoG">
                             <i class="fa-solid fa-wallet"></i>
                             Wallet</a>
                     </li>
                     <li class="tripsli">
-                        <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
+                        <a data-baseweb="button" data-buttonkey="//ride" href="#" class="_css-cBkCoG">
                             <i class="fa-solid fa-rectangle-list"></i>
                             Trip</a>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropbtn" href="index.html">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </a>
-                            <a >Log out</a>
+                    <li>
+                    <div class="dropdown">
+                        <button class="dropbtn" onclick="myFunction2()">
+                            <i class="fa-solid fa-user" style="color: #080707;"></i>
+                        </button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
                     </li>
                 </ul>
-            <nav>
-                <ul class="list-unstyled">
-                    <li class="login">
-                        <button class="logbut" onclick="logButton()">Log in</button>
-                    </li>
-                    <li class="signup">
-                        <button class="signbut" onclick="signButton()">Sign Up</button>
-                    </li>
-                </ul>
-            </nav>
+
         </div>
     </div>
     </div>
 </header>
 
+<!--Body-->
+<!--Title-->
+<div class="tripsBody">
+    <div class="headOfTrips">
+        <h5 class="headerTrips">MyTrips</h5>
+        <div class="tapsOfTrips">
+            <button class="all-Trips" data-baseweb="button" id = "allTrips" onclick="getTrips()">All Trips</button>
+            <button class="finished-Trips" data-baseweb="button" id="finishTrips" onclick="getFinishedTrips()">Finished</button>
+            <button class="progress" data-baseweb="button" id="progress">In progress</button>
+            <button class="requested-trips" id="requestedTrips" data-baseweb="button" onclick="getNewTrip()">Requested</button>
+            <button class="cancel-trips" data-baseweb="button" id="cancelTrips" onclick="getCanceledTrips()">Canceled</button>
+        </div>
+        <section class="body-trips">
+            <ul id="contentTrip" style="list-style-type: none;">
 
 
-<!--<section data-baseweb="card" class="_css-gtxWCh">-->
-<!--    <div class="_css-hPOtBI"><div class="_css-hDJoXZ">-->
-<!--        <div data-baseweb="block" class="_css-jceiuG"><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY">UberX</p><p data-baseweb="typo-paragraphmedium" class="_css-dTqljZ">January 13 2022, 5:04 AM</p></div><div data-baseweb="typo-labellarge" class="_css-byJCfZ">المرج البحرية، قسم المرج،، Al Marg Al Bahreyah, El Marg, Cairo Governorate 4623138, Egypt</div><div data-baseweb="block" class="_css-jXTBqT"><div data-baseweb="block" class="_css-lpcwSG"><div data-baseweb="block" class="_css-iKPUZI"><div data-baseweb="block" class="_css-ctmInd _css-lpcwSG"><div class="_css-lnLMDC"></div><div class="_css-eVVEDd"></div></div><div data-baseweb="block" class="_css-ivekrt _css-lpcwSG"><div data-baseweb="block" class="_css-igiwyy"><p data-baseweb="typo-paragraphmedium" class="_css-jBkfju">67 عرب الطوايله، Al Khosous, El Marg, Cairo Governorate 4535120, Egypt</p><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div></div><div data-baseweb="block" class="_css-iKPUZI"><div data-baseweb="block" class="_css-ctmInd _css-lpcwSG"><div class="_css-hGDNsw"></div></div><div data-baseweb="block" class="_css-bWKLVv _css-lpcwSG"><div data-baseweb="block" class="_css-igiwyy"><p data-baseweb="typo-paragraphmedium" class="_css-jBkfju">المرج البحرية، قسم المرج،، Al Marg Al Bahreyah, El Marg, Cairo Governorate 4623138, Egypt</p><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div></div></div><div data-baseweb="block" class="_css-eoUfwg"><a data-baseweb="button" href="https://help.uber.com/riders/section/help-with-a-trip?nodeId=595d429d-21e4-4c75-b422-72affa33c5c8&amp;jobId=92bce22b-f610-40de-9aaa-45881cb6bf52" class="_css-kmFJRi">Help</a><a data-baseweb="button" href="https://riders.uber.com/trips/92bce22b-f610-40de-9aaa-45881cb6bf52?_csid=ET5yDAVZpjGolQtT5LT1TQ&amp;state=R_FmlZtVORqMWdmA5rwh0z0AydSZKYB2EyZQPS0qbhM%3D&amp;effect=" class="_css-hBHgGw">View Details</a></div></div></div></div>-->
-<!--</section>-->
-<section data-baseweb="card" class="_css-gtxWCh"><div class="_css-hPOtBI"><div class="_css-hDJoXZ"><div data-baseweb="block" class="_css-jceiuG"><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY">UberX</p><p data-baseweb="typo-paragraphmedium" class="_css-dTqljZ">November 1 2022, 7:29 AM</p></div><div data-baseweb="typo-labellarge" class="_css-byJCfZ">أسفل، 26th of July Corridor, Mit Akaba, Agouza, Giza Governorate 3752404, Egypt</div><div data-baseweb="block" class="_css-jXTBqT"><div data-baseweb="block" class="_css-lpcwSG"><div data-baseweb="block" class="_css-iKPUZI"><div data-baseweb="block" class="_css-ctmInd _css-lpcwSG"><div class="_css-lnLMDC"></div><div class="_css-eVVEDd"></div></div><div data-baseweb="block" class="_css-ivekrt _css-lpcwSG"><div data-baseweb="block" class="_css-igiwyy"><p data-baseweb="typo-paragraphmedium" class="_css-jBkfju">الورش الجويه بحلوان, شارع نجيب محفوظ، العجوزة، حي العجوزة، الجيزة 3753562, Egypt</p><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div></div><div data-baseweb="block" class="_css-iKPUZI"><div data-baseweb="block" class="_css-ctmInd _css-lpcwSG"><div class="_css-hGDNsw"></div></div><div data-baseweb="block" class="_css-bWKLVv _css-lpcwSG"><div data-baseweb="block" class="_css-igiwyy"><p data-baseweb="typo-paragraphmedium" class="_css-jBkfju">أسفل، 26th of July Corridor, Mit Akaba, Agouza, Giza Governorate 3752404, Egypt</p><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div><p data-baseweb="typo-paragraphmedium" class="_css-hkJruY"></p></div></div></div><div data-baseweb="block" class="_css-eoUfwg"><a data-baseweb="button" href="https://help.uber.com/riders/section/help-with-a-trip?nodeId=595d429d-21e4-4c75-b422-72affa33c5c8&amp;jobId=4e17e45f-8fb4-4804-ad8f-09f491d67240" class="_css-kmFJRi">Help</a><a data-baseweb="button" href="https://riders.uber.com/trips/4e17e45f-8fb4-4804-ad8f-09f491d67240" class="_css-hBHgGw">View Details</a></div></div></div></div></section>
+
+            </ul>
+        </section>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+
+    <script>
+        loadTrips();
+    </script>
+<script>
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction2() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
+
 </body>
 </html>

@@ -1,12 +1,25 @@
 package com.uber.uber.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.checkerframework.checker.units.qual.C;
+
+import java.util.List;
 
 @Entity
 @Table(name = "carmaker")
 public class CarMaker {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public int id;
     public String maker;
+
+    @ManyToMany(
+            mappedBy = "carMaker"
+    )
+    @JsonIgnore
+    public List<Vehicle> vehicle;
 
     public CarMaker() {
     }
@@ -15,20 +28,8 @@ public class CarMaker {
         this.maker = maker;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getMaker() {
-        return maker;
-    }
 
     public void setMaker(String maker) {
         this.maker = maker;

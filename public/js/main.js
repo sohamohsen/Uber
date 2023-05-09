@@ -10,6 +10,7 @@ var isPickupSelected = false
 var isDropSelected = false
 let pickLocation = {};
 let dropLocation = {}
+var distance;
 
 //validation
 var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -40,8 +41,6 @@ function logButton() {
 function signButton() {
     window.location.href = "signup-option.html";
 }
-
-
 
 //Account Sign in --http request
 function signIn(emailValue,passwordValue){
@@ -124,7 +123,6 @@ function updateProfileUi(profile){
         balanceView.innerHTML = "EGP "+profile.rider.wallet.balance
     }
 }
-
 
 function signUp(object){
       $.ajax({ // request
@@ -213,7 +211,6 @@ function getCarMakers(){
         });
 }
 
-
 function onCarMakerSelectItem(event){
     carMakerId = event.target.value;
     getCarModels()
@@ -253,12 +250,10 @@ function getCarModels(){
         });
 }
 
-
 function onCarModelSelectItem(event){
     carModelId = event.target.value;
     console.log(carModelId);
 }
-
 
 function getYears(){
       $.ajax({ // request
@@ -288,8 +283,6 @@ function onColorSelectItem(event){
     console.log(color);
 }
 
-
-
 function getColors(){
       $.ajax({ // request
             url: BASE_URL+"/colors",
@@ -317,7 +310,6 @@ function onColorSelectItem(event){
     year = event.target.value;
     console.log(year);
 }
-
 
 function createRiderProfile(object){
       $.ajax({ // request
@@ -361,7 +353,6 @@ function createDriverProfile(object){
     });
 }
 
-
 function createVehicleProfile(object){
       $.ajax({ // request
         url: BASE_URL+"/vehicle",
@@ -383,7 +374,6 @@ function createVehicleProfile(object){
     });
 }
 
-
 function createTrip(object){
       $.ajax({ // request
         url: BASE_URL+"/trip",
@@ -404,7 +394,6 @@ function createTrip(object){
         alert(JSON.stringify(error.responseJSON.error));
     });
 }
-
 
 function driverSignIn(){
     /***
@@ -448,8 +437,219 @@ function riderSignIn(){
         signIn(email.value,password.value)
 }
 
+function getFinishedTrips(){
+      $('#contentTrip').empty();
+      clearTripsButton();
+      const button = document.getElementById("finishTrips");
+      button.style.backgroundColor= 'black';
+      button.style.color= 'white';
+      $.ajax({ // request
+            url: BASE_URL+"/finish_trip/"+localStorage.getItem('user_id'),
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+
+              for (var i = 0; i<data.length; i++){
+                    createTripListItem(data[i]);
+              }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
+
+function getCanceledTrips(){
+      $('#contentTrip').empty();
+      clearTripsButton();
+      const button = document.getElementById("cancelTrips");
+      button.style.backgroundColor= 'black';
+      button.style.color= 'white';
+      $.ajax({ // request
+            url: BASE_URL+"/cancel_trip/"+localStorage.getItem('user_id'),
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+
+              for (var i = 0; i<data.length; i++){
+                    createTripListItem(data[i]);
+              }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
 
 
+function getNewTrip(){
+      $('#contentTrip').empty();
+      clearTripsButton();
+      const button = document.getElementById("requestedTrips");
+      button.style.backgroundColor= 'black';
+      button.style.color= 'white';
+      $.ajax({ // request
+            url: BASE_URL+"/new_request/"+localStorage.getItem('user_id'),
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+
+              for (var i = 0; i<data.length; i++){
+                    createTripListItem(data[i]);
+              }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
+
+function getTrips(){
+      $('#contentTrip').empty();
+      clearTripsButton();
+      const button = document.getElementById("allTrips");
+      button.style.backgroundColor= 'black';
+      button.style.color= 'white';
+      $.ajax({ // request
+            url: BASE_URL+"/trips/"+localStorage.getItem('user_id'),
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+
+              for (var i = 0; i<data.length; i++){
+                    createTripListItem(data[i]);
+              }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
+
+function clearTripsButton(){
+let button = document.getElementById("allTrips");
+      button.style.backgroundColor= "#f0f0f0";
+      button.style.color= 'black';
+      button = document.getElementById("requestedTrips");
+            button.style.backgroundColor= "#f0f0f0";
+            button.style.color= 'black';
+      button = document.getElementById("progress");
+            button.style.backgroundColor= "#f0f0f0";
+            button.style.color= 'black';
+      button = document.getElementById("finishTrips");
+                  button.style.backgroundColor= "#f0f0f0";
+                  button.style.color= 'black';
+      button = document.getElementById("cancelTrips");
+                  button.style.backgroundColor= "#f0f0f0";
+                  button.style.color= 'black';
+}
+
+function loadTrips(){
+    const nav = localStorage.getItem('trip_nav');
+    console.log(nav);
+    localStorage.removeItem('trip_nav');
+
+   if(nav === 'requested'){
+        getNewTrip()
+
+    }else{
+        getTrips()
+    }
+}
+function convertDate(inputFormat) {
+  function pad(s) { return (s < 10) ? '0' + s : s; }
+  var d = new Date(inputFormat)
+  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+}
+
+
+function createTripListItem(trip){
+
+    $('<li/>').html(`<div class="ridebody" style="width: 60%; margin:16px;">
+    <div class="content-trip" >
+                               <div class="titleTrip">
+                                   <p class="title-uber">Uber</p>
+                                   <p class="trip-creation-date">${convertDate(trip.createDate)}</p>
+                               </div>
+                               <div class="trip-locations" id="tripLocations">
+                                   <div class="trip-pick-location" style="display:flex;">
+                                       <div class="pick-location" style="float:left; height:100%;width:auto;display:flex;">
+                                           <svg style="position: absolute;" width="16" height="16" viewBox="0 0 24 24" fill="none" data-baseweb="icon"><title>search</title><path fill-rule="evenodd" clip-rule="evenodd" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11Zm0-8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="currentColor"></path></svg>
+                                       </div>
+                                       <div style="width:100%; margin-left:16px; display:flex;">
+                                           <p class="location">
+                                               &emsp; Act Pick location lat: ${trip.pickLocLat}.
+                                               <br>
+                                               &emsp; Act Pick location lng: ${trip.pickLocLng}.
+                                           </p>
+                                       </div>
+                                   </div>
+                                   <div class="trip-drop-location" style="margin-top:16px">
+                                       <div class="drop-location" style="float:left; height:100%;width:auto;display:flex;">
+                                               <svg style="position: absolute;" width="16" height="16" viewBox="0 0 24 24" fill="none" data-baseweb="icon"><title>search</title><path fill-rule="evenodd" clip-rule="evenodd" d="M22 2H2v20h20V2Zm-6 6H8v8h8V8Z" fill="currentColor"></path></svg>
+                                       </div>
+                                       <div style="width:100%; margin-left:16px; display:flex;">
+                                           <p class="location">
+                                               &emsp; Act drop location lat: ${trip.dropLocLat}.
+                                               <br>
+                                               &emsp; Act drop location lng: ${trip.dropLocLng}.
+                                           </p>
+                                       </div>
+                                   </div>
+                                       <div class="user-details" style="text-align:center; width: 100%; margin-top:2%;">
+                                           <div style="display:inline-block; margin-right: auto; margin-top:1%; float: left; ">
+                                           <i class="fa-solid fa-user" style="color: #111213;"></i>
+                                           <p style="display:inline-block;">&emsp; ${trip.driver.firstName} ${trip.driver.lastName}</p>
+                                           </div>
+                                           <div style="display:inline-block; margin-top:1%; float: right; margin-right:5%;">
+                                           <i class="fa-solid fa-phone" style="color: #050505;"></i>
+                                           <p style="display:inline-block;">Phone: ${trip.driver.phoneNumber}</p>
+                                           </div>
+                                       </div>
+                                       <div class="vehicle-details" style="text-align:center; width: 100%;  margin-top:2%;">
+                                           <div style="display:inline-block; margin-right: auto; margin-top:1%; float: left;">
+                                           <i class="fa-solid fa-id-card" style="color: #070808;"></i>
+                                           <p style="display:inline-block;">&emsp;Licence plate: ${trip.driver.vehicle.licencePlate}</p>
+                                           </div>
+                                           <div style="display:inline-block; margin-right: auto; margin-top:1%; float: center;">
+                                           <i class="fa-solid fa-car-side" style="color: #050505;"></i>
+                                           <p style="display:inline-block;">Car Model: ${trip.driver.vehicle.carMaker.maker},  ${trip.driver.vehicle.carModel.name}</p>
+                                           </div>
+                                           <div style="display:inline-block; margin-top:1%; float: right; margin-right:5%;">
+                                           <i class="fa-solid fa-droplet" style="color: #070808;" ></i>
+                                           <p style="display:inline-block;">Color: ${trip.driver.vehicle.color.color}</p>
+                                           </div>
+                                       </div>
+                                   <div class="trip-details" style="text-align:center; width: 100%;  margin-top:2%;">
+                                       <div class="trip-fare" style="display:inline-block; margin-top:1%; float: right; margin-right:5%;" >
+                                           <i class="fa-solid fa-money-bill-1-wave"></i>
+                                           <p class="anm">
+                                               ${trip.fare} EGP
+                                           </p>
+                                       </div>
+                                       <div class="trip-duration" style="display:inline-block; margin-right: auto; margin-top:1%; float: center;" >
+                                           <i class="fa-solid fa-stopwatch"></i>
+                                           <p class="anm">
+                                               ${trip.duration} min
+                                           </p>
+                                       </div>
+                                       <div class="distance" style="display:inline-block; margin-right: auto; margin-top:1%; float: left;">
+                                           <i class="fa-solid fa-location-dot"></i>
+                                           <p class="anm">
+                                               &emsp;${trip.distance} Km
+                                           </p>
+                                       </div>
+                                   </div>
+                               </div>
+                               </div>
+                               </div>`).appendTo('#contentTrip')
+
+
+}
 function attemptCreateRiderAccount(){
     /**
     * get values from html fields
@@ -488,7 +688,6 @@ function attemptCreateRiderAccount(){
 
     signUp(json);
 }
-
 
 function attemptCreateDriverAccount(){
     /**
@@ -578,8 +777,6 @@ function attemptCreateRiderProfile(){
     createRiderProfile(json);
 
 }
-
-
 
 function attemptCreateDriverProfile(){
     /**
@@ -716,7 +913,8 @@ function bookTrip(){
         alert("Please, choose your destination")
         return;
     }
-    if (getDistanceFromLatLonInKm(pickLocation.lat,pickLocation.lng,dropLocation.lat,dropLocation.lng)>50){
+    distance = getDistanceFromLatLonInKm(pickLocation.lat,pickLocation.lng,dropLocation.lat,dropLocation.lng);
+    if (distance>50.0 || distance<1.0){
         alert("Invalid location")
                 return;
     }
@@ -730,8 +928,6 @@ function bookTrip(){
         }
         createTrip(json);
 }
-
-
 
 function initMap() {
   const myLatlng = { lat: 30.0595563, lng: 31.2995782 };
@@ -782,23 +978,16 @@ function initMap() {
     dropLocation = mapsMouseEvent.latLng.toJSON()
     isDropSelected = true
   }
+    distance = getDistanceFromLatLonInKm(pickLocation.lat,pickLocation.lng,dropLocation.lat,dropLocation.lng);
+    fare = 10.0+(distance * 4.87)
+    document.getElementById("pickLocation").innerHTML = "<span style=\"color:black\">"+ "Distance: "+ distance.toFixed(2)+ " Km.";
+    document.getElementById("dropLocation").innerHTML = "<span style=\"color:black\">"+ "Fare: "+ fare.toFixed(2)+ " EGP.";
 
-    document.getElementById("pickLocation").innerHTML = "<span style=\"color:black\">"+ "Longitude: "+ pickLocation.lng +
-  " </span> <br> <br> <span style=\"color:black\">"+ "Latitude: " + pickLocation.lat;
-
-    document.getElementById("dropLocation").innerHTML = "<span style=\"color:black\">"+ "Longitude: "+ dropLocation.lng +
-    "</span> <br> <br> <span style=\"color:black\">"+ "Latitude: " + dropLocation.lat;
-    //TODO delete 
-    console.log(pickLocation.lat)
-    console.log(pickLocation.lng)
-    console.log(dropLocation.lat)
-    console.log(dropLocation.lng)
   });
 
 }
 
 window.initMap = initMap;
-
 
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km

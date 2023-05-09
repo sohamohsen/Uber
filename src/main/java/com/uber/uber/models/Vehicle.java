@@ -34,6 +34,40 @@ public class Vehicle  {
     )
     public int driverId;
 
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "color_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    public Color color;
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "car_model_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    public CarModel carModel;
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "car_maker_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    public CarMaker carMaker;
+
     @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER

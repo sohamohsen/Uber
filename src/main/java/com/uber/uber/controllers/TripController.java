@@ -177,7 +177,9 @@ public class TripController {
     @RequestMapping(
             path = "/finish_trip/{id}",
             method = RequestMethod.GET)
-    public ResponseEntity<Object> finishTrip(@PathVariable("id") int id) {
+    public ResponseEntity<Object> finishTrip(
+            @PathVariable("id") int id
+    ) {
         Trip trip = service.getTripById(id);
         Calendar calendar = Calendar.getInstance();
         if (trip != null && trip.statusId==2) {
@@ -190,7 +192,7 @@ public class TripController {
             long diffInMillis = Math.abs(trip.pickTime.getTime() - trip.dropTime.getTime());
             //duration
             trip.duration = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-            trip.fare = (float) ((trip.distance * 4.87) + 10.0);
+            trip.fare =  (trip.distance * 4.87f) + 10.0f;
             trip.statusId = 3;
             return new ResponseEntity<>(service.save(trip),HttpStatus.OK);
         }else{
