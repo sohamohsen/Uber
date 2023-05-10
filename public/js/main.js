@@ -569,10 +569,11 @@ function convertDate(inputFormat) {
 
 function createTripListItem(trip){
 
-    $('<li/>').html(`<div class="ridebody" style="width: 60%; margin:16px;">
+    $('<li/>').html(`<div class="ridebody" style="width: 60%; margin:16px; ">
     <div class="content-trip" >
                                <div class="titleTrip">
                                    <p class="title-uber">Uber</p>
+                                   <p class="status">${trip.status.status}</p>
                                    <p class="trip-creation-date">${convertDate(trip.createDate)}</p>
                                </div>
                                <div class="trip-locations" id="tripLocations">

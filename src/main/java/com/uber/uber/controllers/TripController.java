@@ -42,7 +42,7 @@ public class TripController {
     }
 
     @GetMapping("/new_request/{account_id}")
-    public ResponseEntity<Object> getDriverRequestedTrips(
+    public ResponseEntity<Object> getNewRequestedTrips(
             @PathVariable("account_id") int accountId
     ) {
         Rider rider = riderService.getRiderByUserId(accountId);
@@ -59,7 +59,7 @@ public class TripController {
     }
 
     @GetMapping("/trips/{account_id}")
-    public ResponseEntity<Object> getAllTripByDriverId(
+    public ResponseEntity<Object> getAllTripByUserId(
             @PathVariable("account_id") int accountId
     ) {
         Driver driver = driverService.getDriverByAccountId(accountId);
