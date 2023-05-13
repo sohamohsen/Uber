@@ -5,15 +5,21 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="city")
 public class City {
-    //declaration of attributes
+
+                                           /****  declaration of attributes  ****/
+    /*Announce that this colum is the primary key*/
     @Id
+    //Announce that this id generate automatically in the process of creating new account.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id",nullable = false)    //nullable to announce that this attribute can't be null
+    // Nullable to announce that this attribute can't be null.
+    @Column(name = "id",nullable = false)
+    /**Doing attributes public not private due to changing of name from column name.**/
     public int id;
 
     @Column(name="city_name")
     public String cityName;
 
+    //TODO why this relation is commented.
     //declaration of relationships
     /*@OneToOne(
             mappedBy = "city"
@@ -31,8 +37,5 @@ public class City {
     public City(String cityName) {
         this.cityName = cityName;
     }
-
-
-
 
 }

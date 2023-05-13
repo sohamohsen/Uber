@@ -24,6 +24,10 @@ public class RiderWalletService {
         return repo.findById(id).get();
     }
 
+    public RiderWallet getWalletByRiderId(int riderId){
+        return repo.findByRiderId(riderId);
+    }
+
     public RiderWallet save(RiderWallet riderwallet){
         return repo.save(riderwallet);
     }

@@ -5,6 +5,7 @@ carMakerId = -1
 carModelId = -1
 year = -1
 colorId =-1
+currentTripId = -1
 let map;
 var isPickupSelected = false
 var isDropSelected = false
@@ -444,7 +445,7 @@ function getFinishedTrips(){
       button.style.backgroundColor= 'black';
       button.style.color= 'white';
       $.ajax({ // request
-            url: BASE_URL+"/finish_trip/"+localStorage.getItem('user_id'),
+            url: BASE_URL+"/all_finished_trips/"+localStorage.getItem('user_id'),
             type: 'GET',
             headers:{
                 "Access-Control-Allow-Origin": '*' // recommended
@@ -467,7 +468,30 @@ function getCanceledTrips(){
       button.style.backgroundColor= 'black';
       button.style.color= 'white';
       $.ajax({ // request
-            url: BASE_URL+"/cancel_trip/"+localStorage.getItem('user_id'),
+            url: BASE_URL+"/all_canceled_trips/"+localStorage.getItem('user_id'),
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+
+              for (var i = 0; i<data.length; i++){
+                    createTripListItem(data[i]);
+              }
+
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
+
+function getStartedTrips(){
+      $('#contentTrip').empty();
+      clearTripsButton();
+      const button = document.getElementById("progress");
+      button.style.backgroundColor= 'black';
+      button.style.color= 'white';
+      $.ajax({ // request
+            url: BASE_URL+"/all_started_trips/"+localStorage.getItem('user_id'),
             type: 'GET',
             headers:{
                 "Access-Control-Allow-Origin": '*' // recommended
@@ -569,7 +593,20 @@ function convertDate(inputFormat) {
 
 function createTripListItem(trip){
 
-    $('<li/>').html(`<div class="ridebody" style="width: 60%; margin:16px; ">
+    const startId = 'start_'+trip.id
+    const cancelId = 'cancel_'+trip.id
+    const payId = 'pay'+trip.id
+    const finishId = 'finish_'+trip.id
+    let name;
+    let phone;
+     if(trip.driver.accountId ==  localStorage.getItem('user_id')){
+            name = trip.rider.firstName+" " +trip.rider.lastName
+            phone = trip.rider.phoneNumber
+     }else{
+        name = trip.driver.firstName+" " +trip.driver.lastName
+         phone = trip.driver.phoneNumber
+     }
+    $('<li/>').html(`<div class="ridebody" id={trip.id} style="width: 60%; margin:16px; ">
     <div class="content-trip" >
                                <div class="titleTrip">
                                    <p class="title-uber">Uber</p>
@@ -604,25 +641,25 @@ function createTripListItem(trip){
                                        <div class="user-details" style="text-align:center; width: 100%; margin-top:2%;">
                                            <div style="display:inline-block; margin-right: auto; margin-top:1%; float: left; ">
                                            <i class="fa-solid fa-user" style="color: #111213;"></i>
-                                           <p style="display:inline-block;">&emsp; ${trip.driver.firstName} ${trip.driver.lastName}</p>
+                                           <p style="display:inline-block;">&emsp; ${name}</p>
                                            </div>
                                            <div style="display:inline-block; margin-top:1%; float: right; margin-right:5%;">
                                            <i class="fa-solid fa-phone" style="color: #050505;"></i>
-                                           <p style="display:inline-block;">Phone: ${trip.driver.phoneNumber}</p>
+                                           <p style="display:inline-block;">Phone: ${phone}</p>
                                            </div>
                                        </div>
                                        <div class="vehicle-details" style="text-align:center; width: 100%;  margin-top:2%;">
                                            <div style="display:inline-block; margin-right: auto; margin-top:1%; float: left;">
                                            <i class="fa-solid fa-id-card" style="color: #070808;"></i>
-                                           <p style="display:inline-block;">&emsp;Licence plate: ${trip.driver.vehicle.licencePlate}</p>
+                                           <p style="display:inline-block;">&emsp;${trip.driver.vehicle.licencePlate}</p>
                                            </div>
                                            <div style="display:inline-block; margin-right: auto; margin-top:1%; float: center;">
                                            <i class="fa-solid fa-car-side" style="color: #050505;"></i>
-                                           <p style="display:inline-block;">Car Model: ${trip.driver.vehicle.carMaker.maker},  ${trip.driver.vehicle.carModel.name}</p>
+                                           <p style="display:inline-block;"> ${trip.driver.vehicle.carMaker.maker},  ${trip.driver.vehicle.carModel.name}</p>
                                            </div>
                                            <div style="display:inline-block; margin-top:1%; float: right; margin-right:5%;">
                                            <i class="fa-solid fa-droplet" style="color: #070808;" ></i>
-                                           <p style="display:inline-block;">Color: ${trip.driver.vehicle.color.color}</p>
+                                           <p style="display:inline-block;"> ${trip.driver.vehicle.color.color}</p>
                                            </div>
                                        </div>
                                    <div class="trip-details" style="text-align:center; width: 100%;  margin-top:2%;">
@@ -644,12 +681,179 @@ function createTripListItem(trip){
                                                &emsp;${trip.distance} Km
                                            </p>
                                        </div>
+                                       <div style="width:100%; margin-top:30px;">
+                                       <button id=${startId}  style="background:green; float:left; visibility:hidden;">Start</button>
+                                       <button id=${finishId} style="background:black; color:white; float:center; visibility:hidden;">Finish</button>
+                                       <button id=${payId} style="background:black; color:white; float:center; visibility:hidden;">Pay</button>
+                                       <button id=${cancelId} style="background:red; float:right; visibility:hidden;">Cancel</button>
+
+                                       </div>
                                    </div>
                                </div>
                                </div>
                                </div>`).appendTo('#contentTrip')
 
 
+    if(trip.driver.accountId ==  localStorage.getItem('user_id')){
+     document.getElementById(payId).onclick = function(){
+        document.getElementById('paymentMethodModal').style.display = 'block';
+     }
+        if(trip.statusId == 4){
+            //show start and cancel button
+            document.getElementById(startId).style.visibility= 'visible';
+            document.getElementById(cancelId).style.visibility= 'visible';
+
+            document.getElementById(startId).onclick = function(){
+                startTrip(trip.id);
+                location.reload(true);
+
+            }
+
+            document.getElementById(cancelId).onclick = function(){
+                 cancelTrip(trip.id);
+                 location.reload(true);
+
+            }
+        }
+        if(trip.statusId == 2){
+                    //show finish button
+            document.getElementById(finishId).style.visibility= 'visible';
+            document.getElementById(finishId).onclick = function(){
+                finishTrip(trip.id);
+            }
+        }
+
+        if(trip.statusId == 3 && trip.payment == null){
+                //show modal
+                currentTripId = trip.id;
+                document.getElementById(finishId).style.visibility= 'hidden';
+                document.getElementById(payId).style.visibility= 'visible';
+                const paymentMethodModal = document.getElementById('paymentMethodModal');
+                paymentMethodModal.style.display = 'block'
+        }
+    }
+
+}
+
+
+function payWithWallet(){
+    console.log(currentTripId)
+    const object = {}
+    object.tripId = currentTripId
+    object.paymentMethodId = 2
+    //make api request to pay with wallet
+    $.ajax({ // request
+            url: BASE_URL+"/payment",
+            type: 'POST',
+            headers:{
+                "Access-Control-Allow-Origin": '*', // recommended
+                'Content-Type' : "application/json"
+            },
+            data: JSON.stringify(object)
+        }).then(function(data, status, jqxhr) { // response
+            // Update UI
+            // Navigate to create rider and driver profile
+            console.log(JSON.stringify(data));
+            // On request success hide the modal
+           document.getElementById("paymentMethodSussedModal").style.display = "block";
+           document.getElementById("paymentMethodModal").style.display = "none";
+
+
+        }).fail(function(error){
+            console.log(error.responseJSON.error);
+            alert(JSON.stringify(error.responseJSON.error));
+
+        });
+}
+
+function attemptToPay(){
+    document.getElementById("paymentMethodCashModal").style.display = "block";
+    document.getElementById("paymentMethodModal").style.display = "none";
+
+}
+
+function payWithCash(){
+    const cash = document.getElementById("cashAmount").value;
+    console.log(currentTripId)
+    console.log(currentTripId)
+    const object = {}
+    object.tripId = currentTripId
+    object.paymentMethodId = 1
+    object.value = cash;
+    if(object.value == 0){
+        return;
+    }
+        //make api request to pay with wallet
+        $.ajax({ // request
+                url: BASE_URL+"/payment",
+                type: 'POST',
+                headers:{
+                    "Access-Control-Allow-Origin": '*', // recommended
+                    'Content-Type' : "application/json"
+                },
+                data: JSON.stringify(object)
+            }).then(function(data, status, jqxhr) { // response
+                // Update UI
+                // Navigate to create rider and driver profile
+                console.log(JSON.stringify(data));
+                // On request success hide the modal
+                document.getElementById("paymentMethodCashModal").style.display = "none";
+                document.getElementById("paymentMethodSussedModal").style.display = "block";
+                document.getElementById("paymentMethodModal").style.display = "none";
+
+
+            }).fail(function(error){
+                console.log(error.responseJSON.error);
+                alert(JSON.stringify(error.responseJSON.error));
+            });
+
+}
+
+function startTrip(tripId){
+console.log(tripId);
+$.ajax({ // request
+            url: BASE_URL+"/start_trip/"+tripId,
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
+
+
+function finishTrip(tripId){
+$.ajax({ // request
+            url: BASE_URL+"/finish_trip/"+tripId,
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+        console.log(status);
+            if(status === 'success'){
+                 location.reload(true);
+            }
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
+}
+
+
+function cancelTrip(tripId){
+console.log(tripId);
+$.ajax({ // request
+            url: BASE_URL+"/cancel_trip/"+tripId,
+            type: 'GET',
+            headers:{
+                "Access-Control-Allow-Origin": '*' // recommended
+            }
+        }).then(function(data, status, jqxhr) { // response
+        }).fail(function(error){
+            console.log(error.responseJSON);
+        });
 }
 function attemptCreateRiderAccount(){
     /**
@@ -1007,6 +1211,4 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
-
-
 

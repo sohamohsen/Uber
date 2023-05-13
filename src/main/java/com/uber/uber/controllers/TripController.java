@@ -52,9 +52,62 @@ public class TripController {
             object.put("error", "Not Found");
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
         } else if (rider != null) {
-            return new ResponseEntity<>(service.getRiderRequestedTrips(rider.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getRiderTripsByStatusId(rider.id,4), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getRequestedTripByDriverId(driver.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getTripsByDriverIdAndStatusId(driver.id,4), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/all_canceled_trips/{account_id}")
+    public ResponseEntity<Object> getCanceledTrips(
+            @PathVariable("account_id") int accountId
+    ) {
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderCanceledTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getCanceledTripByDriverId(driver.id), HttpStatus.OK);
+        }
+    }
+
+
+    @GetMapping("/all_finished_trips/{account_id}")
+    public ResponseEntity<Object> getFinishedTrips(
+            @PathVariable("account_id") int accountId
+    ) {
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderFinishedTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getFinishedTripByDriverId(driver.id), HttpStatus.OK);
+        }
+    }
+
+
+    @GetMapping("/all_started_trips/{account_id}")
+    public ResponseEntity<Object> getStartedTrips(
+            @PathVariable("account_id") int accountId
+    ) {
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderStartedTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getStartedTripByDriverId(driver.id), HttpStatus.OK);
         }
     }
 
@@ -93,7 +146,10 @@ public class TripController {
         }
         if (rider != null) {
 
-            if (!service.getRiderRequestedTrips(rider.id).isEmpty()) {
+            if (!service.getRiderTripsByStatusId(rider.id,2).isEmpty() ||
+                    !service.getRiderTripsByStatusId(rider.id,4).isEmpty() ||
+                    !service.getRiderTripsByStatusId(rider.id,3).isEmpty()
+            ) {
                 JSONObject object = new JSONObject();
                 object.put("error", "You already have request in progress");
                 return new ResponseEntity<>(object.toString(), HttpStatus.NOT_ACCEPTABLE);
@@ -108,7 +164,10 @@ public class TripController {
                 for (Driver d : drivers) {
                     if (d.available) {
                         //Check if driver does not have a trip
-                        if (!service.getRequestedTripByDriverId(d.id).isEmpty()) {
+                        if (!service.getTripsByDriverIdAndStatusId(d.id,4).isEmpty() ||
+                                !service.getTripsByDriverIdAndStatusId(d.id,2).isEmpty() ||
+                                !service.getTripsByDriverIdAndStatusId(d.id,3).isEmpty()
+                        ) {
                             continue;
                         }
                         driver = d;

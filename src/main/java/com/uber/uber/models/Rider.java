@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="rider")
@@ -49,6 +50,11 @@ public class Rider{
     public RiderWallet wallet;
 
 
+    @ManyToMany(
+            mappedBy = "rider"
+    )
+    @JsonIgnore
+    public List<Trip> trips;
 
     public Rider() {
     }

@@ -24,8 +24,8 @@ public class TransactionService {
         return repo.findById(id).get();
     }
 
-    public void save(Transaction transaction){
-        repo.save(transaction);
+    public Transaction save(Transaction transaction){
+       return repo.save(transaction);
     }
 
 }

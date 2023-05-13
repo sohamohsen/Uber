@@ -21,7 +21,55 @@
     <link rel="stylesheet" href="css/riderwallet.css" />
 <!--     Trip style-->
     <link rel="stylesheet" href="trips.html"/>
+<style>
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  height: 50%;
+
+}
+.modal-content p {
+  margin-top:10%;
+  font-size:20px;
+  text-align:center;
+}
+.modal-content button {
+  margin-top:7%;
+  margin-left:50px;
+}
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
 </head>
 <body>
 <!--header-->
@@ -74,24 +122,55 @@
 <!--Title-->
 <div class="tripsBody">
     <div class="headOfTrips">
-        <h5 class="headerTrips">MyTrips</h5>
-        <div class="tapsOfTrips">
+
+        <div class="trip-img">
+            <img  style=" overflow-clip-margin: content-box; overflow: clip;  margin-left: auto; margin-right: auto; object-fit: cover; height:500px;"
+                 src="css/images/road-trip-by-car-summer-vacation-travel-trip_107791-9489.avif" alt="">
+        </div>
+        <h5 class="headerTrips">My Trips</h5>
+        <div class="tapsOfTrips" style="al">
             <button class="all-Trips" data-baseweb="button" id = "allTrips" onclick="getTrips()">All Trips</button>
             <button class="finished-Trips" data-baseweb="button" id="finishTrips" onclick="getFinishedTrips()">Finished</button>
-            <button class="progress" data-baseweb="button" id="progress">In progress</button>
+            <button class="progress" data-baseweb="button" id="progress" onclick="getStartedTrips()">In progress</button>
             <button class="requested-trips" id="requestedTrips" data-baseweb="button" onclick="getNewTrip()">Requested</button>
             <button class="cancel-trips" data-baseweb="button" id="cancelTrips" onclick="getCanceledTrips()">Canceled</button>
         </div>
         <section class="body-trips" style="margin-bottom:40px;">
             <ul id="contentTrip" style="list-style-type: none;">
-
-
+                <!-- The Modal -->
 
             </ul>
         </section>
     </div>
 </div>
 
+<div id="paymentMethodModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <p>Please, Ask Rider which payment way prefer?!</p>
+        <button  id="wallet" style="background:black; color:white; float:left; width:100px;" onclick="payWithWallet()">Wallet</button>
+        <button id="cash" style="background:black; color:white; float:right; width:100px;" onclick="attemptToPay()">Cash</button>
+    </div>
+</div>
+
+<div id="paymentMethodSussedModal" class="modal">
+    <div class="modal-content">
+        <i class="fa-regular fa-circle-check fa-8x" style="color: #5cac3e;"></i>
+        <p>Done</p>
+    </div>
+</div>
+
+<div id="paymentMethodCashModal" class="modal">
+    <div class="modal-content">
+        <p>
+            Enter the amount rider paid.
+        </p>
+        <label>
+            <input id="cashAmount" type="number" placeholder="amount">
+            <button id="payCash" onclick="payWithCash()">Pay</button>
+        </label>
+    </div>
+</div>
 <script src="js/main.js"></script>
 
     <script>
@@ -116,5 +195,12 @@ window.onclick = function(e) {
 }
 </script>
 
+<script>
+  window.onclick = function(event) {
+    if(event.target.id === 'paymentMethodCashModal' || event.target.id === 'paymentMethodSussedModal' || event.target.id === 'paymentMethodModal'){
+        event.target.style.display = "none";
+    }
+  }
+</script>
 </body>
 </html>

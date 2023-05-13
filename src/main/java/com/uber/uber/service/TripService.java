@@ -21,8 +21,19 @@ public class TripService {
     public Trip getTripByAccountId(int id){
         return repo.findById(id).get();
     }
-    public List<Trip> getRequestedTripByDriverId(int driverId) {
-        return repo.findByDriverIdAndStatusId(driverId,4);
+    public List<Trip> getTripsByDriverIdAndStatusId(int driverId,int statusId) {
+        return repo.findByDriverIdAndStatusId(driverId,statusId);
+    }
+    public List<Trip> getCanceledTripByDriverId(int driverId) {
+        return repo.findByDriverIdAndStatusId(driverId,1);
+    }
+
+    public List<Trip> getFinishedTripByDriverId(int driverId) {
+        return repo.findByDriverIdAndStatusId(driverId,3);
+    }
+
+    public List<Trip> getStartedTripByDriverId(int driverId) {
+        return repo.findByDriverIdAndStatusId(driverId,2);
     }
 
     public Trip getTripByStatusId(int statusId) {
@@ -38,8 +49,18 @@ public class TripService {
         return repo.findByDriverId(driverId);
     }
 
-    public List<Trip> getRiderRequestedTrips(int riderId) {
-        return repo.findByRiderIdAndStatusId(riderId, 4);
+    public List<Trip> getRiderTripsByStatusId(int riderId,int statusId) {
+        return repo.findByRiderIdAndStatusId(riderId, statusId);
+    }
+    public List<Trip> getRiderCanceledTrips(int riderId) {
+        return repo.findByRiderIdAndStatusId(riderId, 1);
+    }
+
+    public List<Trip> getRiderFinishedTrips(int riderId) {
+        return repo.findByRiderIdAndStatusId(riderId, 3);
+    }
+    public List<Trip> getRiderStartedTrips(int riderId) {
+        return repo.findByRiderIdAndStatusId(riderId, 2);
     }
 
 
