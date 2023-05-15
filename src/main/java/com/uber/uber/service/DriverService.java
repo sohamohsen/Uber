@@ -44,4 +44,7 @@ public class DriverService {
 
     }
 
+    public Driver getDriverById(int driverId){
+        return repo.findById(driverId).get();
+    }
 }

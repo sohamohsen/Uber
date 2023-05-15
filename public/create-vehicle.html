@@ -3,106 +3,131 @@
 
     <head >
         <meta charset="utf-8"/>
-        <meta name="keywords" content="Log in"/>
-        <meta name="description" content="Log in"/>
-        <title>Uber</title>
+        <meta name="keywords" content="Sign up"/>
+        <meta name="description" content="Sign up"/>
+
+        <title>Create Vehicle account</title>
         
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-        <script src="js/jquery-3.6.4.min.js"></script>
 
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
         <link rel="stylesheet" href="css/sign.css" />
+        <link rel="stylesheet" href="css/style.css" />
+
+        <script src="js/jquery-3.6.4.min.js"></script>
+
     </head>
 
     <body>
-        <!--header-->
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <ul class="list-unstyled">
-                        <li class="ulogo">
-                            <a data-baseweb="link" href="index.html"
-                            target="_self" aria-label="Go to Uber.com"  
-                            class="uberlogo">Uber</a>
-                        </li>
-                    </ul>
-                </div>
+
+    <!--NavBar-->
+    <div class="navbar">
+        <a href="index.html" style="font-size:30px; margin-right:10%;">
+            Uber
+        </a>
+<!--        <a href="#home" style="margin-top:10px;">Driver</a>-->
+<!--        <a href="#news" style="margin-top:10px;">Rider</a>-->
+<!--        <a href="#news" style="margin-top:10px;">How uber works</a>-->
+<!--        <a href="#news" style="margin-top:10px;">About us</a>-->
+
+        <div class="sign" style="margin-top:10px;" >
+<!--            <button class="sign-but"  onclick="signButton()">Sign Up</button>-->
+            <button class="log-but" onclick="logButton()">Log In</button>
+        </div>
+    </div>
+
+    <!--Sign Up  -->
+        <div role="main" class="Sign">
+
+            <!--Title-->
+            <div class="title">
+                <h2 id="title" class="title">
+                    vehicle information
+                </h2>
             </div>
-        </header>
 
-        <br>
-        
-        <!--Sign Up  -->
-            <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
-                    <div class="title">
-                        <h2 id="title" class="title">
-                            vehicle information
-                        </h2>
-                    </div>
-
-                    <!-- Vehicle Licence -->
-                    <div class="vehiclelicence">
-                        <label for="vehicle-licence"><b>Vehicle Licence ID</b></label>
-                            <input type="tel" id="vehicle-licence" name="vehiclelicence" placeholder="Vehicle Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
-                    </div>
+            <!-- Vehicle Licence -->
+            <div class="vehiclelicence">
+                <label for="vehicle-licence"><b>Vehicle Licence ID</b></label>
+                <input type="tel" id="vehicle-licence" name="vehiclelicence" placeholder="Vehicle Licence ID" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
+            </div>
                     
-                    <!-- Licence plate -->
-                    <div class="licenceplate">
-                        <label for="licence_plate"><b>Licence Plate</b></label>
-                            <input type="text" id="licence_plate" name="licenceplate" placeholder="Licence Plate" pattern="[أ-ى][أى][أ-ى][0-9][0-9][0-9]" required>
-                    </div>
-                    
-                    <!-- Car Maker -->
-                    <label for="car_maker">Car Maker</label>
-                    <select id="car_maker" name="carmaker" onchange="onCarMakerSelectItem(event)" >
-                    </select>
+            <!-- Licence plate -->
+            <div class="licenceplate">
+                <label for="licence_plate"><b>Licence Plate</b></label>
+                <input type="text" id="licence_plate" name="licenceplate" placeholder="Licence Plate" pattern="[أ-ى][أى][أ-ى][0-9][0-9][0-9]" required>
+            </div>
 
-                    <!-- Model -->
-                    <label for="model" > Car Model</label>
-                    <select id="model" name="model" onchange="onCarModelSelectItem(event)">
-                    </select>
+            <!-- Car Maker -->
+            <label for="car_maker">Car Maker</label>
+            <select id="car_maker" name="carmaker" onchange="onCarMakerSelectItem(event)" >
+            </select>
 
-                    <!-- Release Year -->
-                    <label for="year">Release Year</label>
-                    <select id="year" name="year" onchange="onYearSelectItem(event)">
-                    </select>
+            <!-- Model -->
+            <label for="model" > Car Model</label>
+            <select id="model" name="model" onchange="onCarModelSelectItem(event)"></select>
 
-                    <!-- Color -->
-                    <label for="color">Color</label>
-                    <select id="color" name="color">
-                    </select>
+            <!-- Release Year -->
+            <label for="year">Release Year</label>
+            <select id="year" name="year" onchange="onYearSelectItem(event)">
+            </select>
+
+            <!-- Color -->
+            <label for="color">Color</label>
+            <select id="color" name="color"></select>
                         
-                <!-- submit button -->
-                <div class="summit">
-                    <button type="submit" class="next" id="summit" onclick="attemptCreateVehicleAccount()">Submit</button>
-                </div>                      
+            <!-- submit button -->
+            <div class="summit">
+                <button type="submit" class="next" id="summit" onclick="attemptCreateVehicleAccount()">Submit</button>
+            </div>
+
         </div>
 
-        <div class="captche-continer">            
-            <div class="captche">
-                <p class="p-catche">
-                    This site is protected by reCAPTCHA and the Google 
-                        <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
-                             Privacy Policy
-                        </a>
-                            and 
-                        <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
-                            Terms of Service
-                        </a>
+        <!--    Captcha -->
+        <div class="captcha-container">
+            <div class="captcha">
+                <p class="p-cache">
+                    This site is protected by reCAPTCHA and the Google
+                    <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
+                        Privacy Policy
+                    </a>
+                    and
+                    <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
+                        Terms of Service
+                    </a>
                     apply.
                 </p>
             </div>
         </div>
-        <script src="js/main.js">
-        </script>
+
+        <script src="js/main.js"></script>
         <script>
             getCarMakers()
             getCarModels()
             getYears();
             getColors();
+
+<!--            Navigation of buttons-->
+            function navigateToDriverLogIn(){
+              window.location.href = "login-driver.html";
+            }
+
+            function navigateToRiderLogIn(){
+              window.location.href = "login-rider.html";
+            }
+
+<!--            header-->
+            function logButton() {
+                window.location.href = "login.html";
+            }
+
+            function signButton() {
+                window.location.href = "signup-option.html";
+            }
+
         </script>
 
     </body>

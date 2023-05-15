@@ -23,26 +23,6 @@ var driverLicenceRegex = /^\d{7}$/;
 var vehicleLicenceRegex = /^\d{9}$/;
 var password=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
 
-
-
-//Navigation of buttons
-function navigateToDriverLogIn(){
-  window.location.href = "login-driver.html";
-}
-
-function navigateToRiderLogIn(){
-  window.location.href = "login-rider.html";
-}
-
-// header
-function logButton() {
-    window.location.href = "login.html";
-}
-
-function signButton() {
-    window.location.href = "signup-option.html";
-}
-
 //Account Sign in --http request
 function signIn(emailValue,passwordValue){
       $.ajax({ // request
@@ -731,6 +711,10 @@ function createTripListItem(trip){
                 const paymentMethodModal = document.getElementById('paymentMethodModal');
                 paymentMethodModal.style.display = 'block'
         }
+    }else{
+        document.getElementById('paymentMethodModal').style.display = 'none';
+        document.getElementById("paymentMethodCashModal").style.display = "none";
+        document.getElementById("paymentMethodSussedModal").style.display = "none";
     }
 
 }
@@ -1210,5 +1194,37 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 
 function deg2rad(deg) {
   return deg * (Math.PI/180)
+}
+
+
+
+function logOut(){
+    document.getElementById('availability').checked = false;
+    changeAvailability();
+    localStorage.clear();
+}
+
+function changeAvailability(){
+    const b = document.getElementById('availability').checked;
+    console.log(b)
+    $.ajax({ // request
+      url: BASE_URL+"/availability",
+      type: 'GET',
+      headers:{
+          "Access-Control-Allow-Origin": '*' // recommended
+      },
+      data:{
+        account_id: localStorage.getItem('user_id'),
+        availability: b
+      }
+    }).then(function(data, status, jqxhr) { // response
+      console.log(status);
+      if(status === 'success'){
+
+      //TODO location.reload(true);
+      }
+      }).fail(function(error){
+          console.log(error.responseJSON);
+      });
 }
 

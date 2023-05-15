@@ -5,7 +5,8 @@
         <meta charset="utf-8"/>
         <meta name="keywords" content="Log in"/>
         <meta name="description" content="Log in"/>
-        <title>Uber</title>
+
+        <title>Create Driver Account</title>
         
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,47 +14,40 @@
         
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
-        <link rel="stylesheet" href="css/fridersign.css" />
+        <link rel="stylesheet" href="css/style.css" />
+
         <script src="js/jquery-3.6.4.min.js"></script>
     </head>
 
     <body>
-        <!--header-->
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <ul class="list-unstyled">
-                        <li class="ulogo">
-                            <a data-baseweb="link" href="index.html"
-                            target="_self" aria-label="Go to Uber.com"  
-                            class="uberlogo">Uber</a>
-                        </li>
-                    </ul>
 
-<!--                    <nav>-->
-<!--                        <ul class="list-unstyled">-->
-<!--                            <li class="login">-->
-<!--                                <button class="logbut" onClick="logButton()">Log in</button>-->
-<!--                            </li>-->
-<!--                            <li class="signup">-->
-<!--                                <button class="signbut" onClick="signButton()">Sign UP</button>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
+    <!--NavBar-->
+    <div class="navbar">
+        <a href="index.html" style="font-size:35px; margin-right:10%;">
+            Uber
+        </a>
+<!--        <a href="#home" style="margin-top:10px;">Driver</a>-->
+<!--        <a href="#news" style="margin-top:10px;">Rider</a>-->
+<!--        <a href="#news" style="margin-top:10px;">How uber works</a>-->
+<!--        <a href="#news" style="margin-top:10px;">About us</a>-->
+
+        <div class="sign" style="margin-top:10px;" >
+<!--            <button class="sign-but"  onclick="signButton()">Sign Up</button>-->
+            <button class="log-but" onclick="logButton()">Log In</button>
+        </div>
+    </div>
+
+                                                    <!--Sign Up Form -->
+            <div role="main" class="Sign">
+                <div class="title">
+                    <h2 align="center">
+                        Create Driver Account
+                    </h2>
+                    <br> <br>
+                    <h3 id="title" class="title">
+                        What's your email and password?
+                    </h3>
                 </div>
-            </div>
-
-        </header>
-
-        <br>
-        
-        <!--Sign Up  -->
-            <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
-                    <div class="title">
-                        <h2 id="title" class="title">
-                            What's your email and password?
-                        </h2>
-                    </div>
 
                     <!--mail  -->
                     <div class="mail">
@@ -67,20 +61,21 @@
                         <input type="password" id="create_driver_password" placeholder="Enter Password" name="psw" required>
                     </div>
 
-                    <div class="repassword">
+                    <div class="repeat-password">
                         <label for="create_driver_password-repeat"><b>Repeat Password</b></label>
                         <input type="password" id="create_driver_password-repeat" placeholder="Repeat Password" name="psw-repeat" required>
                     </div>
                         
                 <!-- submit button -->
-                <div class="continune">
+                <div class="continue">
                     <button type="submit" class="next" id="createDriverAccount" onclick="attemptCreateDriverAccount()">Continue</button>
                 </div>                      
         </div>
 
-        <div class="captche-continer">            
-            <div class="captche">
-                <p class="p-catche">
+<!--    Captcha -->
+        <div class="captcha-container">
+            <div class="captcha">
+                <p class="p-cache">
                     This site is protected by reCAPTCHA and the Google 
                         <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
                              Privacy Policy
@@ -93,6 +88,27 @@
                 </p>
             </div>
         </div>
+
         <script src="js/main.js"></script>
+    <script>
+
+<!--            Navigation of buttons-->
+            function navigateToDriverLogIn(){
+              window.location.href = "login-driver.html";
+            }
+
+            function navigateToRiderLogIn(){
+              window.location.href = "login-rider.html";
+            }
+
+<!--            header-->
+            function logButton() {
+                window.location.href = "login.html";
+            }
+
+            function signButton() {
+                window.location.href = "signup-option.html";
+            }
+        </script>
     </body>
 </html>

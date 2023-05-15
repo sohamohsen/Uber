@@ -1,131 +1,159 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-    <head >
-        <meta charset="utf-8"/>
-        <meta name="keywords" content="Log in"/>
-        <meta name="description" content="Log in"/>
-        <title>Uber</title>
-        
-        <!-- Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-        
-        <!--Css files -->
-        <link rel="stylesheet" href="css/font-awesome.min.css" />
-        <link rel="stylesheet" href="css/signstyle.css" />
-    </head>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="keywords" content="Log in"/>
+    <meta name="description" content="Log in"/>
 
-    <body>
-        <!--header-->
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <ul class="list-unstyled">
-                        <li class="ulogo">
-                            <a data-baseweb="link" href="index.html"
-                            target="_self" aria-label="Go to Uber.com"  
-                            class="uberlogo">Uber</a>
-                        </li>
-                    </ul>
+    <title>Log In</title>
 
-                    <nav>
-                        <ul class="list-unstyled">
-<!--                            <li class="login">-->
-<!--                                <button class="logbut" onClick="logButton()">Log in</button>-->
-<!--                            </li>-->
-                            <li class="signup">
-                                <button class="signbut" onClick="signButton()">Sign Up</button>
-                            </li>
-                        </ul>
-                    </nav>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
 
-                </div>
+    <!--Css files -->
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
 
-            </div>
-        </header>
+</head>
 
-        <!-- Section -->
-        <section>
-            <!-- Driver -->
-            <div class="driver" id="log_driver" onclick="navigateToDriverLogIn()">
-                <a class="signdriver" >
-                    Log in to drive
+<body>
+
+<!--NavBar-->
+<div class="navbar">
+    <a href="index.html" style="font-size:30px; margin-right:10%;">
+        Uber
+    </a>
+
+    <div class="sign" style="margin-top:10px;">
+        <button class="sign-but" onclick="signButton()">Sign Up</button>
+        <!--            <button class="logbut" onclick="logButton()">Log In</button>-->
+    </div>
+</div>
+
+<!-- body -->
+
+<!-- Section log in -->
+<section>
+    <!-- Driver -->
+    <div class="driver" id="log_driver" onclick="navigateToDriverLogIn()">
+        <a class="sign-driver">
+            Log in to drive
+        </a>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <path d="m22.2 12-6.5 9h-3.5l5.5-7.5H2v-3h15.7L12.2 3h3.5l6.5 9Z" fill="currentColor"></path>
+        </svg>
+    </div>
+
+    <!-- Rider -->
+    <div class="rider" id="log_rider" onclick="navigateToRiderLogIn()">
+        <a class="sign-rider">
+            Log in to ride
+        </a>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <path d="m22.2 12-6.5 9h-3.5l5.5-7.5H2v-3h15.7L12.2 3h3.5l6.5 9Z" fill="currentColor"></path>
+        </svg>
+    </div>
+
+</section>
+
+
+<!-- Footer Section-->
+
+<footer >
+    <div class="footer-content">
+
+        <!--Logo-->
+        <div class="foot-logo">
+            <a data-baseweb="link" href="index.html" target="_self" aria-label="Uber" class="fuberlogo">Uber</a>
+        </div>
+
+    </div>
+
+    <!--Social Media icons-->
+    <div class="socialMedia">
+        <ul class="footer-links">
+
+            <li>
+                <!--Facebook-->
+                <a href="https://www.facebook.com/uber?uclick_id=7cd26bd8-e376-4c3d-8727-427c8c278ef7" class="hover-opacity">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
                 </a>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                    <path d="m22.2 12-6.5 9h-3.5l5.5-7.5H2v-3h15.7L12.2 3h3.5l6.5 9Z" fill="currentColor">
-                    </path>
-                </svg>
-            </div>
-            <!-- Rider -->
-            <div class="rider" id="log_rider" onclick="navigateToRiderLogIn()">
-                <a class="signrider" >
-                    Log in to ride
-                </a>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                    <path d="m22.2 12-6.5 9h-3.5l5.5-7.5H2v-3h15.7L12.2 3h3.5l6.5 9Z" fill="currentColor">
-                    </path>
-                </svg>
-            </div>
-        </section>
+            </li>
 
-        <!-- Footer Seaction-->
-        <footer>
-            <div class="footercontent">
-                <div class="footlogo">
-                    <a data-baseweb="link" href="#" target="_self" aria-label="Uber" class="fuberlogo">Uber</a>
-                </div>
-            </div>
-            <div class="socialMedia">
-                <ul class="footer-linkes">
-                    <li>
-                        <a href="https://www.facebook.com/uber?uclick_id=7cd26bd8-e376-4c3d-8727-427c8c278ef7" class="hover-opacity">
-                            <i class="fa fa-facebook-official" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/uber?uclick_id=7cd26bd8-e376-4c3d-8727-427c8c278ef7" class="hover-opacity">
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/channel/UCgnxoUwDmmyzeigmmcf0hZA" class="hover-opacity">
-                            <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/company/uber-com/" class="hover-opacity">
-                            <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.instagram.com/uber/?uclick_id=7cd26bd8-e376-4c3d-8727-427c8c278ef7" class="hover-opacity">
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="application">
-                <a>
-                    <img/>
+            <li>
+                <!--Twitter-->
+                <a href="https://twitter.com/uber?uclick_id=7cd26bd8-e376-4c3d-8727-427c8c278ef7" class="hover-opacity">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
                 </a>
-                <a data-baseweb="link" href="https://ocie.app.link/HmhKsK15Pwb?%243p=a_custom_47734&amp;~tune_publisher_sub1=%7Bmarketing_visitor_id%7D&amp;~campaign=uber-com-footer&amp;%24uri_redirect_mode=1" 
-                alt="Download the Uber app for Android" 
-                target="_self" class="app">
-                    <img src="css/images/playstore.png" class="fplay"
-                alt="Download the Uber app for Android" role="presentation" aria-hidden="true"/>
+            </li>
+
+            <li>
+                <!--Youtube-->
+                <a href="https://www.youtube.com/channel/UCgnxoUwDmmyzeigmmcf0hZA" class="hover-opacity">
+                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
                 </a>
-                <a data-baseweb="link" href="https://ocie.app.link/HmhKsK15Pwb?%243p=a_custom_47734&amp;~tune_publisher_sub1=%7Bmarketing_visitor_id%7D&amp;~campaign=uber-com-footer&amp;%24uri_redirect_mode=1" 
-                alt="Download the Uber app for IOS" 
-                target="_self" class="app">
-                    <img src="css/images/appstore.png" class="fapp"
-                     alt="Download the Uber app for IOS" role="presentation" aria-hidden="true">
+            </li>
+
+            <li>
+                <!--LinkedIn-->
+                <a href="https://www.linkedin.com/company/uber-com/" class="hover-opacity">
+                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                 </a>
-            </div>
-            <div class="copyrights">
-                <p class="fcopyrights">copyrights &copy; 2023 Uber Technologies Inc.</p>
-            </div>
-        </footer>
-        <script src="js/main.js"></script>
-    </body>
+            </li>
+
+            <li>
+                <!--Instagram-->
+                <a href="https://www.instagram.com/uber/?uclick_id=7cd26bd8-e376-4c3d-8727-427c8c278ef7" class="hover-opacity">
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!--Application links-->
+    <div class="application">
+
+        <a data-baseweb="link" href="https://ocie.app.link/HmhKsK15Pwb?%243p=a_custom_47734&amp;~tune_publisher_sub1=%7Bmarketing_visitor_id%7D&amp;~campaign=uber-com-footer&amp;%24uri_redirect_mode=1" alt="Download the Uber app for Android" target="_self" class="app">
+            <img src="css/images/playstore.png" class="fplay" alt="Download the Uber app for Android" role="presentation" aria-hidden="true">
+        </a>
+
+        <a data-baseweb="link" href="https://ocie.app.link/HmhKsK15Pwb?%243p=a_custom_47734&amp;~tune_publisher_sub1=%7Bmarketing_visitor_id%7D&amp;~campaign=uber-com-footer&amp;%24uri_redirect_mode=1" alt="Download the Uber app for IOS" target="_self" class="app">
+            <img src="css/images/appstore.png" class="fapp" alt="Download the Uber app for IOS" role="presentation" aria-hidden="true">
+        </a>
+
+    </div>
+
+    <!--CopyRights-->
+    <div class="copyrights">
+        <p class="fcopyrights">copyrights &copy; 2023 Uber Technologies Inc.</p>
+    </div>
+
+</footer>
+
+<script src="js/main.js"></script>
+
+<script>
+
+<!--            Navigation of buttons-->
+            function navigateToDriverLogIn(){
+              window.location.href = "login-driver.html";
+            }
+
+            function navigateToRiderLogIn(){
+              window.location.href = "login-rider.html";
+            }
+
+<!--            header-->
+            function logButton() {
+                window.location.href = "login.html";
+            }
+
+            function signButton() {
+                window.location.href = "signup-option.html";
+            }
+        </script>
+</body>
 </html>

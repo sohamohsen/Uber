@@ -36,6 +36,19 @@ public class DriverController {
         return new ResponseEntity<>(service.getDrivers(), HttpStatus.OK);
     }
 
+    @GetMapping("/availability") // log_out?driverId=47&availability=true
+    public ResponseEntity<Object> changeDriverAvailability(
+            @RequestParam(name = "account_id",defaultValue = "0") int accountId,
+            @RequestParam(name = "availability", defaultValue = "true") boolean available
+    ){
+        Driver driver = service.getDriverByAccountId(accountId);
+        if (driver != null){
+            driver.available = available;
+            service.save(driver);
+        }
+
+        return new ResponseEntity<>(driver,HttpStatus.OK);
+    }
 
     @RequestMapping(
             path = "/driver",

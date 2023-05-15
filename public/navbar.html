@@ -10,7 +10,7 @@
   <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-
+  <script src="js/jquery-3.6.4.min.js"></script>
   <!--Css files -->
   <link rel="stylesheet" href="css/font-awesome.min.css" />
   <link rel="stylesheet" href="css/style.css" />
@@ -196,7 +196,7 @@ input:checked + .slider:before {
       <a style="display:inline-block; width:100%;">
         <p style="display:inline-block; margin-right:30px;">Available</p>
         <label class="switch">
-          <input type="checkbox">
+          <input id = "availability" type="checkbox" onclick="changeAvailability()">
           <span class="slider round"></span>
         </label>
       </a>
@@ -204,7 +204,7 @@ input:checked + .slider:before {
       <a href="#">Trips</a>
       <a href="#">Wallet</a>
       <hr>
-      <a href="#">Log out
+      <a onclick="logOut()">Log out
         <i class="fa-solid fa-right-to-bracket" ></i>
       </a>
     </div>
