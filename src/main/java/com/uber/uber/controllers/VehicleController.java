@@ -26,28 +26,31 @@ public class VehicleController {
     @Autowired
     private DriverService driverService;
 
-    @GetMapping("/vehicles")
+    // Request a list of all vehicles
+    @GetMapping("/vehicles") // path after base url http://localhost:8080/vehicles
     public ResponseEntity<List<Vehicle>> getVehicles() {
         return new ResponseEntity<>(service.getVehicles(), HttpStatus.OK);
     }
 
+    // Request to create vehicle account
     @RequestMapping(
-            path = "/vehicle",
+            path = "/vehicle", // path after base url http://localhost:8080/vehicle
             method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE, // request data type
+            consumes = MediaType.APPLICATION_JSON_VALUE // request data type
     )
 
-    public ResponseEntity<Object> createNewDriver(
+    public ResponseEntity<Object> createNewDriver( //TODO change method name createVehicle
             @RequestBody VehicleForm payload
     ){
+        // 1. Check if the driver has account.
         Driver driver = null;
         try {
             driver = driverService.getDriverByAccountId(payload.accountId);
         }catch (NoSuchElementException e){
             System.out.println(e.getMessage());
         }
-
+        // 2. Check that driver dosen't have another vehicle.
         if (driver != null){
             Vehicle vehicleFromDb = service.getVehicleByDriverId(driver.id);
             if (vehicleFromDb != null){
@@ -64,6 +67,7 @@ public class VehicleController {
                         payload.carMakerId,
                         driver.id
                 );
+                // 3. Check validation
                 if(service.getVehicleByVehicleLicence(payload.vehicleLicence) != null) {
                     JSONObject object = new JSONObject();
                     object.put("error", "Maybe your Vehicle Licence is wrong or is already in use.");
@@ -73,7 +77,7 @@ public class VehicleController {
                     object.put("error", "Maybe your Licence Plate is wrong or is already in use.");
                     return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
                 }
-                Gson gson = new Gson();
+                Gson gson = new Gson(); // TODO what is this?!
                 System.out.println(gson.toJson(vehicle));
                 return new ResponseEntity<>(service.save(vehicle),HttpStatus.CREATED);
             }

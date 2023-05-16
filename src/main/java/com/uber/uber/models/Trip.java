@@ -36,7 +36,6 @@ public class Trip {
     public Date pickTime ;
     @Column(name = "drop_time")
     public Date dropTime ;
-
     @Column(name = "create_date")
     @CreationTimestamp
     public Date createDate ;// database will create it for you, auto creation

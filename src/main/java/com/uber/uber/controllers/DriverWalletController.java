@@ -17,7 +17,8 @@ public class DriverWalletController {
     @Autowired
     private DriverWalletService service;
 
-    @GetMapping("/driverwallets")
+    // Request a list with all driver's wallets
+    @GetMapping("/driverwallets") // path after base url http://localhost:8080/driverwallet
     public List<DriverWallet> getDriverWallets() {
         return service.getDriverWallets();
     }

@@ -18,7 +18,7 @@ public class StatusController {
     private StatusService service;
 
 
-    @GetMapping("/status")
+    @GetMapping("/status") // path after base url http://localhost:8080/status
     public List<Status> getStatus() {
         return service.getStatus();
     }

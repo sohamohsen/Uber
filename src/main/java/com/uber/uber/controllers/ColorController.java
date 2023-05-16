@@ -16,8 +16,8 @@ public class ColorController {
     @Autowired
     private ColorService service;
 
-
-    @GetMapping("/colors")
+    // Return list with all colors
+    @GetMapping("/colors") // path after base url http://localhost:8080/colors
     public List<Color> getColors() {
         return service.getColors();
     }
