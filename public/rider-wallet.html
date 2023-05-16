@@ -23,48 +23,50 @@
 
     <body>
         <!--header-->
-        <header id="myHeader">
+        <header>
             <div class="container">
                 <div class="header-content">
                     <ul class="list-unstyled">
                         <li class="ulogo">
-                            <a data-baseweb="link" href="takeride.html"
-                            target="_self" aria-label="Go to Uber.com"  
-                            class="uberlogo">Uber</a>
+                            <a data-baseweb="link" href="#"
+                               target="_self" aria-label="Go to Uber.com"
+                               class="uberlogo">Uber</a>
                         </li>
                     </ul>
-                    <nav>
-                        <div class="taps">
+                    <div class="taps">
                         <ul class="list-unstyled">
                             <li class="rideli">
-                                <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
-                                        <i class="fa fa-taxi" aria-hidden="true"></i>
-                            Ride</a>                            </li>
+                                <a data-baseweb="button" data-buttonkey="//ride" href="takeride.html" class="_css-cBkCoG">
+                                    <i class="fa fa-taxi" aria-hidden="true"></i>
+                                    Ride</a>                            </li>
                             <li class="walletli">
-                                <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
+                                <a data-baseweb="button" data-buttonkey="//ride" href="#" class="_css-cBkCoG">
                                     <i class="fa-solid fa-wallet"></i>
-                                Wallet</a>
+                                    Wallet</a>
                             </li>
                             <li class="tripsli">
-                                <a data-baseweb="button" data-buttonkey="//ride" href="//ride" class="_css-cBkCoG">
+                                <a data-baseweb="button" data-buttonkey="//ride" href="trips.html" class="_css-cBkCoG">
                                     <i class="fa-solid fa-rectangle-list"></i>
-                                Trip</a>
+                                    Trip</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
-                                <div class="dropdown-content">
-                                  <a href="index.html">Log out</a>
-                                  <i class="fa-solid fa-right-from-bracket"></i>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="dropbtn" onclick="myFunction2()">
+                                        <i class="fa-solid fa-user" style="color: #080707;"></i>
+                                    </button>
+                                    <div class="dropdown-content" id="myDropdown">
+                                        <a href="#">Link 1</a>
+                                        <a href="#">Link 2</a>
+                                        <a href="#">Link 3</a>
+                                    </div>
                                 </div>
-                              </li>
+                            </li>
                         </ul>
-                        
+
                     </div>
-                    </nav>
                 </div>
             </div>
-        </header>
-<!-- body -->
+        </header><!-- body -->
         <div class="body">
             <div class="wallet">
                     <span class="wtitle">
@@ -77,6 +79,24 @@
             </div>
         </div>
    </body>
+    <script>
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction2() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
     <script src="js/main.js"></script>
     <script>
         getAccountByUserId();
