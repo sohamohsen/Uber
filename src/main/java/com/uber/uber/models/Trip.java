@@ -36,7 +36,6 @@ public class Trip {
     public Date pickTime ;
     @Column(name = "drop_time")
     public Date dropTime ;
-
     @Column(name = "create_date")
     @CreationTimestamp
     public Date createDate ;// database will create it for you, auto creation
@@ -78,6 +77,28 @@ public class Trip {
     )
     public Driver driver;
 
+
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "rider_id",
+            referencedColumnName = "id",
+            updatable = false,
+            insertable = false
+    )
+    public Rider rider;
+
+    @OneToOne(
+            mappedBy = "trip"
+    )
+    public Payment payment;
+
+    @OneToOne(
+            mappedBy = "trip"
+    )
+    public Transaction transaction;
     public Trip() {
     }
 

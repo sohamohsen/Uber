@@ -1,12 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <title>Trips</title>
     <meta charset="utf-8"/>
     <meta name="keywords" content="Trips"/>
     <meta name="description" content="All user trips"/>
 
+    <style>
+<!--Modal-->
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  height: 50%;
+
+}
+.modal-content p {
+  margin-top:10%;
+  font-size:20px;
+  text-align:center;
+}
+.modal-content button {
+  margin-top:7%;
+  margin-left:50px;
+}
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.navbar {
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: right;
+  margin-right:25px;
+  overflow: hidden;
+}
+
+
+
+
+</style>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <script src="js/jquery-3.6.4.min.js"></script>
 
@@ -18,67 +97,29 @@
     <!--Css files -->
     <link rel="stylesheet" href="css/css/all.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" href="css/riderwallet.css" />
-<!--     Trip style-->
-    <link rel="stylesheet" href="trips.html"/>
+    <link rel="stylesheet" href="css/rider-wallet.css" />
 
 </head>
 <body>
 <!--header-->
-<header>
-    <div class="container" style="  overflow: hidden;">
-        <div class="header-content">
-            <ul class="list-unstyled">
-                <li class="ulogo">
-                    <a data-baseweb="link" href="#"
-                       target="_self" aria-label="Go to Uber.com"
-                       class="uberlogo">Uber</a>
-                </li>
-            </ul>
-            <div class="taps">
-                <ul class="list-unstyled">
-                    <li class="rideli">
-                        <a data-baseweb="button" data-buttonkey="//ride" href="takeride.html" class="_css-cBkCoG">
-                            <i class="fa fa-taxi" aria-hidden="true"></i>
-                            Ride</a>                            </li>
-                    <li class="walletli">
-                        <a data-baseweb="button" data-buttonkey="//ride" href="rider-wallet.html" class="_css-cBkCoG">
-                            <i class="fa-solid fa-wallet"></i>
-                            Wallet</a>
-                    </li>
-                    <li class="tripsli">
-                        <a data-baseweb="button" data-buttonkey="//ride" href="#" class="_css-cBkCoG">
-                            <i class="fa-solid fa-rectangle-list"></i>
-                            Trip</a>
-                    </li>
-                    <li>
-                    <div class="dropdown">
-                        <button class="dropbtn" onclick="myFunction2()">
-                            <i class="fa-solid fa-user" style="color: #080707;"></i>
-                        </button>
-                        <div class="dropdown-content" id="myDropdown">
-                            <a href="#">Link 1</a>
-                            <a href="#">Link 2</a>
-                            <a href="#">Link 3</a>
-                        </div>
-                    </div>
-                    </li>
-                </ul>
 
-        </div>
-    </div>
-    </div>
-</header>
+
+
 
 <!--Body-->
 <!--Title-->
 <div class="tripsBody">
     <div class="headOfTrips">
-        <h5 class="headerTrips">MyTrips</h5>
-        <div class="tapsOfTrips">
+
+        <div class="trip-img">
+            <img  style=" overflow-clip-margin: content-box; overflow: clip;  margin-left: auto; margin-right: auto; object-fit: cover; height:500px;"
+                 src="css/images/road-trip-by-car-summer-vacation-travel-trip_107791-9489.avif" alt="">
+        </div>
+        <h5 class="headerTrips">My Trips</h5>
+        <div class="tapsOfTrips" style="al">
             <button class="all-Trips" data-baseweb="button" id = "allTrips" onclick="getTrips()">All Trips</button>
             <button class="finished-Trips" data-baseweb="button" id="finishTrips" onclick="getFinishedTrips()">Finished</button>
-            <button class="progress" data-baseweb="button" id="progress">In progress</button>
+            <button class="progress" data-baseweb="button" id="progress" onclick="getStartedTrips()">In progress</button>
             <button class="requested-trips" id="requestedTrips" data-baseweb="button" onclick="getNewTrip()">Requested</button>
             <button class="cancel-trips" data-baseweb="button" id="cancelTrips" onclick="getCanceledTrips()">Canceled</button>
         </div>
@@ -86,34 +127,50 @@
             <ul id="contentTrip" style="list-style-type: none;">
 
 
-
             </ul>
         </section>
     </div>
 </div>
+<!-- The Modal -->
+<div id="paymentMethodModal" class="modal" style="display:none;">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <p>Please, Ask Rider which payment way prefer?!</p>
+        <button  id="wallet" style="background:black; color:white; float:left; width:100px;" onclick="payWithWallet()">Wallet</button>
+        <button id="cash" style="background:black; color:white; float:right; width:100px;" onclick="attemptToPay()">Cash</button>
+    </div>
+</div>
 
+<div id="paymentMethodSussedModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <i class="fa-regular fa-circle-check fa-8x" style="color: #5cac3e;"></i>
+        <p>Done</p>
+    </div>
+</div>
+
+<div id="paymentMethodCashModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <p>
+            Enter the amount rider paid.
+        </p>
+        <label>
+            <input id="cashAmount" type="number" placeholder="amount">
+            <button id="payCash" onclick="payWithCash()">Pay</button>
+        </label>
+    </div>
+</div>
 <script src="js/main.js"></script>
 
     <script>
         loadTrips();
     </script>
+
 <script>
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction2() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
+  window.onclick = function(event) {
+    if(event.target.id === 'paymentMethodCashModal' || event.target.id === 'paymentMethodSussedModal' || event.target.id === 'paymentMethodModal'){
+        event.target.style.display = "none";
     }
   }
-}
 </script>
 
 </body>

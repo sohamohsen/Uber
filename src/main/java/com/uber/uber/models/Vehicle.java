@@ -24,14 +24,9 @@ public class Vehicle  {
     public int releaseYear;
     @Column(name="car_model_id")
     public int carModelId;
-
-
     @Column(name = "car_maker_id")
     public int carMakerId;
-
-    @Column(
-            name = "driver_id"
-    )
+    @Column(name = "driver_id")
     public int driverId;
 
     @ManyToOne(

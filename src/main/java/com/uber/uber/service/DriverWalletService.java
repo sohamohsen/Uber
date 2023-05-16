@@ -20,4 +20,9 @@ public class DriverWalletService {
         return repo.findAll();
     }
     public DriverWallet save(DriverWallet driverWallet) {return repo.save(driverWallet);}
+
+
+    public DriverWallet getWalletByDriverId(int driverId){
+        return repo.findByDriverId(driverId);
+    }
 }

@@ -18,8 +18,8 @@ public class CarMakerController {
     @Autowired
     private CarMakerService service;
 
-
-    @GetMapping("/carmakers")
+    // Return list with all car makers
+    @GetMapping("/carmakers") // path after base url http://localhost:8080/carmakers
     public ResponseEntity<List<CarMaker>> getCarMakers() {
         return new ResponseEntity<>(service.getCarMakers(), HttpStatus.OK) ;
     }

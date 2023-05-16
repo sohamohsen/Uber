@@ -18,8 +18,8 @@ public class ReleaseYearController {
     @Autowired
     private ReleaseYearService service;
 
-
-    @GetMapping("/release_years")
+    // Return list with all released years
+    @GetMapping("/release_years") // path after base url http://localhost:8080/release_years
     public ResponseEntity<List<ReleaseYear>> getReleaseYears() {
         return new ResponseEntity<> (service.getReleaseYears(), HttpStatus.OK);
     }

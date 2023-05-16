@@ -19,6 +19,7 @@ public class RiderWalletController {
     private RiderWalletService service;
 
 
+    // Request a list of riderWallets
     @GetMapping("/rider_wallets")
     public List<RiderWallet> getRiderWallets() {
         return service.getRiderWallets();

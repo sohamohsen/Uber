@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head >
+        <meta charset="utf-8"/>
+        <meta name="keywords" content="Log in"/>
+        <meta name="description" content="Log in"/>
+        <title>Wallet</title>
+
+        <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+
+        
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
+        <script src="js/jquery-3.6.4.min.js"></script>
+
+        <!--Css files -->
+        <link rel="stylesheet" href="css/css/all.min.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/rider-wallet.css" />
+    </head>
+
+    <body>
+        <!--header-->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <ul class="list-unstyled">
+                        <li class="ulogo">
+                            <a data-baseweb="link" href="#"
+                               target="_self" aria-label="Go to Uber.com"
+                               class="uberlogo">Uber</a>
+                        </li>
+                    </ul>
+                    <div class="taps">
+                        <ul class="list-unstyled">
+                            <li class="rideli">
+                                <a data-baseweb="button" data-buttonkey="//ride" href="ride.html" class="_css-cBkCoG">
+                                    <i class="fa fa-taxi" aria-hidden="true"></i>
+                                    Ride</a>                            </li>
+                            <li class="walletli">
+                                <a data-baseweb="button" data-buttonkey="//ride" href="#" class="_css-cBkCoG">
+                                    <i class="fa-solid fa-wallet"></i>
+                                    Wallet</a>
+                            </li>
+                            <li class="tripsli">
+                                <a data-baseweb="button" data-buttonkey="//ride" href="trips.html" class="_css-cBkCoG">
+                                    <i class="fa-solid fa-rectangle-list"></i>
+                                    Trip</a>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="dropbtn" onclick="myFunction2()">
+                                        <i class="fa-solid fa-user" style="color: #080707;"></i>
+                                    </button>
+                                    <div class="dropdown-content" id="myDropdown">
+                                        <a href="#">Link 1</a>
+                                        <a href="#">Link 2</a>
+                                        <a href="#">Link 3</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </header><!-- body -->
+        <div class="body">
+            <div class="wallet">
+                    <span class="wtitle">
+                        <span class="">Uber Cash</span>
+                    </span>
+                    <br>
+                    <span class="amount">
+                        <span class="" id="wallet">EGP&nbsp;0.00</span>
+                </span>
+            </div>
+        </div>
+   </body>
+    <script>
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction2() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
+    <script src="js/main.js"></script>
+    <script>
+        getAccountByUserId();
+    </script>
+</html>

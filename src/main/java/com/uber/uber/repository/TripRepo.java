@@ -15,6 +15,8 @@ import java.util.List;
 public interface TripRepo extends JpaRepository<Trip, Integer> {
     List<Trip> findByRiderId(int riderId);
     List<Trip> findByDriverIdAndStatusId(int driverId,int statusId);
+
+
     List<Trip> findByRiderIdAndStatusId(int riderId,int statusId);
 
     List<Trip> findByDriverId(int driverId);

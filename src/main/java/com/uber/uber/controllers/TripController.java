@@ -30,35 +30,102 @@ public class TripController {
     @Autowired
     private StatusService statusService;
 
-    //Requests
-    @GetMapping("/trips")
+    // Requests to get lest with all trips
+    @GetMapping("/trips") // path after base url http://localhost:8080/trips
     public List<Trip> getTrips() {
         return service.getTrips();
     }
 
-    @GetMapping("/trip/{id}")
+    // Request to get each trip from it's id
+    @GetMapping("/trip/{id}") // path after base url http://localhost:8080/trip/(id)
     public Trip getTripById(@PathVariable("id") int id) {
         return service.getTripById(id);
     }
 
-    @GetMapping("/new_request/{account_id}")
+    // Request to get requested trip
+    @GetMapping("/new_request/{account_id}") // path after base url http://localhost:8080/new_reqest/(account_Id)
     public ResponseEntity<Object> getNewRequestedTrips(
             @PathVariable("account_id") int accountId
-    ) {
+    ) { // 1. Check that the user order trip is already exist.
         Rider rider = riderService.getRiderByUserId(accountId);
         Driver driver = driverService.getDriverByAccountId(accountId);
+        // 2. Return error if user not found
         if (rider == null && driver == null) {
             JSONObject object = new JSONObject();
             object.put("error", "Not Found");
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+            // or 2. rerun all requested user trips that status id 4
         } else if (rider != null) {
-            return new ResponseEntity<>(service.getRiderRequestedTrips(rider.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getRiderTripsByStatusId(rider.id,4), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getRequestedTripByDriverId(driver.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getTripsByDriverIdAndStatusId(driver.id,4), HttpStatus.OK);
         }
     }
 
-    @GetMapping("/trips/{account_id}")
+    // Request to get all canceled trips for specific USER
+    @GetMapping("/all_canceled_trips/{account_id}") // path after base url http://localhost:8080/all_canceled_trips/(account_Id)
+    public ResponseEntity<Object> getCanceledTrips(
+            @PathVariable("account_id") int accountId
+    ) { // 1. Check that the user order trip is already exist.
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        // 2. Return error if user not found
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+            // or 2. rerun all canceled user trips that status id 1
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderCanceledTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getCanceledTripByDriverId(driver.id), HttpStatus.OK);
+        }
+    }
+
+    // Request to get all finished trips for specific USER
+    @GetMapping("/all_finished_trips/{account_id}") // path after base url http://localhost:8080/all_finished_trips/(account_Id)
+    public ResponseEntity<Object> getFinishedTrips(
+            @PathVariable("account_id") int accountId
+    ) { // 1. Check that the user order trip is already exist.
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        // 2. Return error if user not found
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+            // or 2. rerun all finished user trips that status id 3
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderFinishedTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getFinishedTripByDriverId(driver.id), HttpStatus.OK);
+        }
+    }
+
+
+    // Request to get all started trips for specific USER
+    @GetMapping("/all_started_trips/{account_id}") // path after base url http://localhost:8080/all_started_trips/(account_Id)
+    public ResponseEntity<Object> getStartedTrips(
+            @PathVariable("account_id") int accountId
+    ) { // 1. Check that the user order trip is already exist.
+        Rider rider = riderService.getRiderByUserId(accountId);
+        Driver driver = driverService.getDriverByAccountId(accountId);
+        // 2. Return error if user not found
+        if (rider == null && driver == null) {
+            JSONObject object = new JSONObject();
+            object.put("error", "Not Found");
+            return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
+            // or 2. return all started user trips that status id 2
+        } else if (rider != null) {
+            return new ResponseEntity<>(service.getRiderStartedTrips(rider.id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(service.getStartedTripByDriverId(driver.id), HttpStatus.OK);
+        }
+    }
+
+
+    // Request to get all trips for specific user
+    @GetMapping("/trips/{account_id}") // path after base url http://localhost:8080/trips/(account_Id)
     public ResponseEntity<Object> getAllTripByUserId(
             @PathVariable("account_id") int accountId
     ) {
@@ -93,7 +160,10 @@ public class TripController {
         }
         if (rider != null) {
 
-            if (!service.getRiderRequestedTrips(rider.id).isEmpty()) {
+            if (!service.getRiderTripsByStatusId(rider.id,2).isEmpty() ||
+                    !service.getRiderTripsByStatusId(rider.id,4).isEmpty() ||
+                    !service.getRiderTripsByStatusId(rider.id,3).isEmpty()
+            ) {
                 JSONObject object = new JSONObject();
                 object.put("error", "You already have request in progress");
                 return new ResponseEntity<>(object.toString(), HttpStatus.NOT_ACCEPTABLE);
@@ -108,7 +178,10 @@ public class TripController {
                 for (Driver d : drivers) {
                     if (d.available) {
                         //Check if driver does not have a trip
-                        if (!service.getRequestedTripByDriverId(d.id).isEmpty()) {
+                        if (!service.getTripsByDriverIdAndStatusId(d.id,4).isEmpty() ||
+                                !service.getTripsByDriverIdAndStatusId(d.id,2).isEmpty() ||
+                                !service.getTripsByDriverIdAndStatusId(d.id,3).isEmpty()
+                        ) {
                             continue;
                         }
                         driver = d;
@@ -204,7 +277,7 @@ public class TripController {
 
 
 
-
+    // Method calculate distance in km
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
         if ((lat1 == lat2) && (lon1 == lon2)) {
             return 0;
@@ -219,12 +292,3 @@ public class TripController {
         }
     }
 }
-
-
-// 1- Start trip button
-// 2- finish
-// 3- fare
-// 4- driver choose which way rider will pay (cash or credit)
-
-
-

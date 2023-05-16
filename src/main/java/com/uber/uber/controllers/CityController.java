@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 
@@ -22,7 +21,7 @@ public class CityController {
 
 
     //Request to get all cities
-    @GetMapping("/cities")
+    @GetMapping("/cities") // path after base url http://localhost:8080/cities
     public ResponseEntity<List<City>> getCities() {
         return new ResponseEntity<>(service.getCities(), HttpStatus.OK);
     }

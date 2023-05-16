@@ -3,101 +3,121 @@
 
     <head >
         <meta charset="utf-8"/>
-        <meta name="keywords" content="Log in"/>
-        <meta name="description" content="Log in"/>
-        <title>Uber</title>
+        <meta name="keywords" content="Sign up"/>
+        <meta name="description" content="Sign up"/>
+
+        <title>Rider Sign up</title>
         
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
-        <script src="js/jquery-3.6.4.min.js"></script>
+
         <!--Css files -->
         <link rel="stylesheet" href="css/font-awesome.min.css" />
         <link rel="stylesheet" href="css/sign.css" />
+        <link rel="stylesheet" href="css/style.css" />
+
+        <script src="js/jquery-3.6.4.min.js"></script>
+
     </head>
 
     <body>
-        <!--header-->
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <ul class="list-unstyled">
-                        <li class="ulogo">
-                            <a data-baseweb="link" href="index.html"
-                            target="_self" aria-label="Go to Uber.com"  
-                            class="uberlogo">Uber</a>
-                        </li>
-                    </ul>
-<!--                    <nav>-->
-<!--                        <ul class="list-unstyled">-->
-<!--                            <li class="login">-->
-<!--                                <button class="logbut">Log in</button>-->
-<!--                            </li>-->
-<!--                            <li class="signup">-->
-<!--                                <button class="signbut">Sign UP</button>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
-                </div>
-            </div>
-        </header>
 
-        <br>
-        
-        <!--Sign Up  -->
-            <div role="main" screen-test="PHONE_NUMBER_INITIAL" flow-test="INITIAL" class="Sign">
-                    <div class="title">
-                        <h2 id="title" class="title">
-                            Create rider account
-                        </h2>
-                    </div>
+    <!--NavBar-->
+    <div class="navbar">
+        <a href="index.html" style="font-size:35px; margin-right:10%;">
+            Uber
+        </a>
+        <a href="#home" style="margin-top:10px;">Driver</a>
+        <a href="#news" style="margin-top:10px;">Rider</a>
+        <a href="#news" style="margin-top:10px;">How uber works</a>
+        <a href="#news" style="margin-top:10px;">About us</a>
 
-                    <label for="rider-first-name">First Name</label>
-                    <input type="text" id="rider-first-name" name="firstname" placeholder="Your name..">
-                
-                    <label for="rider-last-name">Last Name</label>
-                    <input type="text" id="rider-last-name" name="lastname" placeholder="Your last name..">
+        <div class="sign" style="margin-top:10px;" >
+            <button class="sign-but"  onclick="signButton()">Sign Up</button>
+            <button class="log-but" onclick="logButton()">Log In</button>
+        </div>
+    </div>
 
-                    <!-- Phone  -->
-                    <div class="phone">
-                        <label for="rider-phone-number"><b>Phone Number</b></label>
-                        <input type="tel" id="rider-phone-number" name="phone" placeholder="01x-xxx-xxx-xx"  >
-                    </div>
-                    <div class="birthday">
-                        <label for="rider-birthday">Birthday:</label>
-                        <input type="date" id="rider-birthday" name="birthday">
-                    </div>
+    <!--Sign Up  -->
+    <div role="main" class="Sign">
+
+        <!--Title-->
+        <div class="title">
+            <h2 id="title" class="title">
+                Create rider account
+            </h2>
+        </div>
+
+        <!--Name-->
+        <label for="rider-first-name">First Name</label>
+        <input type="text" id="rider-first-name" name="firstname" placeholder="Your name..">
+        <label for="rider-last-name">Last Name</label>
+        <input type="text" id="rider-last-name" name="lastname" placeholder="Your last name..">
+
+        <!-- Phone  -->
+        <div class="phone">
+            <label for="rider-phone-number"><b>Phone Number</b></label>
+            <input type="tel" id="rider-phone-number" name="phone" placeholder="01x-xxx-xxx-xx"  >
+        </div>
+
+        <!--BirthDate-->
+        <div class="birthday">
+            <label for="rider-birthday">Birthday:</label>
+            <input type="date" id="rider-birthday" name="birthday">
+        </div>
                     
-                    <!-- City -->
-
-                    <label for="city">City</label>
-                    <select id="city" name="city" onchange="onCitySelectItem(event)">
-
-                    </select>
+        <!-- City -->
+        <label for="city">City</label>
+        <select id="city" name="city" onchange="onCitySelectItem(event)">
+        </select>
                         
-                <!-- submit button -->
-                <div class="continue">
-                    <button type="submit" class="next" id="CreateRiderAccount" onclick="attemptCreateRiderProfile()">Sign Up</button>
-                </div>                      
+        <!-- submit button -->
+        <div class="continue">
+            <button type="submit" class="next" id="CreateRiderAccount" onclick="attemptCreateRiderProfile()">Sign Up</button>
         </div>
 
-        <div class="captche-continer">            
-            <div class="captche">
-                <p class="p-catche">
-                    This site is protected by reCAPTCHA and the Google 
-                        <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
-                             Privacy Policy
-                        </a>
-                            and 
-                        <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
-                            Terms of Service
-                        </a>
-                    apply.
-                </p>
-            </div>
-        </div>
-        <script src="js/main.js"></script>
+    </div>
 
-        <script>getCities()</script>
+    <!--    Captcha -->
+    <div class="captcha-container">
+        <div class="captcha">
+            <p class="p-cache">
+                This site is protected by reCAPTCHA and the Google
+                <a target="_blank" id="privacyPolicyLink" href="https://policies.google.com/privacy">
+                    Privacy Policy
+                </a>
+                and
+                <a target="_blank" id="termsOfServiceLink" href="https://policies.google.com/terms">
+                    Terms of Service
+                </a>
+                apply.
+            </p>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+
+            getCities();
+
+<!--            Navigation of buttons-->
+            function navigateToDriverLogIn(){
+              window.location.href = "login-driver.html";
+            }
+
+            function navigateToRiderLogIn(){
+              window.location.href = "login-rider.html";
+            }
+
+<!--            header-->
+            function logButton() {
+                window.location.href = "login.html";
+            }
+
+            function signButton() {
+                window.location.href = "signup-option.html";
+            }
+        </script>
     </body>
 </html>

@@ -30,16 +30,16 @@ public class AccountController {
      */
     //end point or url path
 
-    //List all accounts
+    // Return all accounts
     @GetMapping("/accounts") //http://localhost:8080/accounts
     public List<Account> getAccounts() {
         return service.getAccounts();
     }
 
 
-    //Request to get each account by id
+    // Request to get each account by id
     @GetMapping("/accounts/{user_id}") // http://localhost:8080/account/2
-    public ResponseEntity<Account> getAccount(
+    public ResponseEntity<Account> getAccount( //TODO Change function name to getAccountByUserId
             @PathVariable("user_id") int id
     ){
         return new ResponseEntity<>(service.getAccountById(id),HttpStatus.OK);
@@ -66,23 +66,31 @@ public class AccountController {
         //Validation
         //1. check if email exists in database
         Account accountFromDb = service.getAccountByEmail(payLoad.email);
-        if (accountFromDb != null){
-            // return error
+
+        if (accountFromDb != null){ // if exist
+            // 2. return error
             JSONObject object = new JSONObject();
             object.put("error","User already exist");
             return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-        }else {
-            //create new account
-            // check for validation value
+        }else { // if it's not exist
+            //or 2. create new account
             Account account = new Account();
+
+            // Json objects
             JSONObject object = new JSONObject();
             JSONObject error = new JSONObject();
+
+            // 3. get data from user.
             String email = payLoad.email;
             String password = payLoad.password;
             String type = payLoad.type;
-            boolean isEmailInvalid = email.isBlank() || !email.contains("@") || !email.contains(".com");
-            boolean isPasswordInValid = password.isBlank() || password.length() < 8;
-            boolean isTypeInvalid = !type.equals("rider") && !type.equals("driver");
+
+            // 3. check for validation value
+            boolean isEmailInvalid = email.isBlank() || !email.contains("@") || !email.contains(".com"); // 3.1. check email validation (Contain @ and .com)
+            boolean isPasswordInValid = password.isBlank() || password.length() < 8; // 3.2. check password validation (password doesn't have spaces and not less than 8 characters)
+            boolean isTypeInvalid = !type.equals("rider") && !type.equals("driver"); // 3.3. check user type
+
+            // 4. Put Error messages in json file.
             if (isEmailInvalid) {
                 error.put("email","Invalid Email");
             }
@@ -93,11 +101,12 @@ public class AccountController {
                 error.put("type","Invalid Type");
             }
 
+            // 4. Return error messages.
             if (isEmailInvalid || isPasswordInValid || isTypeInvalid){
               object.put("error",error); // wrap
               return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
             }else {
-                // create new account and return account
+                // or 4. create new account and return account
                 account.email = (email);
                 account.password = (password);
                 account.type = (type);
@@ -133,7 +142,7 @@ public class AccountController {
             }
         }else {
             // if account doesn't exist
-            // OR 3. return wrong account not found
+            // OR 2. return wrong account not found
             JSONObject object = new JSONObject();
             object.put("error","User doesn't exist.");
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
