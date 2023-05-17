@@ -75,7 +75,9 @@ function signIn(emailValue,passwordValue){
             console.log(JSON.stringify(error.responseJSON));
     });
 }
- function getAccountByUserId(){
+
+ // Http request to select user by his account id which is save in local storage
+function getAccountByUserId(){
 
     return $.ajax({
         url: BASE_URL+"/accounts/"+localStorage.getItem('user_id'),
@@ -97,6 +99,7 @@ function signIn(emailValue,passwordValue){
     })*/
 }
 
+// Update ui of home according to type of user
 async function updateIndex(){
 
 try{
@@ -125,12 +128,13 @@ try{
     }
 }
 
+// Update ui of wallet according to type of user
 async function updateWallet(){
         const profile = await getAccountByUserId();
         updateProfileUi(profile);
-
 }
 
+// Update ui of wallet according to type of user
 function updateProfileUi(profile){
     // declare ui elements
     const balanceView = document.getElementById('wallet')
@@ -142,6 +146,7 @@ function updateProfileUi(profile){
     }
 }
 
+// Update ui of navbar according to type of user
 async function updateNavBar(){
 if(localStorage.getItem('user_id') == null){
  window.location.assign('index.html', "_self")
@@ -171,6 +176,7 @@ if(localStorage.getItem('user_id') == null){
     }
 }
 
+// control navigation of navbar links
 function createDriverNavLinks(){
     var a = document.createElement('a');
     var linkText = document.createTextNode("Driver");
@@ -202,6 +208,7 @@ function createDriverNavLinks(){
 
 }
 
+// control navigation of navbar links
 function createRiderNavLinks(){
     var a = document.createElement('a');
     var linkText = document.createTextNode("Rider");
@@ -233,6 +240,7 @@ function createRiderNavLinks(){
 
 }
 
+// Sign up http request
 function signUp(object){
       $.ajax({ // request
         url: BASE_URL+"/sign_up",
@@ -265,6 +273,7 @@ function signUp(object){
     });
 }
 
+// get cities http request
 function getCities(){
       $.ajax({ // request
             url: BASE_URL+"/cities",
@@ -288,11 +297,13 @@ function getCities(){
         });
 }
 
+// put cities on selection item
 function onCitySelectItem(event){
     cityId = event.target.value;
     console.log(cityId);
 }
 
+// get car makers http request
 function getCarMakers(){
       $.ajax({ // request
             url: BASE_URL+"/carmakers",
@@ -320,18 +331,20 @@ function getCarMakers(){
         });
 }
 
+// put car makers on selection item
 function onCarMakerSelectItem(event){
     carMakerId = event.target.value;
     getCarModels()
 }
 
+// remove items add on html to put new items from DB
 function removeAll(selectBox) {
-
     while (selectBox.options.length > 0) {
         selectBox.remove(0);
     }
 }
 
+// get car models http request
 function getCarModels(){
       $.ajax({ // request
             url: BASE_URL+"/car_model/"+carMakerId,
@@ -359,11 +372,13 @@ function getCarModels(){
         });
 }
 
+// put car models on selection item
 function onCarModelSelectItem(event){
     carModelId = event.target.value;
     console.log(carModelId);
 }
 
+//  get years
 function getYears(){
       $.ajax({ // request
             url: BASE_URL+"/release_years",
