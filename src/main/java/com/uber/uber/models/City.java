@@ -19,17 +19,6 @@ public class City {
     @Column(name="city_name")
     public String cityName;
 
-    //TODO why this relation is commented.
-    //declaration of relationships
-    /*@OneToOne(
-            mappedBy = "city"
-    )
-    public Driver driver;
-
-    @OneToOne(
-            mappedBy = "city"
-    )
-    public Rider rider;*/
 
     public City() {
     }

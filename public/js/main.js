@@ -76,24 +76,65 @@ function signIn(emailValue,passwordValue){
     });
 }
 
+ // Http request to select user by his account id which is save in local storage
 function getAccountByUserId(){
-    $.ajax({
+
+    return $.ajax({
         url: BASE_URL+"/accounts/"+localStorage.getItem('user_id'),
         type: 'GET',
         headers:{
             "Access-Control-Allow-Origin": '*', // recommended
         }
-    }).then(function(data, status, jqxhr){
+    });
+    /*.then(function(data, status, jqxhr){
         // Update UI
-
-        updateProfileUi(data);
+        return data;
+       // updateProfileUi(data);
 
 
     }).fail(function(error){
+
     console.log(JSON.stringify(error));
-    })
+    return error;
+    })*/
 }
 
+// Update ui of home according to type of user
+async function updateIndex(){
+
+try{
+    const profile = await getAccountByUserId();
+        if(profile === ''){
+            document.getElementById('signup_button').style.visibility = 'visible';
+            document.getElementById('signIn_button').style.visibility = 'visible';
+            return;
+        }
+                   // Update UI
+        if(profile.type === "rider"){
+            document.getElementById('rider_button').style.visibility = 'visible';
+
+        }
+
+        if(profile.type === "driver"){
+            document.getElementById('driver_button').style.visibility = 'visible';
+        }
+
+
+
+    }catch(error){
+    document.getElementById('signup_button').style.visibility = 'visible';
+                document.getElementById('signIn_button').style.visibility = 'visible';
+        console.log(error)
+    }
+}
+
+// Update ui of wallet according to type of user
+async function updateWallet(){
+        const profile = await getAccountByUserId();
+        updateProfileUi(profile);
+}
+
+// Update ui of wallet according to type of user
 function updateProfileUi(profile){
     // declare ui elements
     const balanceView = document.getElementById('wallet')
@@ -105,6 +146,101 @@ function updateProfileUi(profile){
     }
 }
 
+// Update ui of navbar according to type of user
+async function updateNavBar(){
+if(localStorage.getItem('user_id') == null){
+ window.location.assign('index.html', "_self")
+ return;
+ }
+    try{
+    const profile = await getAccountByUserId();
+    if(profile === ''){
+        //navigate to index
+        window.location.assign('index.html', "_self")
+
+    }
+
+    if(profile.type === "rider"){
+        createRiderNavLinks()
+        document.getElementById('user_name').innerHTML = profile.rider.firstName+" "+profile.rider.lastName;
+    }
+
+    if(profile.type === "driver"){
+        createDriverNavLinks()
+        document.getElementById('availability_ref').style.visibility = 'visible';
+        document.getElementById('availability').checked = profile.driver.available;
+        document.getElementById('user_name').innerHTML = profile.driver.firstName+" "+profile.driver.lastName;
+    }
+    }catch(error){
+        console.log(error);
+    }
+}
+
+// control navigation of navbar links
+function createDriverNavLinks(){
+    var a = document.createElement('a');
+    var linkText = document.createTextNode("Driver");
+    a.appendChild(linkText);
+    a.title = "Driver";
+    a.href = "trips.html";
+    a.style.setProperty('margin-top','10px');
+    document.getElementById('navbar_links').appendChild(a);
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("How uber works");
+                a.appendChild(linkText);
+                a.title = "How uber works";
+                a.href = "https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("About us");
+                a.appendChild(linkText);
+                a.title = "About us";
+                a.href = "https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+}
+
+// control navigation of navbar links
+function createRiderNavLinks(){
+    var a = document.createElement('a');
+    var linkText = document.createTextNode("Rider");
+    a.appendChild(linkText);
+    a.title = "Rider";
+    a.href = "ride.html";
+    a.style.setProperty('margin-top','10px');
+    document.getElementById('navbar_links').appendChild(a);
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("How uber works");
+                a.appendChild(linkText);
+                a.title = "How uber works";
+                a.href = "https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("About us");
+                a.appendChild(linkText);
+                a.title = "About us";
+                a.href = "https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+}
+
+// Sign up http request
 function signUp(object){
       $.ajax({ // request
         url: BASE_URL+"/sign_up",
@@ -137,6 +273,7 @@ function signUp(object){
     });
 }
 
+// get cities http request
 function getCities(){
       $.ajax({ // request
             url: BASE_URL+"/cities",
@@ -160,11 +297,13 @@ function getCities(){
         });
 }
 
+// put cities on selection item
 function onCitySelectItem(event){
     cityId = event.target.value;
     console.log(cityId);
 }
 
+// get car makers http request
 function getCarMakers(){
       $.ajax({ // request
             url: BASE_URL+"/carmakers",
@@ -192,18 +331,20 @@ function getCarMakers(){
         });
 }
 
+// put car makers on selection item
 function onCarMakerSelectItem(event){
     carMakerId = event.target.value;
     getCarModels()
 }
 
+// remove items add on html to put new items from DB
 function removeAll(selectBox) {
-
     while (selectBox.options.length > 0) {
         selectBox.remove(0);
     }
 }
 
+// get car models http request
 function getCarModels(){
       $.ajax({ // request
             url: BASE_URL+"/car_model/"+carMakerId,
@@ -231,11 +372,13 @@ function getCarModels(){
         });
 }
 
+// put car models on selection item
 function onCarModelSelectItem(event){
     carModelId = event.target.value;
     console.log(carModelId);
 }
 
+//  get years
 function getYears(){
       $.ajax({ // request
             url: BASE_URL+"/release_years",
@@ -1202,6 +1345,7 @@ function logOut(){
     document.getElementById('availability').checked = false;
     changeAvailability();
     localStorage.clear();
+    window.location.assign('index.html', "_self")
 }
 
 function changeAvailability(){
@@ -1221,7 +1365,7 @@ function changeAvailability(){
       console.log(status);
       if(status === 'success'){
 
-      //TODO location.reload(true);
+      // TODO location.reload(true);
       }
       }).fail(function(error){
           console.log(error.responseJSON);
