@@ -101,18 +101,63 @@
 
 </head>
 <body>
-<!--header-->
+
+<!--NavBar-->
+<div class="navbar" id="navbar_links">
+    <!--Logo-->
+    <a href="index.html" style="font-size:30px; margin-right:10%;">
+        Uber
+    </a>
+
+<!--    &lt;!&ndash;Taps&ndash;&gt;-->
+<!--    <a id="driver_button" href="https://www.uber.com/eg/en/drive/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px; visibility:visible;">Driver</a>-->
+<!--    <a id="rider_button" href="https://www.uber.com/eg/en/ride/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px; visibility:hidden;">Rider</a>-->
+<!--    <a href="https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">How uber works</a>-->
+<!--    <a href="https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">About us</a>-->
+
+    <!--DropDown-->
+    <div class="dropdown" style="margin-top:10px;" onclick="dropDown()">
+
+        <button class="dropbtn" >
+            <i class="fa-solid fa-user" style="color: #000000; display: inline-block; background:white; border-radius: 60px; box-shadow: 0 0 2px white; padding: 0.5em 0.6em;"></i>
+        </button>
+
+        <!--Content-->
+        <div class="dropdown-content" id="myDropdown">
+            <a href="#" id="user_name">Driver Name</a>
+            <hr>
 
 
+
+            <a href="ride.html">Ride</a>
+            <a href="trips.html">Trips</a>
+            <a href="wallet.html">Wallet</a>
+            <!--Available switch-->
+            <a id="availability_ref" style="display:inline-block; width:100%; visibility:hidden" >
+                <p style="display:inline-block; margin-right:20px;">Available</p>
+                <label class="switch">
+                    <input id = "availability" type="checkbox" onclick="changeAvailability()">
+                    <span class="slider round"></span>
+                </label>
+            </a>
+            <hr>
+
+            <!--Log Out-->
+            <a onclick="logOut()">Log out
+                <i class="fa-solid fa-right-to-bracket" ></i>
+            </a>
+        </div>
+    </div>
+</div>
 
 
 <!--Body-->
 <!--Title-->
-<div class="tripsBody">
+<div class="tripsBody" style=" margin-top:20px;">
     <div class="headOfTrips">
 
         <div class="trip-img">
-            <img  style=" overflow-clip-margin: content-box; overflow: clip;  margin-left: auto; margin-right: auto; object-fit: cover; height:500px;"
+            <img  style=" overflow-clip-margin: content-box; overflow: clip;  margin-left: auto; margin-right: auto; object-fit: cover; height:300px;"
                  src="css/images/road-trip-by-car-summer-vacation-travel-trip_107791-9489.avif" alt="">
         </div>
         <h5 class="headerTrips">My Trips</h5>
@@ -162,6 +207,7 @@
 <script src="js/main.js"></script>
 
     <script>
+        updateNavBar();
         loadTrips();
     </script>
 
@@ -171,6 +217,25 @@
         event.target.style.display = "none";
     }
   }
+</script>
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function dropDown() {
+console.log('1');
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
 </script>
 
 </body>

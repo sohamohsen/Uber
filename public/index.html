@@ -7,7 +7,8 @@
         <meta name="description" content="Uber"/>
 
         <title>Earn Money by Driving or Get a Ride</title>
-        
+        <script src="js/jquery-3.6.4.min.js"></script>
+
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap" rel="stylesheet">
@@ -20,18 +21,18 @@
     <body >
 
                                                     <!--NavBar-->
-        <div class="navbar">
+        <div class="navbar" id="navbar_links">
             <a href="index.html" style="font-size:30px; margin-right:10%;">
                 Uber
             </a>
-            <a href="https://www.uber.com/eg/en/drive/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Driver</a>
-            <a href="https://www.uber.com/eg/en/ride/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Rider</a>
+            <a id="driver_button" href="trips.html" style="margin-top:10px; visibility:hidden;">Driver</a>
+            <a id="rider_button" href="ride.html" style="margin-top:10px; visibility:hidden;">Rider</a>
             <a href="https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">How uber works</a>
             <a href="https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">About us</a>
 
             <div class="sign" style="margin-top:10px;" >
-                <button class="sign-but"  onclick="signButton()">Sign Up</button>
-                <button class="log-but" onclick="logButton()">Log In</button>
+                <button class="sign-but"  id="signup_button" onclick="signButton()" style="visibility:hidden;">Sign Up</button>
+                <button class="log-but" id="signIn_button" onclick="logButton()" style="visibility:hidden;">Log In</button>
             </div>
         </div>
 
@@ -165,7 +166,7 @@
         <script src="js/main.js"></script>
 
         <script>
-
+                 updateIndex()
 <!--            Navigation of buttons-->
             function navigateToDriverLogIn(){
               window.location.href = "login-driver.html";

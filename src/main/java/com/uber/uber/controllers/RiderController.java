@@ -43,14 +43,14 @@ public class RiderController {
             produces = MediaType.APPLICATION_JSON_VALUE, // request data type
             consumes = MediaType.APPLICATION_JSON_VALUE // response data type
     )
-    public ResponseEntity<Object> signUp(@RequestBody Rider payLoad){ //TODO change the function name to createRiderProfile
+    public ResponseEntity<Object> createRiderProfile(@RequestBody Rider payLoad){
 
         // 1. Check if the rider have account or not
         Account account = accountService.getAccountById(payLoad.accountId);
         if (account != null && account.type.equals("rider")){
 
             // 2. Check if rider already have profile or not.
-            Rider riderFromDb = service.getRiderByUserId(payLoad.accountId); // TODO why riderFrom used
+            Rider riderFromDb = service.getRiderByUserId(payLoad.accountId);
             if (riderFromDb != null){
                 // 3. if he/she already hav account return error
                 JSONObject object = new JSONObject();

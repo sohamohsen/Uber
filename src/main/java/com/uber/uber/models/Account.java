@@ -56,7 +56,6 @@ public class Account  {
         this.type = type;
     }
 
-    /*TODO what is this?*/
     public Account() {
     }
 }

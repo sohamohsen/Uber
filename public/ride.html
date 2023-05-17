@@ -22,17 +22,17 @@
 <body>
 
                                                 <!--NavBar-->
-<div class="navbar">
+<div class="navbar" id="navbar_links">
     <!--Logo-->
     <a href="#" style="font-size:30px; margin-right:10%;">
         Uber
     </a>
 
     <!--Taps-->
-    <a href="https://www.uber.com/eg/en/drive/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Driver</a>
-    <a href="https://www.uber.com/eg/en/ride/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Rider</a>
-    <a href="https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">How uber works</a>
-    <a href="https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">About us</a>
+<!--    <a href="https://www.uber.com/eg/en/drive/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Driver</a>-->
+<!--    <a href="https://www.uber.com/eg/en/ride/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Rider</a>-->
+<!--    <a href="https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">How uber works</a>-->
+<!--    <a href="https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">About us</a>-->
 
     <!--DropDown-->
     <div class="dropdown" style="margin-top:10px;" onclick="dropDown()">
@@ -43,21 +43,22 @@
 
         <!--Content-->
         <div class="dropdown-content" id="myDropdown">
-            <a href="#">Driver Name</a>
+            <a href="#" id="user_name">Driver Name</a>
             <hr>
 
             <!--Available switch-->
-            <a style="display:inline-block; width:100%;" >
+
+
+            <a href="ride.html">Ride</a>
+            <a href="trips.html">Trips</a>
+            <a href="wallet.html">Wallet</a>
+            <a style="display:inline-block; width:100%; visibility:hidden;" id="availability_ref">
                 <p style="display:inline-block; margin-right:20px;">Available</p>
                 <label class="switch">
                     <input id = "availability" type="checkbox" onclick="changeAvailability()">
                     <span class="slider round"></span>
                 </label>
             </a>
-
-            <a href="ride.html">Ride</a>
-            <a href="trips.html">Trips</a>
-            <a href="wallet.html">Wallet</a>
             <hr>
 
             <!--Log Out-->
@@ -106,6 +107,9 @@ window.onclick = function(e) {
 </script>
     <div class="map" id="map"></div>
     <script src="js/main.js"></script>
+    <script>
+      updateNavBar();
+    </script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClg9bvRoogFJZd5rh-IXw0CneiY7Xs06Q&callback=initMap"></script>
 </body>
 </html>

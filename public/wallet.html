@@ -22,51 +22,57 @@
     </head>
 
     <body>
-        <!--header-->
-        <header>
-            <div class="container">
-                <div class="header-content">
-                    <ul class="list-unstyled">
-                        <li class="ulogo">
-                            <a data-baseweb="link" href="#"
-                               target="_self" aria-label="Go to Uber.com"
-                               class="uberlogo">Uber</a>
-                        </li>
-                    </ul>
-                    <div class="taps">
-                        <ul class="list-unstyled">
-                            <li class="rideli">
-                                <a data-baseweb="button" data-buttonkey="//ride" href="ride.html" class="_css-cBkCoG">
-                                    <i class="fa fa-taxi" aria-hidden="true"></i>
-                                    Ride</a>                            </li>
-                            <li class="walletli">
-                                <a data-baseweb="button" data-buttonkey="//ride" href="#" class="_css-cBkCoG">
-                                    <i class="fa-solid fa-wallet"></i>
-                                    Wallet</a>
-                            </li>
-                            <li class="tripsli">
-                                <a data-baseweb="button" data-buttonkey="//ride" href="trips.html" class="_css-cBkCoG">
-                                    <i class="fa-solid fa-rectangle-list"></i>
-                                    Trip</a>
-                            </li>
-                            <li>
-                                <div class="dropdown">
-                                    <button class="dropbtn" onclick="myFunction2()">
-                                        <i class="fa-solid fa-user" style="color: #080707;"></i>
-                                    </button>
-                                    <div class="dropdown-content" id="myDropdown">
-                                        <a href="#">Link 1</a>
-                                        <a href="#">Link 2</a>
-                                        <a href="#">Link 3</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
 
-                    </div>
-                </div>
+    <!--NavBar-->
+    <div class="navbar" id="navbar_links">
+        <!--Logo-->
+        <a href="index.html" style="font-size:30px; margin-right:10%;">
+            Uber
+        </a>
+
+<!--        &lt;!&ndash;Taps&ndash;&gt;-->
+<!--        <a href="https://www.uber.com/eg/en/drive/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Driver</a>-->
+<!--        <a href="https://www.uber.com/eg/en/ride/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">Rider</a>-->
+<!--        <a href="https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">How uber works</a>-->
+<!--        <a href="https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">About us</a>-->
+
+        <!--DropDown-->
+        <div class="dropdown" style="margin-top:10px;" onclick="dropDown()">
+
+            <button class="dropbtn" >
+                <i class="fa-solid fa-user" style="color: #000000; display: inline-block; background:white; border-radius: 60px; box-shadow: 0 0 2px white; padding: 0.5em 0.6em;"></i>
+            </button>
+
+            <!--Content-->
+            <div class="dropdown-content" id="myDropdown">
+                <a href="#" id="user_name">Driver Name</a>
+                <hr>
+
+
+
+                <a href="ride.html">Ride</a>
+                <a href="trips.html">Trips</a>
+                <a href="wallet.html">Wallet</a>
+
+                <!--Available switch-->
+                <a style="display:inline-block; width:100%; visibility:hidden;" id="availability_ref">
+                    <p style="display:inline-block; margin-right:20px;">Available</p>
+                    <label class="switch">
+                        <input id = "availability" type="checkbox" onclick="changeAvailability()">
+                        <span class="slider round"></span>
+                    </label>
+                </a>
+                <hr>
+
+                <!--Log Out-->
+                <a onclick="logOut()">Log out
+                    <i class="fa-solid fa-right-to-bracket" ></i>
+                </a>
             </div>
-        </header><!-- body -->
+        </div>
+    </div>
+
+
         <div class="body">
             <div class="wallet">
                     <span class="wtitle">
@@ -80,10 +86,10 @@
         </div>
    </body>
     <script>
-
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-function myFunction2() {
+function dropDown() {
+console.log('1');
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
@@ -99,6 +105,7 @@ window.onclick = function(e) {
 </script>
     <script src="js/main.js"></script>
     <script>
-        getAccountByUserId();
+        updateWallet();
+        updateNavBar();
     </script>
 </html>

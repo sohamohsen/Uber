@@ -75,23 +75,60 @@ function signIn(emailValue,passwordValue){
             console.log(JSON.stringify(error.responseJSON));
     });
 }
+ function getAccountByUserId(){
 
-function getAccountByUserId(){
-    $.ajax({
+    return $.ajax({
         url: BASE_URL+"/accounts/"+localStorage.getItem('user_id'),
         type: 'GET',
         headers:{
             "Access-Control-Allow-Origin": '*', // recommended
         }
-    }).then(function(data, status, jqxhr){
+    });
+    /*.then(function(data, status, jqxhr){
         // Update UI
-
-        updateProfileUi(data);
+        return data;
+       // updateProfileUi(data);
 
 
     }).fail(function(error){
+
     console.log(JSON.stringify(error));
-    })
+    return error;
+    })*/
+}
+
+async function updateIndex(){
+
+try{
+    const profile = await getAccountByUserId();
+        if(profile === ''){
+            document.getElementById('signup_button').style.visibility = 'visible';
+            document.getElementById('signIn_button').style.visibility = 'visible';
+            return;
+        }
+                   // Update UI
+        if(profile.type === "rider"){
+            document.getElementById('rider_button').style.visibility = 'visible';
+
+        }
+
+        if(profile.type === "driver"){
+            document.getElementById('driver_button').style.visibility = 'visible';
+        }
+
+
+
+    }catch(error){
+    document.getElementById('signup_button').style.visibility = 'visible';
+                document.getElementById('signIn_button').style.visibility = 'visible';
+        console.log(error)
+    }
+}
+
+async function updateWallet(){
+        const profile = await getAccountByUserId();
+        updateProfileUi(profile);
+
 }
 
 function updateProfileUi(profile){
@@ -103,6 +140,97 @@ function updateProfileUi(profile){
     if(profile.rider !== null){
         balanceView.innerHTML = "EGP "+profile.rider.wallet.balance
     }
+}
+
+async function updateNavBar(){
+if(localStorage.getItem('user_id') == null){
+ window.location.assign('index.html', "_self")
+ return;
+ }
+    try{
+    const profile = await getAccountByUserId();
+    if(profile === ''){
+        //navigate to index
+        window.location.assign('index.html', "_self")
+
+    }
+
+    if(profile.type === "rider"){
+        createRiderNavLinks()
+        document.getElementById('user_name').innerHTML = profile.rider.firstName+" "+profile.rider.lastName;
+    }
+
+    if(profile.type === "driver"){
+        createDriverNavLinks()
+        document.getElementById('availability_ref').style.visibility = 'visible';
+        document.getElementById('availability').checked = profile.driver.available;
+        document.getElementById('user_name').innerHTML = profile.driver.firstName+" "+profile.driver.lastName;
+    }
+    }catch(error){
+        console.log(error);
+    }
+}
+
+function createDriverNavLinks(){
+    var a = document.createElement('a');
+    var linkText = document.createTextNode("Driver");
+    a.appendChild(linkText);
+    a.title = "Driver";
+    a.href = "trips.html";
+    a.style.setProperty('margin-top','10px');
+    document.getElementById('navbar_links').appendChild(a);
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("How uber works");
+                a.appendChild(linkText);
+                a.title = "How uber works";
+                a.href = "https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("About us");
+                a.appendChild(linkText);
+                a.title = "About us";
+                a.href = "https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+}
+
+function createRiderNavLinks(){
+    var a = document.createElement('a');
+    var linkText = document.createTextNode("Rider");
+    a.appendChild(linkText);
+    a.title = "Rider";
+    a.href = "ride.html";
+    a.style.setProperty('margin-top','10px');
+    document.getElementById('navbar_links').appendChild(a);
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("How uber works");
+                a.appendChild(linkText);
+                a.title = "How uber works";
+                a.href = "https://www.uber.com/eg/en/about/how-does-uber-work/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
+
+
+    var a = document.createElement('a');
+                var linkText = document.createTextNode("About us");
+                a.appendChild(linkText);
+                a.title = "About us";
+                a.href = "https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4";
+                a.style.setProperty('margin-top','10px');
+                document.getElementById('navbar_links').appendChild(a);
+
+
 }
 
 function signUp(object){
@@ -1202,6 +1330,7 @@ function logOut(){
     document.getElementById('availability').checked = false;
     changeAvailability();
     localStorage.clear();
+    window.location.assign('index.html', "_self")
 }
 
 function changeAvailability(){
@@ -1221,7 +1350,7 @@ function changeAvailability(){
       console.log(status);
       if(status === 'success'){
 
-      //TODO location.reload(true);
+      // TODO location.reload(true);
       }
       }).fail(function(error){
           console.log(error.responseJSON);

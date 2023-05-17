@@ -40,7 +40,7 @@ public class VehicleController {
             consumes = MediaType.APPLICATION_JSON_VALUE // request data type
     )
 
-    public ResponseEntity<Object> createNewDriver( //TODO change method name createVehicle
+    public ResponseEntity<Object> createVehicle(
             @RequestBody VehicleForm payload
     ){
         // 1. Check if the driver has account.
@@ -77,7 +77,7 @@ public class VehicleController {
                     object.put("error", "Maybe your Licence Plate is wrong or is already in use.");
                     return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
                 }
-                Gson gson = new Gson(); // TODO what is this?!
+                Gson gson = new Gson(); // create json file
                 System.out.println(gson.toJson(vehicle));
                 return new ResponseEntity<>(service.save(vehicle),HttpStatus.CREATED);
             }

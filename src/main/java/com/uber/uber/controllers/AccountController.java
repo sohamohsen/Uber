@@ -39,7 +39,7 @@ public class AccountController {
 
     // Request to get each account by id
     @GetMapping("/accounts/{user_id}") // http://localhost:8080/account/2
-    public ResponseEntity<Account> getAccount( //TODO Change function name to getAccountByUserId
+    public ResponseEntity<Account> getAccountByUserId(
             @PathVariable("user_id") int id
     ){
         return new ResponseEntity<>(service.getAccountById(id),HttpStatus.OK);
