@@ -257,7 +257,7 @@ function createRiderNavLinks(){
 
 }
 
-
+// control navigation of navbar links
 async function updateSignUpUi(){
     try{
     const profile = await getAccountByUserId();
@@ -269,6 +269,7 @@ async function updateSignUpUi(){
     }
 }
 
+// Control pages ui according to type
 async function updateNewAccountUi(){
     if(localStorage.length == 0){
         return;
@@ -460,11 +461,13 @@ function getYears(){
         });
 }
 
+// Put colors in the selection item
 function onColorSelectItem(event){
     color = event.target.value;
     console.log(color);
 }
 
+// get colors
 function getColors(){
       $.ajax({ // request
             url: BASE_URL+"/colors",
@@ -488,11 +491,13 @@ function getColors(){
         });
 }
 
+// Put years in the selection item
 function onColorSelectItem(event){
     year = event.target.value;
     console.log(year);
-}
+}  //TODO modify the funcrion name to onYearSelectItem
 
+// Http request to add new rider
 function createRiderProfile(object){
       $.ajax({ // request
         url: BASE_URL+"/rider",
@@ -514,6 +519,7 @@ function createRiderProfile(object){
     });
 }
 
+// HTTP request to add new driver
 function createDriverProfile(object){
       $.ajax({ // request
         url: BASE_URL+"/driver",
@@ -535,6 +541,7 @@ function createDriverProfile(object){
     });
 }
 
+// HTTP request to add new vehicle
 function createVehicleProfile(object){
       $.ajax({ // request
         url: BASE_URL+"/vehicle",
@@ -556,6 +563,7 @@ function createVehicleProfile(object){
     });
 }
 
+// HTTP request to add new trip
 function createTrip(object){
       $.ajax({ // request
         url: BASE_URL+"/trip",
@@ -577,6 +585,7 @@ function createTrip(object){
     });
 }
 
+// get data from ui to sign in for driver
 function driverSignIn(){
     /***
     * 1. get email and password from input
@@ -599,6 +608,7 @@ function driverSignIn(){
     signIn(email.value,password.value)
 }
 
+// get data from ui to sign in for rider
 function riderSignIn(){
     /***
         * 1. get email and password from input
@@ -619,6 +629,7 @@ function riderSignIn(){
         signIn(email.value,password.value)
 }
 
+// HTTP request to get all finished trips
 function getFinishedTrips(){
       $('#contentTrip').empty();
       clearTripsButton();
@@ -642,6 +653,7 @@ function getFinishedTrips(){
         });
 }
 
+// HTTP request to get all canceled trips
 function getCanceledTrips(){
       $('#contentTrip').empty();
       clearTripsButton();
@@ -665,6 +677,7 @@ function getCanceledTrips(){
         });
 }
 
+// HTTP request to get all started trips
 function getStartedTrips(){
       $('#contentTrip').empty();
       clearTripsButton();
@@ -688,7 +701,7 @@ function getStartedTrips(){
         });
 }
 
-
+// HTTP request to get trips requests which need to assign driver
 function getNewTrip(){
       $('#contentTrip').empty();
       clearTripsButton();
@@ -712,6 +725,7 @@ function getNewTrip(){
         });
 }
 
+// HTTP request to get all trips
 function getTrips(){
       $('#contentTrip').empty();
       clearTripsButton();
@@ -735,6 +749,7 @@ function getTrips(){
         });
 }
 
+// Control ui according to data (clear the previous loaded trips to not not overwrite on new trips )
 function clearTripsButton(){
 let button = document.getElementById("allTrips");
       button.style.backgroundColor= "#f0f0f0";
@@ -753,6 +768,7 @@ let button = document.getElementById("allTrips");
                   button.style.color= 'black';
 }
 
+// Navigation (navigate user after request trip to trips page)
 function loadTrips(){
     const nav = localStorage.getItem('trip_nav');
     console.log(nav);
@@ -765,13 +781,15 @@ function loadTrips(){
         getTrips()
     }
 }
+
+// Convert date to be readable
 function convertDate(inputFormat) {
   function pad(s) { return (s < 10) ? '0' + s : s; }
   var d = new Date(inputFormat)
   return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
 }
 
-
+// Control Ui of trips page
 function createTripListItem(trip){
 
     const startId = 'start_'+trip.id
@@ -920,7 +938,7 @@ function createTripListItem(trip){
 
 }
 
-
+// HTTP request to pay with wallet
 function payWithWallet(){
     console.log(currentTripId)
     const object = {}
@@ -951,12 +969,13 @@ function payWithWallet(){
         });
 }
 
+// UI payment
 function attemptToPay(){
     document.getElementById("paymentMethodCashModal").style.display = "block";
     document.getElementById("paymentMethodModal").style.display = "none";
-
 }
 
+// HTTP request to pay with cash
 function payWithCash(){
     const cash = document.getElementById("cashAmount").value;
     console.log(currentTripId)
@@ -994,6 +1013,7 @@ function payWithCash(){
 
 }
 
+// HTTP request to get all started trips
 function startTrip(tripId){
 console.log(tripId);
 $.ajax({ // request
@@ -1008,7 +1028,7 @@ $.ajax({ // request
         });
 }
 
-
+// HTTP request to get all finished trips
 function finishTrip(tripId){
 $.ajax({ // request
             url: BASE_URL+"/finish_trip/"+tripId,
@@ -1026,7 +1046,7 @@ $.ajax({ // request
         });
 }
 
-
+// HTTP request to get all canceled trips
 function cancelTrip(tripId){
 console.log(tripId);
 $.ajax({ // request
@@ -1040,6 +1060,8 @@ $.ajax({ // request
             console.log(error.responseJSON);
         });
 }
+
+// Get data from user to create rider account
 function attemptCreateRiderAccount(){
     /**
     * get values from html fields
@@ -1079,6 +1101,7 @@ function attemptCreateRiderAccount(){
     signUp(json);
 }
 
+// get data from user to create driver account
 function attemptCreateDriverAccount(){
     /**
     * get values from html fields
@@ -1120,6 +1143,7 @@ function attemptCreateDriverAccount(){
     signUp(json);
 }
 
+// get data from user to create rider profile
 function attemptCreateRiderProfile(){
     /**
     * get values from html fields
@@ -1168,6 +1192,7 @@ function attemptCreateRiderProfile(){
 
 }
 
+// get data from user to create driver profile
 function attemptCreateDriverProfile(){
     /**
     * get values from html fields
@@ -1242,6 +1267,7 @@ function attemptCreateDriverProfile(){
 
 }
 
+// get data from user to add vehicle to driver
 function attemptCreateVehicleAccount(){
     /**
     * get values from html fields
@@ -1284,6 +1310,7 @@ function attemptCreateVehicleAccount(){
     createVehicleProfile(json)
 }
 
+// get data from user to request trip
 function bookTrip(){
     /**
     * get values from html fields
@@ -1319,6 +1346,7 @@ function bookTrip(){
         createTrip(json);
 }
 
+// Map code
 function initMap() {
   const myLatlng = { lat: 30.0595563, lng: 31.2995782 };
   map = new google.maps.Map(document.getElementById("map"), {
@@ -1379,6 +1407,7 @@ function initMap() {
 
 window.initMap = initMap;
 
+// Calculate distance
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -1393,12 +1422,12 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   return d;
 }
 
+// convert from deg to rad
 function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
 
-
-
+// Navigation of logout
 function logOut(){
     document.getElementById('availability').checked = false;
     changeAvailability();
@@ -1406,6 +1435,7 @@ function logOut(){
     window.location.assign('index.html', "_self")
 }
 
+// HTTP request to change available
 function changeAvailability(){
     const b = document.getElementById('availability').checked;
     console.log(b)
@@ -1429,4 +1459,3 @@ function changeAvailability(){
           console.log(error.responseJSON);
       });
 }
-
