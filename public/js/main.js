@@ -112,11 +112,18 @@ try{
                    // Update UI
         if(profile.type === "rider"){
             document.getElementById('rider_button').style.visibility = 'visible';
-
+            if(profile.rider == null){
+               window.location.assign('signup-rider.html', "_self")
+            }
         }
 
         if(profile.type === "driver"){
             document.getElementById('driver_button').style.visibility = 'visible';
+             if(profile.driver == null){
+                  window.location.assign('signup-driver.html', "_self")
+             }else if(profile.driver.vehicle == null){
+                  window.location.assign('create-vehicle.html', "_self")
+             }
         }
 
 
@@ -163,17 +170,27 @@ if(localStorage.getItem('user_id') == null){
     if(profile.type === "rider"){
         createRiderNavLinks()
         document.getElementById('user_name').innerHTML = profile.rider.firstName+" "+profile.rider.lastName;
+        if(profile.rider == null){
+           window.location.assign('signup-rider.html', "_self")
+        }
     }
 
     if(profile.type === "driver"){
         createDriverNavLinks()
         document.getElementById('availability_ref').style.visibility = 'visible';
+        document.getElementById('ride_nav_button').style.visibility = 'hidden';
         document.getElementById('availability').checked = profile.driver.available;
         document.getElementById('user_name').innerHTML = profile.driver.firstName+" "+profile.driver.lastName;
+         if(profile.driver == null){
+             window.location.assign('signup-driver.html', "_self")
+         }else if(profile.driver.vehicle == null){
+           window.location.assign('create-vehicle.html', "_self")
+         }
     }
     }catch(error){
         console.log(error);
     }
+
 }
 
 // control navigation of navbar links
@@ -238,6 +255,47 @@ function createRiderNavLinks(){
                 document.getElementById('navbar_links').appendChild(a);
 
 
+}
+
+
+async function updateSignUpUi(){
+    try{
+    const profile = await getAccountByUserId();
+    if(profile.rider != null || profile.driver != null){
+        window.location.assign('index.html', "_self")
+    }
+    }catch(e){
+        console.log(e)
+    }
+}
+
+async function updateNewAccountUi(){
+    if(localStorage.length == 0){
+        return;
+    }
+    try{
+    const profile = await getAccountByUserId();
+    if(profile.type === "rider"){
+        if(profile.rider == null){
+            window.location.assign('signup-rider.html', "_self")
+        }else{
+            window.location.assign('index.html', "_self")
+        }
+    }
+
+    if(profile.type === "driver"){
+            if(profile.driver == null){
+                window.location.assign('signup-driver.html', "_self")
+            }else if(profile.driver.vehicle == null){
+                window.location.assign('create-vehicle.html', "_self")
+            }else{
+                window.location.assign('index.html', "_self")
+            }
+        }
+
+    }catch(e){
+        console.log(e)
+    }
 }
 
 // Sign up http request

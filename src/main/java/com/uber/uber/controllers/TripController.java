@@ -185,6 +185,7 @@ public class TripController {
                             continue;
                         }
                         driver = d;
+                        driver.available = false;
                         break;
                     }
                 }//here add this condition
