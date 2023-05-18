@@ -57,7 +57,7 @@ function signIn(emailValue,passwordValue){
                 window.location.assign('create-vehicle.html', "_self")
             }else{
                 // navigate user to profile page
-                window.location.assign('rider-wallet.html', "_self")
+                window.location.assign('wallet.html', "_self");
             }
         }else{
              //navigate to rider profile
@@ -66,7 +66,7 @@ function signIn(emailValue,passwordValue){
                 window.location.assign('signup-rider.html', "_self")
             }else{
                 // navigate user to profile page
-             window.location.assign('takeride.html')
+             window.location.assign('ride.html')
             }
         }
 
@@ -449,7 +449,7 @@ function createRiderProfile(object){
         // Navigate to create rider and driver profile
         console.log(JSON.stringify(data));
             //navigate to create driver profile
-            window.location.assign('takeride.html', "_self")
+            window.location.assign('ride.html', "_self")
     }).fail(function(error){
         console.log(JSON.stringify(error.responseJSON.error));
         alert(JSON.stringify(error.responseJSON.error));
@@ -491,7 +491,7 @@ function createVehicleProfile(object){
         // Navigate to create rider and driver profile
         console.log(JSON.stringify(data));
         //navigate to create driver profile
-        window.location.assign('rider-wallet.html', "_self")
+        window.location.assign('wallet.html', "_self")
     }).fail(function(error){
         console.log(error.responseJSON.error);
         alert(JSON.stringify(error.responseJSON.error));

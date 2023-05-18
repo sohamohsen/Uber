@@ -37,10 +37,10 @@
 <!--        <a href="https://www.uber.com/eg/en/about/?uclick_id=52858fae-cccb-4b9d-bfa3-c6b4f55101a4" style="margin-top:10px;">About us</a>-->
 
         <!--DropDown-->
-        <div class="dropdown" style="margin-top:10px;" onclick="dropDown()">
+        <div class="dropdown" style="margin-top:10px;" >
 
-            <button class="dropbtn" >
-                <i class="fa-solid fa-user" style="color: #000000; display: inline-block; background:white; border-radius: 60px; box-shadow: 0 0 2px white; padding: 0.5em 0.6em;"></i>
+            <button class="dropButton" onclick="dropDown()">
+                <i id="profile_icon" class="fa-solid fa-user" style="color: #000000; display: inline-block; background:white; border-radius: 60px; box-shadow: 0 0 2px white; padding: 0.5em 0.6em;"></i>
             </button>
 
             <!--Content-->
@@ -95,12 +95,12 @@ console.log('1');
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
+    if (!e.target.matches('.dropButton') && e.target.id !== "profile_icon") {
+        var myDropdown = document.getElementById("myDropdown");
+        if (myDropdown.classList.contains('show')) {
+            myDropdown.classList.remove('show');
+        }
     }
-  }
 }
 </script>
     <script src="js/main.js"></script>

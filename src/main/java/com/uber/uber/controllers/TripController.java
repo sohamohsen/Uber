@@ -195,8 +195,8 @@ public class TripController {
                 } else {
                     //create a trip
                     Trip trip = new Trip(
-                            payload.pickLocLat,
                             payload.pickLocLng,
+                            payload.pickLocLat,
                             payload.dropLocLng,
                             payload.dropLocLat,
                             4,
@@ -262,9 +262,8 @@ public class TripController {
             trip.dropTime = calendar.getTime();
             //distance
             trip.distance = (float) distance(trip.actPickLocLat, trip.actPickLocLng, trip.actDropLocLat, trip.actDropLocLng);
-            long diffInMillis = Math.abs(trip.pickTime.getTime() - trip.dropTime.getTime());
-            //duration
-            trip.duration = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+            trip.duration = trip.distance * 2 ;
             trip.fare =  (trip.distance * 4.87f) + 10.0f;
             trip.statusId = 3;
             return new ResponseEntity<>(service.save(trip),HttpStatus.OK);
