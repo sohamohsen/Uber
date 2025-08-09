@@ -13,7 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(
         maxAge = 3600
 )
@@ -36,60 +39,53 @@ public class RiderController {
         return service.getRiders();
     }
 
-    //Request to make new rider profile
-    @RequestMapping(
-            path = "/rider", // path after base url http://localhost:8080/sign_up
-            method = RequestMethod.POST, // request type
-            produces = MediaType.APPLICATION_JSON_VALUE, // request data type
-            consumes = MediaType.APPLICATION_JSON_VALUE // response data type
+    @PostMapping(
+            path = "/rider",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Object> createRiderProfile(@RequestBody Rider payLoad){
+    public ResponseEntity<?> createRiderProfile(@RequestBody Rider payload) {
 
-        // 1. Check if the rider have account or not
-        Account account = accountService.getAccountById(payLoad.accountId);
-        if (account != null && account.type.equals("rider")){
+        // 1️⃣ Validate account existence and type
+        Account account = accountService.getAccountById(payload.getAccount().getId());
+        if (account == null || account.getType() != Account.AccountType.RIDER) {
+            return errorResponse("User does not have a valid rider account.", HttpStatus.NOT_FOUND);
+        }
 
-            // 2. Check if rider already have profile or not.
-            Rider riderFromDb = service.getRiderByUserId(payLoad.accountId);
-            if (riderFromDb != null){
-                // 3. if he/she already hav account return error
-                JSONObject object = new JSONObject();
-                object.put("error","You already Created Profile");
-                return new ResponseEntity<>(object.toString(), HttpStatus.FORBIDDEN);
-            }else {
-                // or 3. Check validation
-                // 3.1. Check that phone number is unique.
-                if (service.getRiderByPhoneNumber(payLoad.phoneNumber) != null){
-                    JSONObject object = new JSONObject();
-                    object.put("error","Phone Number is already in use.");
-                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-                }
-                // 4. Create new rider profile
-                Rider newRider = null;
-                try{
-                    newRider = service.save(payLoad);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                // 5. Create wallet for rider
-                if (newRider != null){
-                    //create wallet here
-                    RiderWallet wallet = new RiderWallet(0.0f, newRider.id);
-                    RiderWallet newWallet = riderWalletService.save(wallet);
-                    return new ResponseEntity<>(newRider,HttpStatus.CREATED);
-                }else {
-                    // or 5. Return error
-                    JSONObject object = new JSONObject();
-                    object.put("error","Something went wrong.");
-                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-                }
-            }
-        }else {
-            // or 2. return error
-            JSONObject object = new JSONObject();
-            object.put("error","User does not have account.");
-            return new ResponseEntity<>(object.toString(),HttpStatus.NOT_FOUND);
+        // 2️⃣ Ensure rider profile doesn't already exist
+        if (service.getRiderByUserId(account.getId()) != null) {
+            return errorResponse("You already created a profile.", HttpStatus.FORBIDDEN);
+        }
+
+        // 3️⃣ Ensure phone number is unique
+        if (service.getRiderByPhoneNumber(payload.getPhoneNumber()) != null) {
+            return errorResponse("Phone number is already in use.", HttpStatus.FORBIDDEN);
+        }
+
+        // 4️⃣ Save new rider
+        try {
+            Rider newRider = service.save(payload);
+
+            // 5️⃣ Create wallet
+            RiderWallet wallet = new RiderWallet(0.0f, newRider.getId());
+            riderWalletService.save(wallet);
+
+            return new ResponseEntity<>(newRider, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return errorResponse("Something went wrong while creating the rider profile.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Utility method to generate error JSON responses
+     */
+    private ResponseEntity<?> errorResponse(String message, HttpStatus status) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", message);
+        return new ResponseEntity<>(error, status);
+    }
+
 
 }

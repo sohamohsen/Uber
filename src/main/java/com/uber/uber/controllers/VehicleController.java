@@ -52,7 +52,7 @@ public class VehicleController {
         }
         // 2. Check that driver dosen't have another vehicle.
         if (driver != null){
-            Vehicle vehicleFromDb = service.getVehicleByDriverId(driver.id);
+            Vehicle vehicleFromDb = service.getVehicleByDriverId(driver.getId());
             if (vehicleFromDb != null){
                 JSONObject object = new JSONObject();
                 object.put("error","User already exist");
@@ -65,7 +65,7 @@ public class VehicleController {
                         payload.releaseYear,
                         payload.carModelId,
                         payload.carMakerId,
-                        driver.id
+                        driver.getId()
                 );
                 // 3. Check validation
                 if(service.getVehicleByVehicleLicence(payload.vehicleLicence) != null) {
