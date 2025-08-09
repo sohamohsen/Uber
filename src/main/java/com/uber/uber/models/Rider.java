@@ -1,62 +1,50 @@
 package com.uber.uber.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name="rider")
-public class Rider{
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Rider extends BaseModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)
-    public int id;
+    private Integer id;
 
-    @Column(name = "first_name")
-    public String firstName;
-    @Column(name = "last_name")
-    public String lastName;
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
 
-    @Column(name = "account_id")
-    public int accountId;
-    @Column(name = "phone_number")
-    public String phoneNumber;
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(name = "phone_number", nullable = false, unique = true)
+    private String phoneNumber;
 
     @Column(name = "birthdate")
-    public Date birthdate;
+    private LocalDate birthDate;
 
-    @Column(name = "city_id")
-    public int cityId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city; // Better naming
 
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    @JoinColumn(
-            name = "account_id",
-            referencedColumnName = "id",
-            updatable = false,
-            insertable = false
-    )
-    @JsonIgnore
-    public Account account;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
-    @OneToOne(
-            mappedBy = "rider"
-    )
-    public RiderWallet wallet;
+    @OneToOne(mappedBy = "rider", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RiderWallet wallet;
 
-
-    @ManyToMany(
-            mappedBy = "rider"
-    )
-    @JsonIgnore
-    public List<Trip> trips;
-
-    public Rider() {
-    }
-
+    @OneToMany(mappedBy = "rider", fetch = FetchType.LAZY)
+    private List<Trip> trips = new ArrayList<>();
 }

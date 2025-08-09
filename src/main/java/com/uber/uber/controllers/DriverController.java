@@ -6,19 +6,13 @@ import com.uber.uber.models.DriverWallet;
 import com.uber.uber.service.AccountService;
 import com.uber.uber.service.DriverService;
 import com.uber.uber.service.DriverWalletService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-@CrossOrigin(
-        maxAge = 3600
-)
+@CrossOrigin(maxAge = 3600)
 @RestController
 public class DriverController {
 
@@ -27,96 +21,89 @@ public class DriverController {
 
     @Autowired
     private AccountService accountService;
+
     @Autowired
     private DriverWalletService driverWalletService;
 
-
-    // Request to change the availability of driver in case of log out.
-    @GetMapping("/availability") // log_out?driverId=47&availability=true
-    public ResponseEntity<Object> changeDriverAvailability(
-            @RequestParam(name = "account_id",defaultValue = "0") int accountId,
+    @GetMapping("/availability") // Example: /availability?account_id=47&availability=true
+    public ResponseEntity<?> changeDriverAvailability(
+            @RequestParam(name = "account_id", defaultValue = "0") int accountId,
             @RequestParam(name = "availability", defaultValue = "true") boolean available
-    ){
+    ) {
         Driver driver = service.getDriverByAccountId(accountId);
-        if (driver != null){
-            driver.available = available;
-            service.save(driver);
+        if (driver == null) {
+            return errorResponse("Driver not found.", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(driver,HttpStatus.OK);
+
+        driver.setAvailable(available);
+        service.save(driver);
+
+        // Update account online status as well
+        Account account = driver.getAccount();
+        account.setOnline(available);
+        accountService.save(account);
+
+        return ResponseEntity.ok(driver);
     }
 
-    // Request to get list of all driver
-    @GetMapping("/drivers") // path after base url http://localhost:8080/drivers
+    @GetMapping("/drivers")
     public ResponseEntity<List<Driver>> getDrivers() {
-        return new ResponseEntity<>(service.getDrivers(), HttpStatus.OK);
+        return ResponseEntity.ok(service.getDrivers());
     }
 
-    // Request to create new driver profile
-    @RequestMapping(
-            path = "/driver", // path after base url http://localhost:8080/driver
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE, // request data type
-            consumes = MediaType.APPLICATION_JSON_VALUE // request data type
+    @PostMapping(
+            path = "/driver",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Object> createNewDriver(
-            @RequestBody Driver payload
-    ){
-        // 1. check if the driver has account or not
-        Account account = null;
-        try {
-            account = accountService.getAccountById(payload.accountId);
-        }catch (NoSuchElementException e){
-            System.out.println(e.getMessage());
-        }
-        if (account != null && account.type.equals("driver")){
-            // 2. check if driver already has profile or not
-            Driver driverFromDb = service.getDriverByAccountId(account.id);
-            if (driverFromDb != null){
-                JSONObject object = new JSONObject();
-                object.put("error","User already exist");
-                return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-            }else {
-                // 3. Check validation
-                // 3.1. Check if the phone number unique
-                if (service.getDriverByPhoneNumber(payload.phoneNumber) != null){
-                    JSONObject object = new JSONObject();
-                    object.put("error","Phone Number is already in use.");
-                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
+    public ResponseEntity<?> createNewDriver(@RequestBody Driver payload) {
 
-                    // 3.2. Check if the national id unique
-                }else if (service.getDriverByNationalId(payload.nationalId) != null){
-                    JSONObject object = new JSONObject();
-                    object.put("error", "Maybe your National id is wrong or is already in use.");
-                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-                    // 3.3. Check if the driver licence unique
-                }else if (service.getDriverByDriverLicence(payload.driverLicence) != null){
-                    JSONObject object = new JSONObject();
-                    object.put("error", "Maybe your Driver Licence is wrong or is already in use.");
-                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-                }
-                // 4. Create new profile
-                Driver newdriver = null;
-                try {
-                    newdriver = service.save(payload);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                // 5. Create wallet for driver with base balance 500 EGP.
-                if (newdriver != null){
-                    DriverWallet wallet = new DriverWallet(newdriver.id,500.0f);
-                    driverWalletService.save(wallet);
-                    return new ResponseEntity<>(newdriver,HttpStatus.CREATED);
-                }else{ // or 5. return error
-                    JSONObject object = new JSONObject();
-                    object.put("error","Something went wrong.");
-                    return new ResponseEntity<>(object.toString(),HttpStatus.FORBIDDEN);
-                }
-            }
-        }else { // 2. return error
-             JSONObject object = new JSONObject();
-            object.put("error","User does not have account.");
-            return new ResponseEntity<>(object.toString(),HttpStatus.NOT_FOUND);
+        // 1️⃣ Validate account existence & type
+        Account account = accountService.getAccountById(payload.getAccount().getId());
+        if (account == null || account.getType() != Account.AccountType.DRIVER) {
+            return errorResponse("User does not have a valid driver account.", HttpStatus.NOT_FOUND);
+        }
+
+        // 2️⃣ Check if driver profile already exists
+        if (service.getDriverByAccountId(account.getId()) != null) {
+            return errorResponse("You already created a profile.", HttpStatus.FORBIDDEN);
+        }
+
+        // 3️⃣ Validate phone, national ID, and license uniqueness
+        if (service.getDriverByPhoneNumber(payload.getPhoneNumber()) != null) {
+            return errorResponse("Phone number is already in use.", HttpStatus.FORBIDDEN);
+        }
+        if (service.getDriverByNationalId(payload.getNationalId()) != null) {
+            return errorResponse("National ID is already in use or invalid.", HttpStatus.FORBIDDEN);
+        }
+        if (service.getDriverByDriverLicence(Long.parseLong(payload.getDriverLicence())) != null) {
+            return errorResponse("Driver licence is already in use or invalid.", HttpStatus.FORBIDDEN);
+        }
+
+        // 4️⃣ Save driver profile
+        try {
+            Driver newDriver = service.save(payload);
+
+            // 5️⃣ Create wallet with 500 EGP base balance
+            DriverWallet wallet = new DriverWallet(newDriver.getId(), 500.0f);
+            driverWalletService.save(wallet);
+
+            // Mark account online
+            account.setOnline(true);
+            accountService.save(account);
+
+            return new ResponseEntity<>(newDriver, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return errorResponse("Something went wrong while creating the driver profile.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    // 📌 Utility method for consistent error responses
+    private ResponseEntity<Map<String, String>> errorResponse(String message, HttpStatus status) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", message);
+        return new ResponseEntity<>(error, status);
+    }
 }

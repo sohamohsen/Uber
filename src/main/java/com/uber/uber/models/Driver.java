@@ -2,85 +2,72 @@ package com.uber.uber.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "driver")
-public class Driver {
-    @Id // this means the variable is primary key
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class Driver extends BaseModel {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)// indicate it's auto generated
-    public int id;
-    @Column(name = "first_name")
-    public String firstName;
-    @Column(name = "last_name")
-    public String lastName;
-    @Column(name = "phone_number")
-    public String phoneNumber;
-    @Column(name = "national_id")
-    public long nationalId;
-    @Column(name = "driver_licence")
-    public long driverLicence;
+    private Integer id;
 
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(name = "phone_number", nullable = false, unique = true, length = 15)
+    private String phoneNumber;
+
+    @Column(name = "national_id", nullable = false, unique = true)
+    private Long nationalId;
+
+    @Column(name = "driver_licence", nullable = false, unique = true)
+    private String driverLicence;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    public int gender;
+    private Gender gender;
+
     @Column(name = "birth_date")
-    public Date birthdate;
+    private Date birthDate;
 
-    @Column(name = "available")
-    public boolean available;
-    @Column(name = "city_id")
-    public int cityId;
-    @Column(name = "account_id")
-    public int accountId;
+    @Column(name = "available", nullable = false)
+    private boolean available = true;
 
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    @JoinColumn(
-            name = "account_id",
-            referencedColumnName = "id",
-            updatable = false,
-            insertable = false
-    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = false)
+    private City city;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
     @JsonIgnore
-    public Account account;
+    private Account account;
 
-    @OneToOne(
-            mappedBy = "driver"
-    )
-    public DriverWallet wallet;
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private DriverWallet wallet;
 
-    @OneToOne(
-            mappedBy = "driver"
-    )
-    public Vehicle vehicle;
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Vehicle vehicle;
 
-    @ManyToMany(
-            mappedBy = "driver"
-    )
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     @JsonIgnore
-    public List<Trip> trips;
+    private List<Trip> trips = new ArrayList<>();
 
-
-
-
-    public Driver() {
-    }
-
-
-    public Driver(String firstName, String lastName, String phoneNumber, int nationalId, int driverLicence, int gender, Date birthDate, boolean available, int cityId) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.nationalId = nationalId;
-        this.driverLicence = driverLicence;
-        this.gender = gender;
-        this.birthdate = birthDate;
-        this.available = available;
-        this.cityId = cityId;
+    public enum Gender {
+        MALE, FEMALE
     }
 }
