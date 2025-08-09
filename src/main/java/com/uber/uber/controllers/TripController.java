@@ -56,9 +56,9 @@ public class TripController {
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
             // or 2. rerun all requested user trips that status id 4
         } else if (rider != null) {
-            return new ResponseEntity<>(service.getRiderTripsByStatusId(rider.id,4), HttpStatus.OK);
+            return new ResponseEntity<>(service.getRiderTripsByStatusId(rider.getId(),4), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getTripsByDriverIdAndStatusId(driver.id,4), HttpStatus.OK);
+            return new ResponseEntity<>(service.getTripsByDriverIdAndStatusId(driver.getId(),4), HttpStatus.OK);
         }
     }
 
@@ -76,9 +76,9 @@ public class TripController {
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
             // or 2. rerun all canceled user trips that status id 1
         } else if (rider != null) {
-            return new ResponseEntity<>(service.getRiderCanceledTrips(rider.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getRiderCanceledTrips(rider.getId()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getCanceledTripByDriverId(driver.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getCanceledTripByDriverId(driver.getId()), HttpStatus.OK);
         }
     }
 
@@ -96,9 +96,9 @@ public class TripController {
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
             // or 2. rerun all finished user trips that status id 3
         } else if (rider != null) {
-            return new ResponseEntity<>(service.getRiderFinishedTrips(rider.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getRiderFinishedTrips(rider.getId()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getFinishedTripByDriverId(driver.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getFinishedTripByDriverId(driver.getId()), HttpStatus.OK);
         }
     }
 
@@ -117,9 +117,9 @@ public class TripController {
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
             // or 2. return all started user trips that status id 2
         } else if (rider != null) {
-            return new ResponseEntity<>(service.getRiderStartedTrips(rider.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getRiderStartedTrips(rider.getId()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getStartedTripByDriverId(driver.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getStartedTripByDriverId(driver.getId()), HttpStatus.OK);
         }
     }
 
@@ -137,9 +137,9 @@ public class TripController {
             object.put("error", "Not Found");
             return new ResponseEntity<>(object.toString(), HttpStatus.NOT_FOUND);
         } else if (driver != null && rider == null) {
-            return new ResponseEntity<>(service.getTripByDriverId(driver.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getTripByDriverId(driver.getId()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(service.getTripByRiderId(rider.id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getTripByRiderId(rider.getId()), HttpStatus.OK);
         }
     }
 
@@ -160,32 +160,32 @@ public class TripController {
         }
         if (rider != null) {
 
-            if (!service.getRiderTripsByStatusId(rider.id,2).isEmpty() ||
-                    !service.getRiderTripsByStatusId(rider.id,4).isEmpty() ||
-                    !service.getRiderTripsByStatusId(rider.id,3).isEmpty()
+            if (!service.getRiderTripsByStatusId(rider.getId(),2).isEmpty() ||
+                    !service.getRiderTripsByStatusId(rider.getId(),4).isEmpty() ||
+                    !service.getRiderTripsByStatusId(rider.getId(),3).isEmpty()
             ) {
                 JSONObject object = new JSONObject();
                 object.put("error", "You already have request in progress");
                 return new ResponseEntity<>(object.toString(), HttpStatus.NOT_ACCEPTABLE);
             }
             //check if rider does not have a trip
-            List<Driver> drivers = driverService.getDriverByCityId(rider.cityId);
+            List<Driver> drivers = driverService.getDriverByCityId(rider.getCity().id);
 
             // maybe we have a drivers but they are not available
             if (!drivers.isEmpty()) {
 
                 Driver driver = null; //this is our driver that we will join him the trip
                 for (Driver d : drivers) {
-                    if (d.available) {
+                    if (d.isAvailable()) {
                         //Check if driver does not have a trip
-                        if (!service.getTripsByDriverIdAndStatusId(d.id,4).isEmpty() ||
-                                !service.getTripsByDriverIdAndStatusId(d.id,2).isEmpty() ||
-                                !service.getTripsByDriverIdAndStatusId(d.id,3).isEmpty()
+                        if (!service.getTripsByDriverIdAndStatusId(d.getId(),4).isEmpty() ||
+                                !service.getTripsByDriverIdAndStatusId(d.getId(),2).isEmpty() ||
+                                !service.getTripsByDriverIdAndStatusId(d.getId(),3).isEmpty()
                         ) {
                             continue;
                         }
                         driver = d;
-                        driver.available = false;
+                        driver.setAvailable(false);
                         break;
                     }
                 }//here add this condition
@@ -201,8 +201,8 @@ public class TripController {
                             payload.dropLocLng,
                             payload.dropLocLat,
                             4,
-                            driver.id,
-                            rider.id
+                            driver.getId(),
+                            rider.getId()
                     );
 
                     return new ResponseEntity<>(service.save(trip), HttpStatus.CREATED);

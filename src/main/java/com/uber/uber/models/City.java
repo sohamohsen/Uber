@@ -12,8 +12,6 @@ public class City {
     //Announce that this id generate automatically in the process of creating new account.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // Nullable to announce that this attribute can't be null.
-    @Column(name = "id",nullable = false)
-    /**Doing attributes public not private due to changing of name from column name.**/
     public int id;
 
     @Column(name="city_name")

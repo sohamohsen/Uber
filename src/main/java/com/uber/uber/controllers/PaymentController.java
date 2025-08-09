@@ -39,10 +39,6 @@ public class PaymentController {
         return service.getPayments();
     }
 
-
-
-
-
     @RequestMapping(
             path = "/payment",
             method = RequestMethod.POST,
