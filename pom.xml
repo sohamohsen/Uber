@@ -17,12 +17,21 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.34</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -61,49 +70,27 @@
 			<scope>import</scope>
 			<type>pom</type>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>31.1-jre</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.10.1</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20230227</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-json</artifactId>
 			<version>3.0.6</version>
 		</dependency>
-		<dependency>
-			<groupId>jakarta.platform</groupId>
-			<artifactId>jakarta.jakartaee-api</artifactId>
-			<version>9.1.0</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<!--
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.15.0</version>
-		</dependency>
--->
-
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -112,5 +99,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
